@@ -1,0 +1,215 @@
+﻿@model LPS_ProjectManagement.Models.MasterDataModels.DepartmentModel
+@using LPS_ProjectManagement.Models
+
+@{
+    ViewBag.Title = "Detil Unit Kerja";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    RoleProject[] RoleAplikasi = (RoleProject[])Session["Roles"];
+}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <input id="hdf" type="hidden" value="@Session["PersonalNumber"].ToString()" />
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Detail Unit Kerja</h2>
+        </header>
+        <div class="content-body padding-top-45">
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">Kode Unit Kerja</label>
+                            <label style="color:red">*</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.DepartmentCode == null)
+                                    {
+                                        <input maxlength="4" id="txtDepartCode" type="text" class="form-control" placeholder="Department Code" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input disabled="disabled" maxlength="4" id="txtDepartCode" type="text" class="form-control" placeholder="Department Code" value="@Model.DepartmentCode" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="form-label" style="font-weight : bold;">Direktorat</label>
+                            <label style="color:red">*</label>
+                            <div class="controls">
+                                <select id="ddlDirektorat" class="form-control ddlDirektorat" style="width:100%" onchange="ValidMonth()">
+                                    @foreach (var data in Model.ListDirektorat)
+                                    {
+                                        if (Model.IDDirektorat == data.IDDirektorat)
+                                        {
+                                            <option value="@data.IDDirektorat" selected="selected">@data.DirektoratName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@data.IDDirektorat">@data.DirektoratName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">Nama Unit Kerja</label>
+                            <label style="color:red">*</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    <input id="txtDepartName" type="text" class="form-control" placeholder="Department Name" value="@Model.DepartmentName" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">Cost Center</label>
+                            <label style="color:red">*</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    <input id="txtCstCtr" type="text" class="form-control" placeholder="Department Cost" value="@Model.CostCenter" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <label class="form-label" style="font-weight : bold;">Deskripsi</label>
+                <br />
+                <div class="col-md-7 padding-left-0">
+                    @*<textarea id="txtAreaDescription" disabled="disabled" class="form-control" style="height:200px">@Model.Description</textarea>*@
+                    <div id="txtDescriptionDepartment"></div>
+                </div>
+            </div>
+
+
+            <br />
+            <div class="row">
+                @if (RoleAplikasi.Any(x => x.Role == "EDIT.LIST.MASTER.DEPARTMENT"))
+                {
+                if (Model.IDDepartment == 0)
+                {
+                <button class="btn btn-success" onclick="insert()"> Tambah Unit Kerja</button>
+                }
+                else
+                {
+                <button class="btn btn-success" onclick="update(@Model.IDDepartment)"> Update Unit Kerja</button>
+                }
+                }
+                <button class="btn btn-default" onclick="location.href='@Url.Action("MasterDepartement","Master")';"> Back To List</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    var obj = @Html.Raw(Json.Encode(Model));
+    var Description = obj.Description;
+    $(document).ready(function () {
+        $('.ddlDirektorat').select2({
+            placeholder: 'Pilih Direktorat',
+            selectOnClose: true
+        });
+    });
+
+    $('#txtDescriptionDepartment').summernote({
+        tabsize: 2,
+        height: 300,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ol', 'ul', 'paragraph', 'height']],
+            ['view', ['undo', 'redo']]
+        ]
+    });
+
+    $('#txtDescriptionDepartment').summernote(
+        'code',
+        Description
+    );
+
+    function insert() {
+        var Department = {
+            IDDirektorat: $('#ddlDirektorat').val(),
+            DepartmentCode: $('#txtDepartCode').val(),
+            CostCenter: $('#txtCstCtr').val(),
+            DepartmentName: $('#txtDepartName').val(),
+            Description: $('#txtDescriptionDepartment').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            CreatedBy: $('#hdf').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("InsertDepartment", "Master")',
+            data: Department,
+            success: function (result) {
+                if (result.Result == "Success") {
+                    alert(result.Message);
+                    window.location.href = '@Url.Action("MasterDepartement", "Master")';
+                }
+                else {
+                    alert(result.Message);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+
+    function update(id) {
+        debugger;
+        var Department = {
+            IDDepartment: id,
+            IDDirektorat: $('#ddlDirektorat').val(),
+            DepartmentCode: $('#txtDepartCode').val(),
+            CostCenter: $('#txtCstCtr').val(),
+            DepartmentName: $('#txtDepartName').val(),
+            Description: $('#txtDescriptionDepartment').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            CreatedBy: $('#hdf').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UpdateDepartment", "Master")',
+            data: Department,
+            success: function (result) {
+                alert(result.Message);
+                window.location.href = '@Url.Action("MasterDepartement", "Master")';
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+</script>

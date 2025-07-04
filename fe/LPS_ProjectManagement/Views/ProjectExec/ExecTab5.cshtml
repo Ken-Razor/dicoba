@@ -1,0 +1,1513 @@
+﻿@model LPS_ProjectManagement.Models.EksekusiModels.EksekusiModel
+
+@{
+    ViewBag.Title = "Input Realisation ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Persn = Session["PersonalNumber"].ToString();
+    string ParStatus = "Due";
+    int tabclick = 0;
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<style type="text/css">
+    body {
+        background-color: #fafafa;
+        font-family: 'Segoe UI' !important;
+        font-size: 14px !important;
+    }
+
+    .container {
+        margin: 150px auto;
+    }
+
+    table {
+        position: relative;
+        margin: 4px 0;
+        border-collapse: collapse;
+        font-family: 'Segoe UI' !important;
+        font-size: 14px !important;
+    }
+
+        table, table th, table td {
+            border: 1px solid black;
+        }
+
+            table th, table td {
+                padding: 0 2em;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                line-height: 22px;
+                height: 22px;
+            }
+
+    a.button {
+        position: relative;
+        display: inline-block;
+        font-family: tahoma, arial, helvetica;
+        font-size: 9pt;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #AAAAAA;
+        padding: 5px;
+        text-decoration: none;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+</style>
+
+<style>
+    a.buttonu {
+        appearance: button;
+        text-decoration: none;
+        padding: 10px;
+        font-size: 12px;
+        font-weight: bold;
+        background: #5DDBB5;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+    }
+
+    .modalu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 99999;
+        opacity: 0;
+        transition: opacity 400ms ease-in;
+        pointer-events: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        min-height: 100vh;
+    }
+
+    .content-modalu {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 50%;
+        height: 60vh;
+    }
+
+    .modalu:target {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modalu h1 {
+        font-size: 42px;
+    }
+
+    .content-modalu a {
+        font-weight: bold;
+    }
+
+    .close {
+        align-self: flex-end;
+        text-decoration: none;
+        color: red;
+    }
+
+    #tab5Content .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+    #tab5Content .active, .collapsible:hover {
+        background-color: #555;
+    }
+
+    #tab5Content .collapsible:after {
+        content: '\002B';
+        color: white;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+    }
+
+    #tab5Content .active:after {
+        content: "\2212";
+    }
+
+    #tab5Content .contentHidden {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #f1f1f1;
+    }
+
+    #tab5Content .table th {
+        text-align: center;
+    }
+</style>
+
+<script type="text/javascript">
+    var ThisLink = "";
+    var obj = @Html.Raw(Json.Encode(Model));
+    var GetDetailKaryawanURl = '@Url.Action("GetDetailEmployeeByPersonNumber", "ManajemenUser")';
+    var ListRoleGroup = obj.rgp;
+    $(
+        function () {
+            $("#stakeholders-table").FullTable({
+                "alwaysCreating": true,
+                "selectable": false,
+                "orderable": true,
+                "filterable": true,
+                "fields": {
+                    "lingkungan": {
+                        "mandatory": true,
+                        "errors": {
+                            "mandatory": "mandatory"
+                        }
+                    },
+                    "jabatan": {
+                        "mandatory": false
+                    },
+                    "nama": {
+                        "mandatory": true,
+                        "errors": {
+                            "mandatory": "mandatory"
+                        }
+                    }
+                }
+            });
+            $("#stakeholders-table-add-row").click(function () {
+                $("#stakeholders-table").FullTable("addRow");
+            });
+            $("#stakeholders-table-get-value").click(function () {
+                console.log($("#stakeholders-table").FullTable("getData"));
+            });
+            $("#stakeholders-table").FullTable("on", "error", function (errors) {
+                for (var error in errors) {
+                    error = errors[error];
+                    console.log(error);
+                }
+            });
+            $("#stakeholders-table").FullTable("draw");
+        }
+    );
+
+    $(
+        function () {
+            $("#milestone-table").FullTable({
+                "alwaysCreating": true,
+                "selectable": false,
+                "orderable": true,
+                "filterable": true,
+                "fields": {
+                    "milestone": {
+                        "mandatory": true,
+                        "errors": {
+                            "mandatory": "mandatory"
+                        }
+                    },
+                    "selesai": {
+                        "type": "date",
+                        "mandatory": false
+                    }
+                }
+            });
+            $("#milestone-table-add-row").click(function () {
+                $("#milestone-table").FullTable("addRow");
+            });
+            $("#milestone-table-get-value").click(function () {
+                console.log($("#milestone-table").FullTable("getData"));
+            });
+            $("#milestone-table").FullTable("on", "error", function (errors) {
+                for (var error in errors) {
+                    error = errors[error];
+                    console.log(error);
+                }
+            });
+            $("#milestone-table").FullTable("draw");
+        }
+    );
+
+    $(
+        function () {
+            $("#sambal-table").FullTable({
+                "alwaysCreating": true,
+                "selectable": false,
+                "orderable": true,
+                "filterable": false,
+                "fields": {
+                    "IDConstraintType": {
+                        "options": [
+                            {
+                                "title": "Internal Koordinasi",
+                                "value": 4
+                            },
+                            {
+                                "title": "Internal Prosess",
+                                "value": 6
+                            },
+                            {
+                                "title": "Internal SDM",
+                                "value": 7
+                            },
+                            {
+                                "title": "Internal Pengadaan",
+                                "value": 8
+                            },
+                            {
+                                "title": "External Koordinasi",
+                                "value": 5
+                            },
+                            {
+                                "title": "External Konsultan",
+                                "value": 9
+                            }
+                        ],
+                        "mandatory": true,
+                        "placeholder": "Select one",
+                        "errors": {
+                            "mandatory": "Constraint field is mandatory"
+                        }
+                    },
+                    "Description": {
+                        "mandatory": true,
+                        "errors": {
+                            "mandatory": "mandatory"
+                        }
+                    },
+                    "Remarks": {
+                        "mandatory": false
+                    },
+                    "Problem": {
+                        "mandatory": false
+                    },
+                    "Mitigasi": {
+                        "mandatory": false
+                    },
+                    "Status": {
+                        "options": [
+                            {
+                                "title": "Ongoing",
+                                "value": "Ongoing"
+                            },
+                            {
+                                "title": "Close",
+                                "value": "Close"
+                            }
+                        ],
+                        "mandatory": true, "placeholder": "Select one",
+                        "errors": {
+                            "mandatory": "Status field is mandatory"
+                        }
+                    }
+                }
+            });
+        });
+
+    var form = $('#__AjaxAntiForgeryForm');
+    var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+
+    $(
+        function () {
+            $("#timeline-table").FullTable({
+                "alwaysCreating": true,
+                "selectable": false,
+                "orderable": true,
+                "filterable": false,
+                "fields": {
+                    "no": {
+                        "mandatory": true,
+                        "errors": {
+                            "mandatory": "mandatory"
+                        }
+                    },
+                    "aktivitas": {
+                        "mandatory": false
+                    },
+                    "durasi": {
+                        "mandatory": false
+                    },
+                    "mulai": {
+                        "mandatory": false
+                    },
+                    "selesai": {
+                        "mandatory": false
+                    }
+                }
+            });
+            $("#timeline-table-add-row").click(function () {
+                $("#timeline-table").FullTable("addRow");
+            });
+            $("#timeline-table-get-value").click(function () {
+                console.log($("#timeline-table").FullTable("getData"));
+            });
+            $("#timeline-table").FullTable("on", "error", function (errors) {
+                for (var error in errors) {
+                    error = errors[error];
+                    console.log(error);
+                }
+            });
+            $("#timeline-table").FullTable("draw");
+        }
+    );
+
+
+    function SetFieldUser(PersNumber) {
+        var GetEmployeeData = {
+            ID: PersNumber
+        };
+
+        $.ajax({
+            url: GetDetailKaryawanURl,
+            type: 'POST',
+            data: {
+                __RequestVerificationToken: token,
+                GetEmployeeData: GetEmployeeData
+            },
+            success: function (result) {
+                var x = result._ListUser;
+                debugger;
+                $("#txtNamaDisable").val(x["Nama"]);
+                $("#txtJabatan").val(x["Posisi"]);
+                var str = x["Email"];
+                var res = str.split("@("@")");
+                $("#txtUsername").val(res[0]);
+
+                $('#btnClose')[0].click();
+                document.getElementById("divAddRole").style.display = "block";
+            }
+        });
+    }
+
+</script>
+
+<style>
+    body {
+        font-family: 'Segoe UI' !important;
+    }
+</style>
+
+<style>
+    /*body {
+        font-family: Arial;
+    }*/
+
+    /* Style the tab */
+    .tabtop {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+        /* Style the buttons inside the tab */
+        .tabtop button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+            /* Change background color of buttons on hover */
+            .tabtop button:hover {
+                background-color: #ddd;
+            }
+
+            /* Create an active/current tablink class */
+            .tabtop button.active {
+                background-color: #ccc;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+</style>
+
+<div class="col-md-12 col-lg-12 col-xl-12 col-xs-12">
+    <div class="content-body">
+        <ul class="wizard">
+            <li class="completed">Step 1 : Initation & Planning</li>
+            <li class="current">Step 2 : Execution</li>
+            <li>Step 3 : Closing</li>
+        </ul>
+        <br />
+        <div class="tab-group">
+
+            <div class="tabtop">
+                <button class="tablinks" onclick="openTab1(event, 'Detail',@Model.IDProjectHeader,'@Model.Keys')">Detail</button>
+                <button class="tablinks" onclick="openTab2(event, 'Approval',@Model.IDProjectHeader,'@Model.Keys')">Approval</button>
+                <button class="tablinks" onclick="openTab3(event, 'ApprovalLog',@Model.IDProjectHeader,'@Model.Keys')">Approval Log</button>
+                <button class="tablinks" onclick="openTab4(event, 'Trend',@Model.IDProjectHeader,'@Model.Keys')">Trend Kendala,Asumsi, dan Resiko</button>
+                <button class="tablinks" onclick="openTab5(event, 'Procurement',@Model.IDProjectHeader,'@Model.Keys', @tabclick)" id="defaultOpen">Status I-Procurement</button>
+                <button class="tablinks" onclick="openTab6(event, 'Laporan',@Model.IDProjectHeader,'@Model.Keys')">Laporan</button>
+            </div>
+
+            <div id="Procurement" class="tabcontent">
+
+                <div id="tab5Content" class="row"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="openmodalu" class="modalu">
+    <div class="content-modalu">
+        <h1>Tambah User</h1>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label class="form-label" for="field-1" style="font-weight : bold;">Nama User</label>
+                    <div class="controls">
+                        <input type="text" placeholder="Ketik disini" class="form-control ng-pristine ng-untouched ng-invalid" name="txtFullName" id="txtFullName" required="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <table id="tblListUserModal" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%">Nama User</th>
+                            <th style="width: 40%">Posisi</th>
+                            <th style="width: 20%">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ListUserBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <a href="#close" title="Close" class="close" id="btnClose">CLOSE</a>
+    </div>
+</div>
+
+<div id="openModalRevise" class="modalu">
+    <div class="content-modalu" style="height:auto">
+        <h1>Alasan Revisi</h1>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <div class="controls">
+                        <textarea class="form-control" name="txtReviseForm" id="txtReviseForm" placeholder="reason"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                &nbsp;
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-4">&nbsp;</div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+                <a href="#close" title="Close" class="close" id="btnClose">CLOSE</a>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+                <a onclick="show_prompt(@Request["ProjectHeaderID"])" title="Submit" class="close" id="btnSubmit" style="color:green">SUBMIT</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function () {
+    //GetMPPData();
+    ThisLink = window.location.href;
+    $('#tblApproval').DataTable({
+        "bLengthChange": false,
+        searching: false
+    });
+
+    $('#tblDocYearly').DataTable({
+        "bLengthChange": false,
+        searching: false
+    });
+    var objL = @Html.Raw(Json.Encode(@Model.ListRKAT));
+    for (var y = 0; y < objL.length; y++) {
+    debugger;
+        var dat = new Object();
+        dat.key = "PasswordIproc";
+        dat.rkat_code = objL[y].IDSAP;
+
+        //Add rivan
+        $.ajax({
+            type: "POST",
+            url: "http://10.10.12.156/iprocdev/api/index.php/v1/Pm_tools",
+            data: dat,
+            success: function (result) {
+                debugger;
+                if (result.status === "success") {
+
+                    var htmlContent = "";
+                    for (var i = 0; i <= result.countDataMain - 1; i++) {
+                        var htmlContent = generateDataIproc(result.resultData[i], i, result.resultData[i].pr_data)
+                        $("#tab5Content").append(htmlContent);
+                        for (var x = 0; x <= result.resultData[i].pr_data.length - 1; x++) {
+                            $('#table' + i + x).DataTable({
+                                "bLengthChange": false,
+                                "searching": false,
+                                "bPaginate": false,
+                                "bInfo": false
+                            });
+                        }
+                    }
+                    var coll = document.getElementsByClassName("collapsible");
+                    var i;
+
+                    for (i = 0; i < coll.length; i++) {
+                        coll[i].addEventListener("click", function () {
+                            this.classList.toggle("active");
+                            var content = this.nextElementSibling;
+                            if (content.style.maxHeight) {
+                                content.style.maxHeight = null;
+                            } else {
+                                content.style.maxHeight = content.scrollHeight + "px";
+                            }
+                        });
+                    }
+                }
+
+            },
+            error: function (errormessage) {
+                debugger;
+            }
+        });
+    }
+
+});
+
+//function load_js(srciptFile) {
+//    var head = document.getElementsByTagName('head')[0];
+//    var script = document.createElement('script');
+//    script.src = srciptFile;
+//    head.appendChild(script);
+//}
+
+function fromatActDate(str) {
+    if (str != null) {
+        return str = str.substr(0, 19);
+    } else {
+        return "-";
+    }
+}
+
+function generateDataIproc(resultData, i, prData) {
+    var htmlTab5Content = "";
+    //if (i == 0) {
+        htmlTab5Content += "<div class='row' style='padding-left: 30px; padding-top: 30px;'>";
+        htmlTab5Content += "<h4>RKAT NAME  : " + resultData.rkat_name + " (" + resultData.rkat_code + ")</h4>";
+        htmlTab5Content += "<h4>RUP NAME  &nbsp;&nbsp;: " + resultData.rup_name + " (" + resultData.rup_code + ")</h4>";
+        htmlTab5Content += "</div>";
+
+    // }
+    htmlTab5Content += "<div class='tab-group form-group has-warning col-md-12'>";
+    for (var x = 0; x <= prData.length - 1; x++) {
+        debugger;
+        if (x == 0 || (prData[x].pr_number != prData[x - 1].pr_number)) {
+            htmlTab5Content += "<div class='row padding-top-10 padding-left-10 padding-right-10'>";
+
+            htmlTab5Content += "<button class='collapsible'>PR NUMBER &nbsp;:&nbsp; " + prData[x].pr_number + " <br> PR NAME &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;" + prData[x].pr_subject_of_work + " <br> METODE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; " + prData[x].metode + "</button>";
+
+            htmlTab5Content += "<div class='contentHidden'>";
+
+            htmlTab5Content += "<div class='row padding-top-5'>";
+            htmlTab5Content += "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
+            htmlTab5Content += "<div class='controls'>";
+            htmlTab5Content += "<table id=table" + i + x + " class='table' style='width:100%;'>";
+            htmlTab5Content += "<thead>";
+            htmlTab5Content += "<tr>";
+            htmlTab5Content += "<th align='center'>No.</th>";
+            htmlTab5Content += "<th>Act. Name</th>";
+            htmlTab5Content += "<th>Status</th>";
+            htmlTab5Content += "<th>Act Date</th>";
+            htmlTab5Content += "</tr>";
+            htmlTab5Content += "</thead>";
+            debugger;
+            var tblPr = prData[x].wkf_activity;
+            var s = 1;
+            for (var y = 0; y <= tblPr.length - 1; y++) {
+                htmlTab5Content += "<tbody>";
+                htmlTab5Content += "<tr>";
+                htmlTab5Content += "<td align='center'>" + s++ + "</td>";
+                htmlTab5Content += "<td>" + tblPr[y].act_name + "</td>";
+                htmlTab5Content += "<td align='center'>" + tblPr[y].act_status + "</td>";
+                htmlTab5Content += "<td align='center'>" + fromatActDate(tblPr[y].act_date) + "</td>";
+
+                htmlTab5Content += "</tr>";
+                htmlTab5Content += "</tbody>";
+            }
+            htmlTab5Content += "</table>";
+            htmlTab5Content += "</div>";
+            htmlTab5Content += "</div>";
+            htmlTab5Content += "</div>";
+            htmlTab5Content += "</div>";
+            htmlTab5Content += "</div>";
+        }
+
+    }
+    //if (i == 0) {
+        htmlTab5Content += "</div>";
+    //}
+    return htmlTab5Content;
+}
+
+
+function DeleteListTableApproval(element) {
+
+    if ($('#tblApproval tr').length = 0) {
+        $('#tblApproval').DataTable().clear();
+    }
+
+    $('#tblApproval').DataTable().destroy();
+
+    var r = confirm("Anda yakin ingin menghapus User ini ?");
+
+    if (r == true) {
+
+        var it = element.parentNode.parentNode.rowIndex;
+
+        document.getElementById("tblApproval").deleteRow(it);
+
+        var table = document.getElementById("tblApproval");
+        var last = table.rows.length - 1;
+
+        for (var x = it; x <= last; x++) {
+            table.rows[x].cells[0].innerHTML = x;
+        }
+
+    }
+
+    $('#tblApproval').DataTable({
+        "bLengthChange": false,
+        searching: false,
+        info: false,
+        "scrollX": true
+    });
+
+    $('#tblRisiko').DataTable({
+        "bLengthChange": false,
+        searching: false,
+        info: false,
+        "scrollX": true
+    });
+
+    $('#tblHistory').DataTable({
+        "bLengthChange": false,
+        searching: false,
+        info: false,
+        "scrollX": true
+    });
+
+
+}
+
+// Calling the plugin
+$('.tab-group').tabify();
+(function ($) {
+    $.fn.extend({
+        donetyping: function (callback, timeout) {
+            timeout = timeout || 1e3; // 1 second default timeout
+            var timeoutReference,
+                doneTyping = function (el) {
+                    if (!timeoutReference) return;
+                    timeoutReference = null;
+                    callback.call(el);
+                };
+            return this.each(function (i, el) {
+                var $el = $(el);
+
+                $el.is(':input') && $el.on('keyup keypress paste', function (e) {
+                    if (e.type === 'keyup' && e.keyCode !== 8) return;
+
+                    if (timeoutReference) clearTimeout(timeoutReference);
+                    timeoutReference = setTimeout(function () {
+                        doneTyping(el);
+                    }, timeout);
+                }).on('blur', function () {
+                    doneTyping(el);
+                });
+            });
+        }
+    });
+})(jQuery);
+
+</script>
+
+<script>
+
+function show_prompt(IDProjectHeader) {
+    var Reason = $('#txtReviseForm').val();
+    ReviseProjectHeader(IDProjectHeader, Reason);
+}
+
+function ReviseProjectHeader(IDProjectHeader, Deskripsi) {
+
+    var url = '@Url.Action("Revise", "MPP")';
+    var ProjectHeader = {
+        IDProjectHeader: IDProjectHeader,
+        ApprovedBy: Deskripsi,
+        CreatedBy: @Session["PersonalNumber"].ToString(),
+        TypeTransaction: '@Request["Keys"]'
+    };
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: ProjectHeader,
+        success: function (result) {
+            if (result.Result === "Success") {
+                debugger;
+                alert(result.Message);
+                //GetDataIFExistSubmit();
+                location.href = '@Url.Action("ProjectExecution", "ProjectExec")';
+                location.href = ThisLink;
+                //location.reload();
+            }
+            else {
+                debugger;
+                alert(result.Message);
+            }
+        }
+    });
+
+}
+
+$('#txtFullName').donetyping(function () {
+    var urlGetDataEmployeeByName = '@Url.Action("GetDataEmployeeByName", "ManajemenUser")';
+    var GetEmployeeData = {
+        ID: $('#txtFullName').val()
+    }
+    $.ajax({
+        url: urlGetDataEmployeeByName,
+        type: 'POST',
+        data: {
+            __RequestVerificationToken: token,
+            GetEmployeeData: GetEmployeeData
+        },
+        success: function (result) {
+            $('#tblListUserModal').DataTable().clear();
+            $('#tblListUserModal').DataTable().destroy();
+
+            var obj = result._search;
+            var html = "";
+            for (var prop in obj) {
+                if (obj.hasOwnProperty(prop)) {
+                    html += "<tr>" +
+                        "<td>" + obj[prop]["nama"] + "</td>" +
+                        "<td>" + obj[prop]["posisi"] + "</td>" +
+                        "<td>" +
+                        "<button type='button' class='btn btn-info btn-corner' id='btnTambah' onclick='SetFieldUser(" + obj[prop]["personalnumber"] + ")'> <i class='fa fa-plus'></i>&nbsp;&nbsp; Pilih</button>" +
+                        "</a>" +
+                        "</td>" +
+                        "</tr>";
+                }
+            }
+            $("#ListUserBody").append(html);
+            $('#tblListUserModal').DataTable({
+                "bLengthChange": false,
+                searching: false,
+                info: false,
+                "pageLength": 4
+            });
+        }
+    });
+});
+
+function AddListTableInitAproval() {
+
+    var tblApproval = $('#tblApproval').DataTable();
+    var dataTblApproval = tblApproval.rows().data();
+    var cekUsername = '';
+    var cekRole = '';
+    var RoleAvailable = 0;
+
+    debugger;
+
+    if ($('#tblApproval tr').length = 0) {
+        $('#tblApproval').DataTable().clear();
+    }
+
+    $('#tblApproval').DataTable().destroy();
+
+    document.getElementById("divAddRole").style.display = "none";
+
+    var objLRG = ListRoleGroup;
+    var RoleName = "";
+    var RoleID = "";
+    var Nama = $("#txtNamaDisable").val();
+    var Username = $("#txtUsername").val();
+    var Jabatan = $("#txtJabatan").val();
+
+    for (x = 0; x < objLRG.length; x++) {
+        var idcb = '#' + objLRG[x].IDRoleGroup;
+        if ($(idcb).is(":checked")) {
+
+            RoleAvailable = 0;
+
+            for (y = 0; y < dataTblApproval.length; y++) {
+
+                cekUsername = dataTblApproval[y][2];
+                cekRole = dataTblApproval[y][1];
+
+                if (cekRole == objLRG[x].IDRoleGroup && cekUsername == Username) {
+                    alert(Nama + ' dengan role ' + objLRG[x].Description + ' sudah tersedia');
+                    RoleAvailable = 1;
+                }
+            }
+
+            if (RoleAvailable == 0) {
+                var table = document.getElementById("tblApproval");
+                var last = table.rows.length;
+                debugger;
+                $('#tblApproval tbody').append('<tr class="ng-scope"><td>' + last +
+                    '</td><td hidden="hidden">' + objLRG[x].IDRoleGroup +
+                    '</td><td hidden="hidden">' + Username + '</td><td>' +
+                    objLRG[x].Description + '</td><td>' + Jabatan + '</td><td>' + Nama +
+                    '</td><td hidden="hidden">-</td>' +
+                    '<td><input type="date" class="form-control" id="'
+                    + Username.replace(".", "")
+                    + '-txtActiveDate" placeholder="Active Date Approval"></td><td><input type="date" class="form-control" id="'
+                    + Username.replace(".", "") + '-'
+                    + objLRG[x].IDRoleGroup
+                    + '-txtEndDate" placeholder="End Date Approval"></td>'
+                    + '<td style="text-align:center"><label class="icheck icheck-success"><input id="' + Username.replace(".", "") + '-' + objLRG[x].IDRoleGroup +
+                    '-chbApproval" type="checkbox" value="" checked=""><i></i></label></td>' +
+                    '<td><button type="button" class="btn btn-danger btn-xs margin-bottom-5 margin-right-5" onclick="DeleteListTableApproval(this)" style="font-size:14px"><span class="fa fa-trash"></span></button></td>' +
+                    '</tr>');
+
+                $(idcb).prop("checked", false);
+            }
+
+        }
+    }
+
+    $('#tblApproval').DataTable({
+        "bLengthChange": false,
+        searching: false,
+        info: false,
+        "scrollX": true
+    });
+
+    $("#txtNamaDisable").val("");
+    $('#txtFullName').val("");
+}
+
+
+$('#uploadMPP').change(function (evt) {
+    GenerateMPP();
+});
+
+function GenerateMPP() {
+    var $file = document.getElementById('uploadMPP'),
+        $formData = new FormData();
+
+    if ($file.files.length > 0) {
+        for (var i = 0; i < $file.files.length; i++) {
+            $formData.append('file-' + i, $file.files[i]);
+        }
+    }
+
+    $.ajax({
+        url: '@Url.Action("GenerateMPP", "MPP")',
+        type: 'POST',
+        data: $formData,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: function (result) {
+
+            var Datas = result.Display.data;
+            var links = result.Display.link;
+
+            gantt.config.scale_unit = "month";
+            gantt.config.date_scale = "%F %Y";
+
+            gantt.config.scale_height = 50;
+
+            gantt.config.subscales = [
+                { unit: "day", step: 1, date: "%j" }
+            ];
+
+            var tasks = {
+                data: Datas,//result,
+                links: links// result.Display.link
+            };
+            gantt.config.columns = [
+                { name: "text", label: "Task name", tree: true, width: 500, resize: true },
+                { name: "durasi", label: "Duration ( Days )", align: "center", width: 100, resize: true },
+                { name: "start_date", label: "Start time", align: "center", width: 100, resize: true},
+                { name: "end_date", label: "End time", align: "center", width: 100, resize: true},
+                { name: "percentcomplate", label: "Completed (%)", align: "center", width:100, resize: true },
+            ];
+
+            gantt.config.layout = {
+                css: "gantt_container",
+                cols: [
+                    {
+                        width: 400,
+                        min_width: 300,
+
+                        // adding horizontal scrollbar to the grid via the scrollX attribute
+                        rows: [
+                            { view: "grid", scrollX: "gridScroll", scrollable: true, scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "gridScroll" }
+                        ]
+                    },
+                    { resizer: true, width: 1 },
+                    {
+                        rows: [
+                            { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "scrollHor" }
+                        ]
+                    },
+                    { view: "scrollbar", id: "scrollVer" }
+                ]
+            };
+
+            gantt.config.work_time = true;
+            //gantt.config.readonly = true;
+            gantt.config.grid_resize = true;
+            gantt.clearAll();
+            gantt.config.open_tree_initially = true;
+            gantt.init("gantt_here");
+            gantt.parse(tasks);
+        }
+    });
+}
+
+function GetMPPData() {
+        var test = '@Url.Action("GetMPPExecution", "ProjectExec", new { ProjectHeaderID = Request["ProjectHeaderID"] +"|"+ Request["Keys"] })'
+        $.ajax({
+        url:  test,
+        type: 'POST',
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: function (result) {
+            var Datas = result.GanttChart;
+            var links = result.GanttChartLink;
+
+                var tasks = {
+                    data: Datas,
+                    links: links
+
+            };
+            gantt.templates.grid_row_class = function (start_date, end_date, item) {
+                if (item.progress == 0) return "red";
+                if (item.progress >= 1) return "green";
+            };
+            gantt.templates.task_row_class = function (start_date, end_date, item) {
+                if (item.progress == 0) return "red";
+                if (item.progress >= 1) return "green";
+            };
+                gantt.config.layout = {
+                    css: "gantt_container",
+                    cols: [
+                        {
+                            width: 400,
+                            min_width: 300,
+
+                            // adding horizontal scrollbar to the grid via the scrollX attribute
+                            rows: [
+                                { view: "grid", scrollX: "gridScroll", scrollable: true, scrollY: "scrollVer" },
+                                { view: "scrollbar", id: "gridScroll" }
+                            ]
+                        },
+                        { resizer: true, width: 1 },
+                        {
+                            rows: [
+                                { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+                                { view: "scrollbar", id: "scrollHor" }
+                            ]
+                        },
+                        { view: "scrollbar", id: "scrollVer" }
+                    ]
+            };
+            gantt.config.columns = [
+                { name: "text", label: "Task name", tree: true, width: 500, resize: true },
+                { name: "durasi", label: "Duration ( Days )", align: "center", width: 100, resize: true },
+                { name: "plant", label: "Planning", align: "center", width: 100, resize: true },
+                {
+                    name: "progress", label: "Progress", width: 80, align: "center",
+                    template: function (item) {
+                        if (item.progress >= 1)
+                            return "Complete";
+                        if (item.progress == 0)
+                            return "Not started";
+                        return Math.round(item.progress * 100) + "%";
+                    }
+                },
+                { name: "start_date", label: "Start time", align: "center", width: 100, resize: true },
+                { name: "end_date", label: "End time", align: "center", width: 100, resize: true }
+
+            ];
+
+            gantt.config.lightbox.sections = [
+                {
+                    name: "progress", height: 22, map_to: "progress", type: "select", options: [
+                        { key: "0", label: "Not started" },
+                        { key: "0.10", label: "10%" },
+                        { key: "0.15", label: "15%" },
+                        { key: "0.20", label: "20%" },
+                        { key: "0.25", label: "25%" },
+                        { key: "0.30", label: "30%" },
+                        { key: "0.35", label: "35%" },
+                        { key: "0.40", label: "40%" },
+                        { key: "0.44", label: "45%" },
+                        { key: "0.50", label: "50%" },
+                        { key: "0.55", label: "55%" },
+                        { key: "0.60", label: "60%" },
+                        { key: "0.65", label: "65%" },
+                        { key: "0.70", label: "70%" },
+                        { key: "0.75", label: "75%" },
+                        { key: "0.80", label: "80%" },
+                        { key: "0.85", label: "85%" },
+                        { key: "0.90", label: "90%" },
+                        { key: "0.95", label: "95%" },
+                        { key: "1", label: "Complete" }
+                        ]
+                    }
+                ];
+                gantt.config.work_time = true;
+                gantt.config.grid_resize = true;
+                gantt.init("gantt_here");
+                gantt.parse(tasks);
+            }
+
+    });
+}
+
+function Save(status) {
+    debugger;
+    //  var json = gantt.serialize();
+    var json = document.getElementById('gantFrame').contentWindow.getGanttData()
+    var contraion = $("#sambal-table").FullTable("getData");
+
+    var firstData = json.data[0];
+
+    var Plan = parseInt(firstData['plant']);
+    var Progress = Math.round(firstData['progress'] * 100);
+    var IsOngoing = contraion.find(x => x.Status === 'Ongoing');
+    if (Plan > Progress) {
+        //alert('Persentasi Plan lebih tinggi dari Persentasi Realisasi')
+        if (IsOngoing === undefined || IsOngoing === null) {
+            alert('Persentasi Realisasi dibawah target, mohon mengisi Kendala , Rencana Aksi , dan Risiko belum di isi')
+        } else {
+            if ($("#tblApproval :input").is(':checked'))
+            {
+                SaveOrSubmit(status)
+            } else {
+                alert('Approver belum di pilih')
+            }
+
+        }
+
+    } else {
+        if ($("#tblApproval :input").is(':checked')) {
+            SaveOrSubmit(status)
+        } else {
+            alert('Approver belum di pilih')
+        }
+    }
+}
+
+function SaveDetail(status, task, MilestoneStatus) {
+
+    var json = document.getElementById('gantFrame').contentWindow.getGanttData()
+    var contraion = $("#sambal-table").FullTable("getData");
+    var firstData = json.data[0];
+    var Plan = parseInt(Math.round(firstData['plant']));
+    var Progress = Math.round(firstData['progress'] * 100);
+    var IsOngoing = contraion.find(x => x.Status === 'Ongoing');
+    SaveOrSubmitDetailMilestone(status, task, MilestoneStatus)
+
+}
+
+function SaveOrSubmit(status) {
+
+    var json = document.getElementById('gantFrame').contentWindow.getGanttData()
+    var contraion = $("#sambal-table").FullTable("getData");
+    var tableApproval = $('#tblApproval').DataTable();
+    var dataApproval = tableApproval.rows().data();
+    var ListProjectInitApprovalRole = [];
+    var ListProjectRoleGroup = [];
+    for (i = 0; i < dataApproval.length; i++) {
+        var rowsApproval = dataApproval[i];
+        var IsEnabled = 0;
+        if ($('#' + rowsApproval[2].replace('.', '') + '-' + String(rowsApproval[1]) + '-chbApproval').is(":checked")) {
+            var IsEnabled = 1;
+        }
+        ListProjectInitApprovalRole.push({
+            Sequence: rowsApproval[0],
+            IDRoleGroup: rowsApproval[1],
+            Username: rowsApproval[2],
+            Periode: '@Request["Keys"]',
+            ActiveDate: $('#' + rowsApproval[2].replace('.', '') + '-txtActiveDate').val(),
+            EndDate: $('#' + rowsApproval[2].replace('.', '') + '-txtEndDate').val(),
+            IsEnabled: IsEnabled
+        });
+        debugger;
+        var str = rowsApproval[1];
+        var array = str.split("|");
+
+        for (j = 0; j < array.length; j++) {
+            ListProjectRoleGroup.push({
+                IDProjectRoleGroup: array[j],
+                Username: rowsApproval[2]
+            });
+        }
+    }
+
+    var tbl = $('#tblApproval tr:has(td)').map(function (i, v) {
+        var $td = $('td', this);
+        return {
+
+            Sequence: $td.eq(0).text(),
+            IDRoleGroup: $td.eq(1).text(),
+            Username: $td.eq(2).text(),
+            Periode: '@Request["Keys"]',
+            ActiveDate: $td.eq(7).find('input').val(),
+            EndDate: $td.eq(8).find('input').val(),
+            IsEnabled: $td.eq(9).find('input[type="checkbox"]:checked').length
+
+        }
+    }).get();
+
+    var type = "blank";
+
+    $.ajax({
+        url: '@Url.Action("InsertRealisasi", "MPP")',
+        type: 'POST',
+        data: {
+            manualData: json.data,
+            ProjectHEaderID: '@Request["ProjectHeaderID"]',
+            type: type,
+            Constrain: contraion,
+            status: status,
+            Keys: '@Request["Keys"]',
+            ListProjectRoleGroup: tbl
+        },
+        success: function (result) {
+            var period = '@Model.Periode';
+            if (status === 'SAVE') {
+                alert('Sukses');
+                @*location.href = '@Url.Action("ProjectExecution", "Proyek")'*@
+                location.reload();
+            } else if (status === 'SUBMIT') {
+                alert('Sukses');
+                @*location.href = '@Url.Action("ProjectExecution", "Proyek")'*@
+                location.reload();
+            } else if (status == 'JUSTIFIKASI') {
+                alert('Sukses');
+                @*location.href = '@Url.Action("ProjectExecution", "Proyek")'*@
+                location.reload();
+            }
+
+        }
+    });
+}
+
+function SaveOrSubmitDetail(status, taskid) {
+    var json = document.getElementById('gantFrame').contentWindow.getGanttData()
+    var contraion = $("#sambal-table").FullTable("getData");
+    var tableApproval = $('#tblApproval').DataTable();
+    var dataApproval = tableApproval.rows().data();
+    var ListProjectInitApprovalRole = [];
+    var ListProjectRoleGroup = [];
+    for (i = 0; i < dataApproval.length; i++) {
+        var rowsApproval = dataApproval[i];
+        var IsEnabled = 0;
+        if ($('#' + rowsApproval[2].replace('.', '') + '-' + String(rowsApproval[1]) + '-chbApproval').is(":checked")) {
+            var IsEnabled = 1;
+        }
+        ListProjectInitApprovalRole.push({
+            Sequence: rowsApproval[0],
+            IDRoleGroup: rowsApproval[1],
+            Username: rowsApproval[2],
+            Periode: '@Request["Keys"]',
+            ActiveDate: $('#' + rowsApproval[2].replace('.', '') + '-txtActiveDate').val(),
+            EndDate: $('#' + rowsApproval[2].replace('.', '') + '-txtEndDate').val(),
+            IsEnabled: IsEnabled
+        });
+        debugger;
+        var str = rowsApproval[1];
+        var array = str.split("|");
+
+        for (j = 0; j < array.length; j++) {
+            ListProjectRoleGroup.push({
+                IDProjectRoleGroup: array[j],
+                Username: rowsApproval[2]
+            });
+        }
+
+    }
+
+    var tbl = $('#tblApproval tr:has(td)').map(function (i, v) {
+        var $td = $('td', this);
+        return {
+
+            Sequence: $td.eq(0).text(),
+            IDRoleGroup: $td.eq(1).text(),
+            Username: $td.eq(2).text(),
+            Periode: '@Request["Keys"]',
+            ActiveDate: $td.eq(7).find('input').val(),
+            EndDate: $td.eq(8).find('input').val(),
+            IsEnabled: $td.eq(9).find('input[type="checkbox"]:checked').length
+
+        }
+    }).get();
+
+    var type = "blank";
+
+    $.ajax({
+        url: '@Url.Action("InsertRealisasi", "MPP")',
+        type: 'POST',
+        data: {
+            manualData: json.data,
+            ProjectHEaderID: '@Request["ProjectHeaderID"]',
+            type: type,
+            Constrain: contraion,
+            status: status,
+            Keys: '@Request["Keys"]',
+            ListProjectRoleGroup: tbl
+        },
+        success: function (result) {
+            var period = '@Model.Periode';
+            if (status === 'SAVE') {
+                alert('Congratulations, you managed to save the realization data in the period of ' + period);
+                @*location.href = '@Url.Action("ProjectExecution", "Proyek")'*@
+                location.reload();
+            } else if (status === 'SUBMIT') {
+                alert('Congratulations, you managed to submit the realization data in the period of ' + period);
+                @*location.href = '@Url.Action("ProjectExecution", "Proyek")'*@
+                location.reload();
+            } else if (status == 'JUSTIFIKASI') {
+                location.href = '@Url.Action("MilestoneDetail", "ProjectExec", new { ProjectHeaderID = Request["ProjectHeaderID"] })' + '&TaskID=' + taskid;
+            }  ;
+            }
+
+
+    });
+}
+
+function SaveOrSubmitDetailMilestone(status, taskid, MilestoneStatus) {
+    var json = document.getElementById('gantFrame').contentWindow.getGanttData()
+    var contraion = $("#sambal-table").FullTable("getData");
+    var tableApproval = $('#tblApproval').DataTable();
+    var dataApproval = tableApproval.rows().data();
+    var ListProjectInitApprovalRole = [];
+    var ListProjectRoleGroup = [];
+    for (i = 0; i < dataApproval.length; i++) {
+        var rowsApproval = dataApproval[i];
+        var IsEnabled = 0;
+        if ($('#' + rowsApproval[2].replace('.', '') + '-' + String(rowsApproval[1]) + '-chbApproval').is(":checked")) {
+            var IsEnabled = 1;
+        }
+        ListProjectInitApprovalRole.push({
+            Sequence: rowsApproval[0],
+            IDRoleGroup: rowsApproval[1],
+            Username: rowsApproval[2],
+            Periode: '@Request["Keys"]',
+            ActiveDate: $('#' + rowsApproval[2].replace('.', '') + '-txtActiveDate').val(),
+            EndDate: $('#' + rowsApproval[2].replace('.', '') + '-txtEndDate').val(),
+            IsEnabled: IsEnabled
+        });
+        debugger;
+        var str = rowsApproval[1];
+        var array = str.split("|");
+
+        for (j = 0; j < array.length; j++) {
+            ListProjectRoleGroup.push({
+                IDProjectRoleGroup: array[j],
+                Username: rowsApproval[2]
+            });
+        }
+
+    }
+
+    var type = "blank";
+
+    $.ajax({
+        url: '@Url.Action("InsertRealisasi", "MPP")',
+        type: 'POST',
+        data: {
+            manualData: json.data,
+            ProjectHEaderID: '@Request["ProjectHeaderID"]',
+            type: type,
+            Constrain: contraion,
+            status: status,
+            Keys: '@Request["Keys"]',
+            ListProjectRoleGroup: ListProjectInitApprovalRole
+        },
+        success: function (result) {
+            var period = '@Model.Periode';
+            if (status == 'SAVE') {
+                location.href = '@Url.Action("MilestoneDetail", "ProjectExec", new { ProjectHeaderID = Request["ProjectHeaderID"] })' + '&TaskID=' + taskid + '&MilestoneStatus=' + MilestoneStatus;
+            }  ;
+            }
+
+
+    });
+}
+
+function Approve() {
+    var r = confirm("Anda yakin ingin Approve project ini ?");
+    if (r == true) {
+        $.ajax({
+            url: '@Url.Action("Approve", "MPP" )' + '?IDProjectHeader=@Request["ProjectHeaderID"]&Keys=@Request["Keys"]',
+            type: 'POST',
+            success: function (result) {
+                alert('Sukses');
+                @*location.href = '@Url.Action("ProjectExecution", "Proyek")'*@
+                location.reload();
+            }
+        });
+    }
+}
+
+</script>
+
+<script>
+
+function Upload() {
+
+    var $file = document.getElementById('uploadLaporanTahunan'), $formData = new FormData();
+
+    if ($file.files.length > 0) {
+        for (var i = 0; i < $file.files.length; i++) {
+            $formData.append('file-' + i, $file.files[i]);
+        }
+    }
+
+    $.ajax({
+        url: '@Url.Action("UploadFile", "Upload", new { ProjHead = Request["ProjectHeaderID"]+"|6|2" + "|0" })',
+            type: 'POST',
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                //Upload progress
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        //Do something with upload progress
+                        console.log(percentComplete);
+                    }
+                }, false);
+
+                return xhr;
+            },
+            beforeSend: function () {
+                $(".ll").show();
+            },
+            complete: function () {
+                $(".ll").hide();
+            },
+                data: $formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+            success: function (result) {
+                if (result == "OK") {
+                    debugger;
+                    location.reload();
+                } else {
+                    alert("Error Upload Data");
+                }
+            }
+        });
+}
+
+function deletefile(id) {
+    var data = '@Url.Action("Delete", "MPP", new { ProjectHeaderID = Request["ProjectHeaderID"] + "|0|"})' + id;
+    $.ajax({
+        url: data,
+        type: 'GET',
+        contentType: false,
+        processData: false
+    });
+    location.reload();
+}
+
+</script>
+
+@*add by yr*@
+<script>
+    $(document).ready(function () {
+        $(document).on('click', ".btn", function (e) {
+            e.preventDefault();
+            id = $(this).attr('id')
+            if (id == 'btnApprove') {
+                document.getElementById("btnApprove").disabled = true;
+            }
+        });
+    });
+</script>
+
+<script>
+    function openTab5(evt, tabName, id, prd, tabclick) {
+        var i, tabcontent, tablinks;
+        if (tabclick == 0) {
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            tabclick = 1;
+        } else {
+            document.getElementById("defaultOpen").click();
+        }
+    }
+    function openTab1(evt, tabName, id, prd) {
+        location.href = "@Url.Action("ExecTab1", "ProjectExec")" + "?ProjectHeaderID=" + id + "&Keys=" + prd;
+    }
+    function openTab2(evt, tabName, id, prd) {
+        location.href = "@Url.Action("ExecTab2", "ProjectExec")" + "?ProjectHeaderID=" + id + "&Keys=" + prd;
+    }
+    function openTab3(evt, tabName, id, prd) {
+        location.href = "@Url.Action("ExecTab3", "ProjectExec")" + "?ProjectHeaderID=" + id + "&Keys=" + prd;
+    }
+    function openTab4(evt, tabName, id, prd) {
+        location.href = "@Url.Action("ExecTab5", "ProjectExec")" + "?ProjectHeaderID=" + id + "&Keys=" + prd;
+    }
+    function openTab6(evt, tabName, id, prd) {
+        location.href = "@Url.Action("ExecTab6", "ProjectExec")" + "?ProjectHeaderID=" + id + "&Keys=" + prd;
+    }
+    document.getElementById("defaultOpen").click();
+</script>
+
+
+
+

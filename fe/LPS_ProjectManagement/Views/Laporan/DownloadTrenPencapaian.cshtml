@@ -1,0 +1,75 @@
+﻿@model List<LPS_ProjectManagement.Models.ReportModels.TrenPencapaianModel>
+
+@{
+    Layout = null;
+}
+
+
+<table id="dataTable">
+    <tr>
+        <td></td>
+    </tr>
+    <tr>
+        <th></th>
+        <th style="background-color:darkgray">No.</th>
+        <th style="background-color:darkgray">Tren Pencapaian</th>
+        <th style="background-color:darkgray">Transformasi</th>
+        <th style="background-color:darkgray">Non Transformasi</th>
+    </tr>
+    @foreach (var data in Model)
+    {
+        if (data.Point == 7 || data.Point == 14 || data.Point == 19 || data.Point == 22)
+        {
+            <tr>
+                <td></td>
+                <td style="background-color:yellow">@data.NoUrut</td>
+                <td style="background-color:yellow">@data.Keterangan</td>
+                <td style="background-color:yellow">@data.TrenPencapaianTrans</td>
+                <td style="background-color:yellow">@data.TrenPencapaianNonTrans</td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td></td>
+                <td>@data.NoUrut</td>
+                <td>@data.Keterangan</td>
+                <td>@data.TrenPencapaianTrans</td>
+                <td>@data.TrenPencapaianNonTrans</td>
+            </tr>
+        }
+    }
+
+</table>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function ($) {
+
+        tableToExcel('dataTable', 'Sheet 1');
+        setTimeout(function () {
+            self.close();
+        }, 500);
+    });
+
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            //window.location.href = uri + base64(format(template, ctx))
+
+            var link = document.createElement("a");
+            link.download = "Report-Tren-Pencapaian.xls";
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+
+        }
+    })();
+
+</script>

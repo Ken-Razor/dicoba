@@ -1,0 +1,272 @@
+﻿@{
+    ViewBag.Title = "Laporan GPTF";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using LPS_ProjectManagement.Helper;
+
+<style>
+    td.whitespace {
+        white-space: pre;
+    }
+    .circle {
+        border-radius: 50%;
+        width: 5px;
+        height: 5px;
+        margin: auto;
+        padding: 5px;
+        /* width and height can be anything, as long as they're equal */
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <section class="box">
+            <div class="content-body padding-15" style=" max-height: none; overflow: auto;">
+
+                <div class="row padding-top-10">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-1"><i class="material-icons pull-right" style="color:blue">brightness_1</i></div>
+                        <div class="col-md-2"><label>Pencapaian di atas target <br />( >= 110% )</label></div>
+                        <div class="col-md-1"><i class="material-icons pull-right" style="color:green">brightness_1</i></div>
+                        <div class="col-md-2"><label>Pencapaian sesuai target <br />( >= 100% dan < 110%)</label></div>
+                        <div class="col-md-1"><i class="material-icons pull-right" style="color:yellow">brightness_1 </i></div>
+                        <div class="col-md-2"><label>Pencapaian sedikit di bawah target <br />(  >= 85% dan < 100% )</label></div>
+                        <div class="col-md-1"><i class="material-icons pull-right" style="color:red">brightness_1 </i></div>
+                        <div class="col-md-2"><label>Pencapaian jauh di bawah target <br />( < 85% )</label></div>
+                    </div>
+
+                </div>
+
+                <div class="row padding-15">
+                    <div class="col-md-2 padding-top-30">
+                        <h4>Year</h4>
+                        <select id="ddlYear" class="form-control ddlYear" style="width:100%;" onchange="OnOnchangeDdlYear(@DateTime.Now.Year, @DateTime.Now.Month)">
+                            @for (int year = Convert.ToInt32(DateTime.Now.Year.ToString()) - 10; year <= Convert.ToInt32(DateTime.Now.Year.ToString()); year++)
+                            {
+                                if (Convert.ToInt32(DateTime.Now.Year.ToString()) == year)
+                                {
+                                    <option value=@year selected="selected">@year</option>
+                                }
+                                else
+                                {
+                                    <option value=@year>@year</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 padding-top-30">
+                        <h4>Month</h4>
+                        <select id="ddlMonth" class="form-control ddlMonth" style="width:100%">
+                            @{ var ListMonth = GlobalHelper.ListDropDowMonth(); }
+
+                            @for (int i = 0; i < 12; i++)
+                            {
+                                if (ListMonth[i].Month == DateTime.Now.Month)
+                                {
+                                    <option value="@ListMonth[i].Month" selected="selected">@ListMonth[i].Description</option>
+                                    i = 12;
+                                }
+                                else
+                                {
+                                    <option value="@ListMonth[i].Month">@ListMonth[i].Description</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-4" style="text-align:left;padding-top:50px">
+                        &nbsp;
+                        <button class="btn btn-success" onclick="Search()"><i class="fa fa-search"></i> Search</button>
+                        &nbsp;
+                        <button class="btn btn-success" onclick="DownloadExcel()"><i class="fa fa-download"></i> Download</button>
+                    </div>
+
+                </div>
+
+                <div class="row padding-15 padding-right-15">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <table id="tblListLaporanGptf" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center; white-space:nowrap">Kode Proyek</th>
+                                    <th style="text-align:center; white-space:nowrap">Nama Proyek</th>
+                                    <th style="text-align:center; white-space:nowrap">Waktu</th>
+                                    <th style="text-align:center; white-space:nowrap">Rencana Pelaksanaan Proyek</th>
+                                    <th style="text-align:center; white-space:nowrap">Target (%)</th>
+                                    <th style="text-align:center; white-space:nowrap">Realisasi (%)</th>
+                                    <th style="text-align:center; white-space:nowrap">Status Capaian Bulanan (%)</th>
+                                    <th style="text-align:center; white-space:nowrap;width:25%">Target Bulanan</th>
+                                    <th style="text-align:center; white-space:nowrap;width:25%">Realisasi Bulanan</th>
+                                    <th style="text-align:center; white-space:nowrap">Kendala</th>
+                                    <th style="text-align:center; white-space:nowrap;width:25%">Status Capaian</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#tblListLaporanGptf').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            "scrollX": true,
+            info: false,
+            "paging": false
+        });
+
+        $('.ddlYear').select2({
+            placeholder: 'Pilih Tahun'
+        });
+
+        $('.ddlMonth').select2({
+            placeholder: 'Pilih Bulan'
+        });
+
+    });
+
+    function Search() {
+
+        data = {
+            Year: $('#ddlYear').val(),
+            Month: $('#ddlMonth').val()
+        }
+
+        $.ajax({
+            url: '@Url.Action("LaporanGptfSearch", "Laporan")',
+            data: data,
+            success: function (result) {
+                debugger;
+
+                if (result.Result === "Success") {
+
+                    $('#tblListLaporanGptf').DataTable().destroy();
+
+                    $('#tblListLaporanGptf').DataTable({
+                        "bLengthChange": false,
+                        "autoWidth": false,
+                        searching: true,
+                        "scrollX": true,
+                        info: false,
+                        data: result.Data,
+                        "paging": true,
+                        //sScrollX: "100%",
+                        //"aoColumns": [
+                        //    { "sWidth": null }, 
+                        //    { "sWidth": "30%" }, 
+                        //    { "sWidth": null },
+                        //    { "sWidth": null },
+                        //    { "sWidth": null },
+                        //    { "sWidth": null },
+                        //    { "sWidth": null },
+                        //    { "sWidth": null },
+                        //    { "sWidth": null },
+                        //    { "sWidth": null },
+                        //    { "sWidth": null },
+                        //],
+                        "columns": [
+                            {
+                                "data": "ProjectNo",
+                                "className": "text-left"
+                            },
+                            {
+                                "data": "ProjectName",
+                                "className": "text-left text-top whitespace"
+                            },
+                            {
+                                "data": "Waktu",
+                                "className": "text-left whitespace"
+                            },
+                            {
+                                "data": "Approach",
+                                "className": "text-left"
+                            },
+                            {
+                                "data": "PlanPercentage",
+                                "className": "text-center"
+                            },
+                            {
+                                "data": "CompletePercentage",
+                                "className": "text-center",
+                            },
+                            {
+                                "data": "Capaian",
+                                "className": "text-center",
+                            },
+                            {
+                                "data": "TargetBulanan",
+                                "className": "text-left whitespace",
+                            },
+                            {
+                                "data": "RealisasiBulanan",
+                                "className": "text-left whitespace",
+                            },
+                            {
+                                "data": "Kendala",
+                                "className": "text-left whitespace",
+                            },
+                            {
+                                "data": "Status",
+                                "className": "text-center",
+                            },
+                        ]
+                    });
+
+                } else {
+                    alert(result.Message);
+                }
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                debugger;
+                    alert(xhr.status);
+                    alert(thrownError);
+            }
+        });
+    }
+
+    function DownloadExcel() {
+        window.open('@Url.Action("ExportLaporanGptfExcel", "Laporan")' + '?Year=' + $('#ddlYear').val() + '&Month=' + $('#ddlMonth').val());
+    }
+
+    function OnOnchangeDdlYear(CurrentYear, CurrentMonth) {
+
+        var ListMonth = @Html.Raw(Json.Encode(GlobalHelper.ListDropDowMonth()));
+
+        debugger;
+
+        var Year = $('#ddlYear').val();
+        var select = document.getElementById("ddlMonth");
+
+        select.innerHTML = "";
+
+        if (Year == CurrentYear) {
+            for (var i = 0; i < 12; i++) {
+                if (ListMonth[i].Month == CurrentMonth) {
+                    select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+                    i = 12;
+                }
+                else {
+                    select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+                }
+            }
+        } else {
+            for (var i = 0; i < 12; i++) {
+                select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+            }
+        }
+
+    }
+
+</script>

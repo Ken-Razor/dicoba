@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "MPPTest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MPPTest</h2>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Daftar Akun Terdaftar</h2>
+            <div class="actions panel_actions pull-right">
+                <i class="box_toggle material-icons">expand_more</i>
+                <i class="box_close material-icons">close</i>
+            </div>
+        </header>
+        <div class="content-body padding-top-45">
+            <div class="row">
+                <div id="gantt_here"></div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+    gantt.init("gantt_here");
+    gantt.parse(tasks);
+
+
+</script>

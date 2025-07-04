@@ -1,0 +1,81 @@
+﻿@model LPS_ProjectManagement.Models.ReportModels.LaporanPencapaian
+@using LPS_ProjectManagement.Helper;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LaporanProgramPrintint</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <div>
+        <table id="tblPencapaianTrans">
+            <thead>
+                <tr>
+                    <th>Strategic Objective</th>
+                    <th>Anggaran (Rp.Juta)</th>
+                    <th>Status</th>
+                    <th>Pencapaian (%)</th>
+                    <th>Realisasi Anggaran (%)</th>
+                    <th>Real + Komit (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Trans.Count > 0)
+                {
+                    foreach (var item in Model.Trans)
+                    {
+                        string str = "";
+                        if (item.Status != null)
+                        {
+                            str = item.Status.Remove(0, 19).Remove(item.Status.Remove(0, 19).Length - 7);
+                        }
+                        <tr>
+                            <td style="text-align:left !important;">@item.NamaProgram</td>
+                            <td>@item.TotalAnggaran</td>
+                            <td @Html.Raw(str)></td>
+                            <td>@item.RataPencapain</td>               >
+                            <td>@item.Realisasi</td>
+                            <td>@item.Realkomit</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        jQuery(document).ready(function ($) {
+
+            tableToExcel('tblPencapaianTrans', 'Sheet 1');
+            setTimeout(function () {
+                self.close();
+            }, 500);
+        });
+
+        var tableToExcel = (function () {
+            var uri = 'data:application/vnd.ms-excel;base64,'
+                , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+                , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+                , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+            return function (table, name) {
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+                //window.location.href = uri + base64(format(template, ctx))
+
+                var link = document.createElement("a");
+                link.download = "Report-CapaianProgram.xls";
+                link.href = uri + base64(format(template, ctx));
+                link.click();
+            }
+        })();
+
+    </script>
+</body>
+</html>

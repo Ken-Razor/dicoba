@@ -1,0 +1,614 @@
+﻿
+@model LPS_ProjectManagement.Models.PJSModels.PJSModel
+@using LPS_ProjectManagement.Models;
+
+@{
+    ViewBag.Title = "PJSDetil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    RoleProject[] RoleAplikasi = (RoleProject[])Session["Roles"];
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
+@using LPS_ProjectManagement.Helper;
+
+<style>
+
+    a.buttonu {
+        appearance: button;
+        text-decoration: none;
+        padding: 10px;
+        font-size: 12px;
+        font-weight: bold;
+        background: #5DDBB5;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+    }
+
+    .modalu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 99999;
+        opacity: 0;
+        transition: opacity 400ms ease-in;
+        pointer-events: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        min-height: 100vh;
+    }
+
+    .content-modalu {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 50%;
+        height: 60vh;
+    }
+
+    .modalu:target {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modalu h1 {
+        font-size: 42px;
+    }
+
+    .content-modalu a {
+        font-weight: bold;
+    }
+
+    .close {
+        align-self: flex-end;
+        text-decoration: none;
+        color: red;
+    }
+</style>
+
+<script>
+
+    (function ($) {
+        $.fn.extend({
+            donetyping: function (callback, timeout) {
+                timeout = timeout || 1e3; // 1 second default timeout
+                var timeoutReference,
+                    doneTyping = function (el) {
+                        if (!timeoutReference) return;
+                        timeoutReference = null;
+                        callback.call(el);
+                    };
+                return this.each(function (i, el) {
+                    var $el = $(el);
+
+                    $el.is(':input') && $el.on('keyup keypress paste', function (e) {
+                        if (e.type === 'keyup' && e.keyCode !== 8) return;
+
+                        if (timeoutReference) clearTimeout(timeoutReference);
+                        timeoutReference = setTimeout(function () {
+                            doneTyping(el);
+                        }, timeout);
+                    }).on('blur', function () {
+                        doneTyping(el);
+                    });
+                });
+            }
+        });
+    })(jQuery);
+
+    var form = $('#__AjaxAntiForgeryForm');
+    var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+    var urlGetDataEmployeeByName = '@Url.Action("GetDataEmployeeByName", "ManajemenUser")';
+    var GetDetailKaryawanURl = '@Url.Action("GetDetailEmployeeByPersonNumber", "ManajemenUser")';
+
+</script>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <input id="hdf" type="hidden" value="@Session["PersonalNumber"].ToString()" />
+    <input id="txtIdRoleGroup" type="hidden" value="@Model.IDRoleGroup" />
+    <input id="txtID" type="hidden" value="@Model.ID" />
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Detail PJS</h2>
+        </header>
+        <div class="content-body padding-top-45">
+
+            <div class="row">
+
+                <div class="col-md-6 col-sm-6 col-xs-12 padding-left-0 padding-right-0">
+                    @if (Model.ExistingUsername == null)
+                    {
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <a href="#openmodalu" class="buttonu"><i class="fa fa-search"></i>&nbsp; Cari User</a>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="form-label" style="font-weight : bold;">Nama</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.ExistingName == null)
+                                    {
+                                        <input id="txtExistingName" type="text" class="form-control" placeholder="Name" disabled="disabled" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtExistingName" type="text" class="form-control" placeholder="Name" disabled="disabled" value="@Model.ExistingName" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="form-label" style="font-weight : bold;">Personal Number</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.ExistingPersonalNumber == null)
+                                    {
+                                        <input id="txtExistingPersonalNumber" type="text" class="form-control" placeholder="Personal Number" disabled="disabled" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtExistingPersonalNumber" type="text" class="form-control" placeholder="Personal Number" disabled="disabled" value="@Model.ExistingPersonalNumber" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="form-label" style="font-weight : bold;">Posisi</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.ExistingPositionCode == null)
+                                    {
+                                        <input id="txtExistingPositionCode" type="text" class="form-control" placeholder="Position Code" disabled="disabled" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtExistingPositionCode" type="text" class="form-control" placeholder="Position Code" disabled="disabled" value="@Model.ExistingPositionCode" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="form-label" style="font-weight : bold;">Username</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.ExistingUsername == null)
+                                    {
+                                        <input id="txtExistingUsername" type="text" class="form-control" placeholder="Username" disabled="disabled" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtExistingUsername" type="text" class="form-control" placeholder="Username" disabled="disabled" value="@Model.ExistingUsername" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-12 padding-left-0 padding-right-0">
+                    @if (Model.PJSUsername == null)
+                    {
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <a href="#openmodaluPJS" class="buttonu"><i class="fa fa-search"></i>&nbsp; Cari Pengganti</a>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="form-label" style="font-weight : bold;">Nama PJS</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.PJSName == null)
+                                    {
+                                        <input id="txtPJSName" type="text" class="form-control" placeholder="PJS Name" disabled="disabled" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtPJSName" type="text" class="form-control" placeholder="PJS Name" disabled="disabled" value="@Model.PJSName" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="form-label" style="font-weight : bold;">Personal Number PJS</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.PJSPersonalNumber == null)
+                                    {
+                                        <input id="txtPJSPersonalNumber" type="text" class="form-control" placeholder="PJS Personal Number" disabled="disabled" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtPJSPersonalNumber" type="text" class="form-control" placeholder="PJS Personal Number" disabled="disabled" value="@Model.PJSPersonalNumber" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="form-label" style="font-weight : bold;">Kode Posisi PJS</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.PJSPositionCode == null)
+                                    {
+                                        <input id="txtPJSPositionCode" type="text" class="form-control" placeholder="PJS Position Code" disabled="disabled" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtPJSPositionCode" type="text" class="form-control" placeholder="PJS Position Code" disabled="disabled" value="@Model.PJSPositionCode" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="form-label" style="font-weight : bold;">Username PJS</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.PJSUsername == null)
+                                    {
+                                        <input id="txtPJSUsername" type="text" class="form-control" placeholder="PJS Username" disabled="disabled" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtPJSUsername" type="text" class="form-control" placeholder="PJS Username" disabled="disabled" value="@Model.PJSUsername" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="form-label" style="font-weight : bold;">Tanggal Mulai</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.StartDate == null || Model.StartDate.ToString("yyyy-MM-dd") == "0001-01-01")
+                                    {
+                                        <input id="txtStartDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtStartDate" type="date" class="form-control" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="form-label" style="font-weight : bold;">Tanggal Selesai</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.EndDate == null || Model.EndDate.ToString("yyyy-MM-dd") == "0001-01-01")
+                                    {
+                                        <input id="txtEndDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtEndDate" type="date" class="form-control" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="form-label" style="font-weight : bold;">Note</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.Note == null )
+                                    {
+                                        <input id="txtNote" type="text" class="form-control" value="" style="text-wrap" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtNote" type="text" class="form-control" value="@Model.Note" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <br />
+
+            <div class="row">
+                @if (Model.ID == "0" || Model.ID == null)
+                {
+                    <button class="btn btn-success" onclick="insert()">Tambah PJS</button>
+                }
+                else
+                {
+                    <button class="btn btn-success" onclick="update()"> Update</button>
+                }
+                <button class="btn btn-default" onclick="location.href='@Url.Action("PJS","PJS")';"> Back To List</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="openmodalu" class="modalu">
+    <div class="content-modalu" style="height:auto">
+        <h1>Cari User</h1>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label class="form-label" for="field-1" style="font-weight : bold;">Nama User</label>
+                    <div class="controls">
+                        <input type="text" placeholder="Ketik disini" class="form-control ng-pristine ng-untouched ng-invalid" name="txtFullNameUser" id="txtFullNameUser" required="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <table id="tblListUserModal" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%">Nama User</th>
+                            <th style="width: 40%">Posisi</th>
+                            <th style="width: 20%">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ListUserBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <a href="#close" title="Close" class="close" id="btnClose">CLOSE</a>
+    </div>
+</div>
+
+<div id="openmodaluPJS" class="modalu">
+    <div class="content-modalu" style="height:auto">
+        <h1>Cari User</h1>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label class="form-label" for="field-1" style="font-weight : bold;">Nama User</label>
+                    <div class="controls">
+                        <input type="text" placeholder="Ketik disini" class="form-control ng-pristine ng-untouched ng-invalid" name="txtFullNamePJS" id="txtFullNamePJS" required="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <table id="tblListUserModalPJS" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%">Nama User</th>
+                            <th style="width: 40%">Posisi</th>
+                            <th style="width: 20%">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ListUserBodyPJS"></tbody>
+                </table>
+            </div>
+        </div>
+        <a href="#close" title="Close" class="close" id="btnClose">CLOSE</a>
+    </div>
+</div>
+
+<script>
+    var obj = @Html.Raw(Json.Encode(Model));
+    var Description = obj.Description;
+
+    $(document).ready(function () {
+        $('.ddlDirektorat').select2({
+            placeholder: 'Pilih Direktorat',
+            selectOnClose: true
+        });
+
+        $('#tblListUserModal').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "pageLength": 4,
+            destroy: true
+        });
+
+        $('#txtFullNameUser').donetyping(function () {
+            debugger;
+            var GetEmployeeData = {
+                ID: $('#txtFullNameUser').val()
+            }
+            $.ajax({
+                url: urlGetDataEmployeeByName,
+                type: 'POST',
+                data: {
+                    __RequestVerificationToken: token,
+                    GetEmployeeData: GetEmployeeData
+                },
+                success: function (result) {
+                    debugger;
+                    $('#tblListUserModal').DataTable().clear();
+                    $('#tblListUserModal').DataTable().destroy();
+
+                    var obj = result._search;
+                    var html = "";
+                    for (var prop in obj) {
+                        if (obj.hasOwnProperty(prop)) {
+                            html += "<tr>" +
+                                "<td>" + obj[prop]["nama"] + "</td>" +
+                                "<td>" + obj[prop]["posisi"] + "</td>" +
+                                "<td>" +
+                                "<button type='button' class='btn btn-info btn-corner' id='btnTambah' onclick='SetFieldUser(" + obj[prop]["personalnumber"] + ")'> <i class='fa fa-plus'></i>&nbsp;&nbsp; Pilih</button>" +
+                                "</a>" +
+                                "</td>" +
+                                "</tr>";
+                        }
+                    }
+                    $("#ListUserBody").append(html);
+                    $('#tblListUserModal').DataTable({
+                        "bLengthChange": false,
+                        searching: false,
+                        info: false,
+                        "pageLength": 4,
+                        destroy: true
+                    });
+                }
+            });
+        });
+
+        $('#txtFullNamePJS').donetyping(function () {
+            debugger;
+            var GetEmployeeData = {
+                ID: $('#txtFullNamePJS').val()
+            }
+            $.ajax({
+                url: urlGetDataEmployeeByName,
+                type: 'POST',
+                data: {
+                    __RequestVerificationToken: token,
+                    GetEmployeeData: GetEmployeeData
+                },
+                success: function (result) {
+                    debugger;
+                    $('#tblListUserModalPJS').DataTable().clear();
+                    $('#tblListUserModalPJS').DataTable().destroy();
+
+                    var obj = result._search;
+                    var html = "";
+                    for (var prop in obj) {
+                        if (obj.hasOwnProperty(prop)) {
+                            html += "<tr>" +
+                                "<td>" + obj[prop]["nama"] + "</td>" +
+                                "<td>" + obj[prop]["posisi"] + "</td>" +
+                                "<td>" +
+                                "<button type='button' class='btn btn-info btn-corner' id='btnTambah' onclick='SetFieldUserPJS(" + obj[prop]["personalnumber"] + ")'> <i class='fa fa-plus'></i>&nbsp;&nbsp; Pilih</button>" +
+                                "</a>" +
+                                "</td>" +
+                                "</tr>";
+                        }
+                    }
+                    $("#ListUserBodyPJS").append(html);
+                    $('#tblListUserModalPJS').DataTable({
+                        "bLengthChange": false,
+                        searching: false,
+                        info: false,
+                        "pageLength": 4,
+                        destroy: true
+                    });
+                }
+            });
+        });
+
+    });
+
+    function insert() {
+
+        debugger;
+
+        var PJSModel = {
+            ID: $('#txtID').val(),
+            ExistingUsername: $('#txtExistingUsername').val(),
+            PJSUsername: $('#txtPJSUsername').val(),
+            StartDate: $('#txtStartDate').val(),
+            EndDate: $('#txtEndDate').val(),
+            Note: $('#txtNote').val(),
+            PersonalNumber: $('#hdf').val(),
+            TypeTransaction: "Insert"
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("PJSInsert", "PJS")',
+            data: PJSModel,
+            success: function (result) {
+                if (result.Result == "Success") {
+                    alert(result.Message);
+                    window.location.href = '@Url.Action("PJS", "PJS")';
+                }
+                else {
+                    alert(result.Message);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            }
+        });
+    }
+
+    function update() {
+
+        debugger;
+
+        var PJSModel = {
+            ID: $('#txtID').val(),
+            ExistingUsername: $('#txtExistingUsername').val(),
+            PJSUsername: $('#txtPJSUsername').val(),
+            StartDate: $('#txtStartDate').val(),
+            EndDate: $('#txtEndDate').val(),
+            Note: $('#txtNote').val(),
+            PersonalNumber: $('#hdf').val(),
+            TypeTransaction: "Update"
+        };
+        
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("PJSInsert", "PJS")',
+            data: PJSModel,
+            success: function (result) {
+                if (result.Result == "Success") {
+                    alert(result.Message);
+                    window.location.href = '@Url.Action("PJS", "PJS")';
+                }
+                else {
+                    alert(result.Message);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            }
+        });
+    }
+
+</script>
+
+<script src="~/Scripts/Views/PJS/PJSDetil.js"></script>

@@ -1,0 +1,298 @@
+﻿@model LPS_ProjectManagement.Models.ReportModels.PDFLaporanBulananModel
+
+@using System.Data;
+@using System.Configuration;
+@{
+    Layout = null;
+    int pointProgram = 0;
+    string Program = "";
+    int pointProject = 0;
+    string Project = "";
+}
+
+<link href="~/Content/bootstrapmp.min.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+<style>
+
+    .circleBlue {
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        background: blue;
+    }
+
+    .circleRed {
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        background: red;
+    }
+
+    .circleGreen {
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        background: green;
+    }
+
+    .circleYellow {
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        background: yellow;
+    }
+</style>
+
+<style>
+
+    /*thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-row-group
+    }
+
+    tr {
+        page-break-inside: avoid;
+    }*/
+
+</style>
+
+<style>
+
+    /*thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-row-group
+    }
+
+    tr {
+        page-break-inside: avoid;
+    }*/
+
+</style>
+
+<table style="width:100%;" id="tableData">
+
+    <tr>
+        <td colspan="10"></td>
+    </tr>
+
+    <tr>
+        <td colspan="10"></td>
+    </tr>
+
+    <tr>
+        <td colspan="10" style="text-align:center; font-size:14px;">
+            <b>
+                @if (Model.HeaderReport.IsTransformasi.ToString() == "Non Transformasi")
+                {
+                    <b>
+                        LAMPIRAN 1 <br />
+                        EVALUASI CAPAIAN PROYEK NON TRANSFORMASI BULAN @Model.HeaderReport.Bulan.ToString().ToUpper() @Model.HeaderReport.Year.ToString()<br />
+                        (PER KPI)
+                    </b>
+                }
+                else if (Model.HeaderReport.IsTransformasi.ToString() == "Transformasi")
+                {
+                    <b>
+                        LAMPIRAN 2 <br />
+                        EVALUASI CAPAIAN PROYEK TRANSFORMASI BULAN @Model.HeaderReport.Bulan.ToString().ToUpper() @Model.HeaderReport.Year.ToString()<br />
+                        (PER KPI)
+                    </b>
+                }
+                else
+                {
+                    <b>
+                        DAFTAR PROYEK DAN KEGIATAN LEMBAGA TAHUN @Model.HeaderReport.Year.ToString() <br />
+                        (PER KPI)
+                    </b>
+                }
+            </b>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="background-color:#86f442; font-size:14px;">
+            Proyek Non Transformasi (Lampiran 1)
+        </td>
+        <td colspan="6"></td>
+        <td colspan="3" style="text-align:left;">
+            Pencapaian di atas target (>110%)
+        </td>
+    </tr>
+
+    <tr>
+        <td style="background-color:yellow; font-size:14px;">
+            Proyek Transformasi (Lampiran 2)
+        </td>
+        <td colspan="6"></td>
+        <td colspan="3" style="text-align:left;">
+            Pencapaian sesuai target (100%-109%)
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="7"></td>
+        <td colspan="3">
+            Pencapaian sedikit di bawah target (85%-99%)
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="7"></td>
+        <td colspan="3">
+            Pencapaian jauh di bawah target (di bawah 85%)
+        </td>
+    </tr>
+
+    @foreach (var item in Model.ListDataReport)
+    {
+        if (item.Tipe.ToString() == "Kpi")
+        {
+            pointProject = 0;
+
+            <tr>
+                <td colspan="10">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="10">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="10" style="background-color:#da9694; font-family:'Book Antiqua'; text-align:left; font-size:14px; color:black;"><label>@item.Name.ToString()</label></td>
+            </tr>
+            <tr>
+                <td colspan="9">&nbsp;</td>
+            </tr>
+            <tr>
+                <td rowspan="2" style="text-align:center; font-size:14px; vertical-align:central;background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;">Nama Proyek<br />&nbsp;</td>
+                <td colspan="2" style="text-align:center; font-size:14px; vertical-align:central;background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;">Keterangan<br />&nbsp;</td>
+                <td rowspan="2" style="text-align:center; font-size:14px; vertical-align:central;background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;">Nilai (Rp. Juta)<br />&nbsp;</td>
+                <td rowspan="2" style="text-align:center; font-size:14px; vertical-align:central;background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;">Target @Model.HeaderReport.Bulan.ToString() @Model.HeaderReport.Year.ToString()<br />&nbsp;</td>
+                <td rowspan="2" style="text-align:center; font-size:14px; vertical-align:central;background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;">Realisasi @Model.HeaderReport.Bulan.ToString() @Model.HeaderReport.Year.ToString()<br />&nbsp;</td>
+                <td rowspan="2" style="text-align:center; font-size:14px; vertical-align:central;background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;">Capaian @Model.HeaderReport.Bulan.ToString() @Model.HeaderReport.Year.ToString()<br />&nbsp;</td>
+                <td rowspan="2" style="text-align:center; font-size:14px; vertical-align:central;background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;">Realisasi Ang.  @Model.HeaderReport.Bulan.ToString() @Model.HeaderReport.Year.ToString()<br />&nbsp;</td>
+                <td rowspan="2" style="text-align:center; font-size:14px; vertical-align:central;background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;">Real+Komit @Model.HeaderReport.Bulan.ToString() @Model.HeaderReport.Year.ToString()<br />&nbsp;</td>
+                <td rowspan="2" style="text-align:center; font-size:14px; vertical-align:central;background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;">Tren thd bulan lalu<br />&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;border-bottom:1px solid; border-top:1px solid; text-align:center; vertical-align:central; font-size:14px;">PIC<br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom: 1px solid; border-top: 1px solid;border-bottom: 1px solid; border-top: 1px solid; text-align: center; vertical-align: central; font-size: 14px;">Waktu<br />&nbsp;</td>
+            </tr>
+        }
+        if (item.Tipe.ToString() == "Project")
+        {
+            pointProject = pointProject + 1;
+            Project = pointProject.ToString() + ". ";
+            <tr>
+                @if (item.IsTransformasi.ToString() == "1")
+                {
+                    <td style="border-bottom: 1px solid black; border-top: 1px solid black; background-color: yellow; text-align: left; font-size: 14px; vertical-align: central; font-family: 'Book Antiqua';"><br />@Project @item.Name.ToString()</td>
+                }
+                else if (item.IsTransformasi.ToString() == "0")
+                {
+                    <td style="border-bottom: 1px solid black; border-top: 1px solid black; background-color: #86f442; text-align: left; font-size: 14px; vertical-align: central; font-family: 'Book Antiqua';"><br />@Project @item.Name.ToString()</td>
+                }
+                else
+                {
+                    <td style="border-bottom: 1px solid black; border-top: 1px solid black; text-align: left; font-size: 14px; vertical-align: central; font-family: 'Book Antiqua';"><br />@Project @item.Name.ToString()</td>
+                }
+                <td style="border-bottom:1px solid black; border-top:1px solid black;text-align:center; font-size:14px; vertical-align:central;font-family:'Book Antiqua';"><br />@item.PIC.ToString()</td>
+                <td style="border-bottom:1px solid black; border-top:1px solid black;text-align:center; font-size:14px; vertical-align:central;font-family:'Book Antiqua';"><br />@item.Waktu.ToString()</td>
+                <td style="border-bottom:1px solid black; border-top:1px solid black;text-align:right;  font-size:14px; vertical-align:central;font-family:'Book Antiqua';"><br />@item.Anggaran.ToString() &nbsp; &nbsp;</td>
+                <td style="border-bottom:1px solid black; border-top:1px solid black;text-align:left;   font-size:14px; vertical-align:central;font-family:'Book Antiqua';"><br />@item.Target.ToString()</td>
+                <td style="border-bottom:1px solid black; border-top:1px solid black;text-align:left;   font-size:14px; vertical-align:central;font-family:'Book Antiqua';"><br />@Html.Raw(item.Realisasi.ToString())</td>
+                <td style="border-bottom:1px solid black; border-top:1px solid black;text-align:right;  font-size:14px; vertical-align:central;font-family:'Book Antiqua';">@Html.Raw(item.RealisasiPencapaian.ToString()) &nbsp; &nbsp;</td>
+                <td style="border-bottom:1px solid black; border-top:1px solid black;text-align:right;  font-size:14px; vertical-align:central;font-family:'Book Antiqua';"><br />@item.RealisasiAnggaran.ToString() &nbsp; &nbsp;</td>
+                <td style="border-bottom:1px solid black; border-top:1px solid black;text-align:right;  font-size:14px; vertical-align:central;font-family:'Book Antiqua';"><br />@item.RealisasiKomit.ToString() &nbsp; &nbsp;</td>
+                <td style="border-bottom: 1px solid black; border-top: 1px solid black; font-family: 'Book Antiqua'; font-size: 14px; vertical-align: central; text-align: right;">@item.Tren</td>
+            </tr>
+        }
+        if (item.Tipe.ToString() == "Total")
+        {
+            <tr>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />Total @item.Name.ToString()&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:right;  font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />@item.Anggaran.ToString() &nbsp; &nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:right;  font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />@Html.Raw(item.RealisasiPencapaian.ToString()) &nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:right;  font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />@item.RealisasiAnggaran.ToString() &nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:right;  font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />@item.RealisasiKomit.ToString() &nbsp;</td>
+                <td style="background-color: #ffc000; border-bottom: 1px solid; border-top: 1px solid; text-align: center; font-size: 14px; vertical-align: central; font-family: 'Book Antiqua';"><br />&nbsp;</td>
+            </tr>
+        }
+        if (item.Tipe.ToString() == "Trans")
+        {
+            <tr>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />Total @item.Name.ToString() (Transformasi)&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:right;  font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />@item.Anggaran.ToString() &nbsp; &nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:right;  font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />@Html.Raw(item.RealisasiPencapaian.ToString()) &nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:right;  font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />@item.RealisasiAnggaran.ToString() &nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:right;  font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />@item.RealisasiKomit.ToString() &nbsp;</td>
+                <td style="background-color: #ffc000; border-bottom: 1px solid; border-top: 1px solid; text-align: center; font-size: 14px; vertical-align: central; font-family: 'Book Antiqua';"><br />&nbsp;</td>
+            </tr>
+        }
+        if (item.Tipe.ToString() == "TransNon")
+        {
+            <tr>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />Total @item.Name.ToString() (Non Transformasi)&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:right;  font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />@item.Anggaran.ToString() &nbsp; &nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:center; font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />&nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:right;  font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />@Html.Raw(item.RealisasiPencapaian.ToString()) &nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:right;  font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />@item.RealisasiAnggaran.ToString() &nbsp;</td>
+                <td style="background-color:#ffc000; border-bottom:1px solid; border-top:1px solid;text-align:right;  font-size:14px; vertical-align:central; font-family:'Book Antiqua';"><br />@item.RealisasiKomit.ToString() &nbsp;</td>
+                <td style="background-color: #ffc000; border-bottom: 1px solid; border-top: 1px solid; text-align: center; font-size: 14px; vertical-align: central; font-family: 'Book Antiqua';"><br />&nbsp;</td>
+            </tr>
+        }
+    }
+
+</table>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function ($) {
+
+        tableToExcel('tableData', 'Sheet 1');
+        setTimeout(function () {
+            self.close();
+        }, 500);
+    });
+
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; })
+            }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = {
+                worksheet: name || 'Worksheet', table: table.innerHTML
+            }
+            //window.location.href = uri + base64(format(template, ctx))
+
+            var link = document.createElement("a");
+            link.download = "Report-Evaluasi-Capaian-KPI.xls";
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+
+        }
+    })();
+
+</script>

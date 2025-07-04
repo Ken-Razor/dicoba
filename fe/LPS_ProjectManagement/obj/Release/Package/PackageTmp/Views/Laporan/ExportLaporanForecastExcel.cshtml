@@ -1,0 +1,125 @@
+﻿@model LPS_ProjectManagement.Models.ReportModels.LaporanForecastExcelModel
+@{
+    Layout = null;
+}
+
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    thead, th, tbody, td {
+        text-align: center;
+        font-size: 11pt;
+    }
+
+    td {
+        border-top: 1px dashed #ddd !important;
+        border-bottom: 1px dashed #ddd !important;
+    }
+
+    thead {
+        display: table-header-group;
+        background-color: rgb(252,213,180) !important;
+        border-top: 1px solid rgb(151,71,6) !important;
+        height: 20px;
+        border-bottom: 1px solid rgb(151,71,6) !important;
+    }
+
+    /*tr {
+            border-bottom: 1px solid rgb(0,0,0);
+        }*/
+    tfoot {
+        display: table-row-group
+    }
+
+    tr {
+        page-break-inside: avoid;
+    }
+
+    th {
+        background-color: rgb(252,213,180);
+        border-color: rgb(151,71,6);
+        border-width: 2px;
+    }
+
+    body, h3, h2, h1 {
+        font-family: 'Book Antiqua' !important;
+        font-size: 14pt;
+    }
+</style>
+<table style="width:100%;" id="tableData">
+    <thead>
+        <tr>
+            <td colspan="3"></td>
+        </tr>
+
+        <tr>
+            <td colspan="3" style="text-align:center; font-size:14px;">
+                <b>
+                    @Model.LaporanLaporanForecastParam.ProjectName <br />
+                    Metode @Model.LaporanLaporanForecastParam.ForecastMethodName                    
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <th class="text-center">
+                Periode
+            </th>
+            <th class="text-center">
+                Realisasi (%)
+            </th>
+            <th class="text-center">
+                Forecast (%)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LaporanForecast)
+        {
+            <tr>
+                <td>@item.Periode</td>
+                <td>@item.Realisasi</td>
+                <td>@item.Forecast</td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        var model = '@Html.Raw(Json.Encode(Model))';
+        var jsonModel = JSON.parse(model);
+        tableToExcel('tableData', 'Sheet 1');
+        setTimeout(function () {
+            self.close();
+        }, 500);
+    });
+
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; })
+            }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = {
+                worksheet: name || 'Worksheet', table: table.innerHTML
+            }
+            //window.location.href = uri + base64(format(template, ctx))
+
+            var link = document.createElement("a");
+            link.download = "Report-Forecast.xls";
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+
+        }
+    })();
+
+</script>

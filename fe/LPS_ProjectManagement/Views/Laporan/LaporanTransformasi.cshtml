@@ -1,0 +1,871 @@
+﻿@model LPS_ProjectManagement.Models.ReportModels.LaporanInitModel
+
+@{
+    ViewBag.Title = "Evaluasi Capaian Proyek";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using LPS_ProjectManagement.Helper;
+
+<style>
+    td.details-control {
+        background: url(@Url.Content("~/Assets/Images/details_open.png")) no-repeat center center;
+        cursor: pointer;
+    }
+
+    tr.details td.details-control {
+        background: url(@Url.Content("~/Assets/Images/details_close.png")) no-repeat center center;
+    }
+</style>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="content-body">
+
+        <div class="row padding-top-45">
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-1"><i class="material-icons pull-right" style="color:blue">brightness_1</i></div>
+                <div class="col-md-2"><label>Pencapaian di atas target <br />( >= 110% )</label></div>
+                <div class="col-md-1"><i class="material-icons pull-right" style="color:green">brightness_1</i></div>
+                <div class="col-md-2"><label>Pencapaian sesuai target <br />( 100% - 109% )</label></div>
+                <div class="col-md-1"><i class="material-icons pull-right" style="color:yellow">brightness_1 </i></div>
+                <div class="col-md-2"><label>Pencapaian sedikit di bawah target <br />( 85% - 99% )</label></div>
+                <div class="col-md-1"><i class="material-icons pull-right" style="color:red">brightness_1 </i></div>
+                <div class="col-md-2"><label>Pencapaian jauh di bawah target <br />( < 85% )</label></div>
+            </div>
+
+        </div>
+
+        <div class="row padding-top-45">
+
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <div class="form-group has-warning">
+                    <label class="form-label label-header" for="ddlYear">Tahun</label>
+                    <span class="desc"></span>
+                    <div class="controls">
+                        <select id="ddlYear" class="form-control ddlYear" style="width:100%;" onchange="OnOnchangeDdlYear(@DateTime.Now.Year, @DateTime.Now.Month)">
+                            @for (int year = Convert.ToInt32(DateTime.Now.Year.ToString()) - 10; year <= Convert.ToInt32(DateTime.Now.Year.ToString()); year++)
+                            {
+                                if (Convert.ToInt32(DateTime.Now.Year.ToString()) == year)
+                                {
+                                    <option value=@year selected="selected">@year</option>
+                                }
+                                else
+                                {
+                                    <option value=@year>@year</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <div class="form-group has-warning">
+                    <label class="form-label label-header" for="ddlMonth">Bulan</label>
+                    <span class="desc"></span>
+                    <div class="controls">
+                        <select id="ddlMonth" class="form-control ddlMonth" style="width:100%" onchange="OnOnchangeDdlMonth()">
+                            @foreach (var item in Model.ListMonth)
+                            {
+                                if (item.Month == Model.DashboardProjectHeaderModel.Month)
+                                {
+                                    <option value="@item.Month" selected="selected">@item.Description</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Month">@item.Description</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="week">
+                <div class="form-group has-warning">
+                    <label class="form-label label-header" for="ddlWeek">Periode</label>
+                    <span class="desc"></span>
+                    <div class="controls">
+                        <select id="ddlWeek" class="form-control ddlWeek" style="width:100%">
+                            @for (int x = 1; x <= Model.DashboardProjectHeaderModel.JumlahWeek; x++)
+                            {
+                                if (x == (Model.DashboardProjectHeaderModel.Week))
+                                {
+                                    <option value="@x" selected="selected">Minggu Ke-@x</option>
+                                }
+                                else
+                                {
+                                    if (x <= Model.DashboardProjectHeaderModel.Week)
+                                    {
+                                        <option value="@x">Minggu Ke-@x</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label class="form-label label-header" for="ddlIsTransformasi">Jenis Transformasi</label>
+                    <span class="desc"></span>
+                    <select id="ddlIsTransformasi" class="form-control ddlIsTransformasi" style="width:100%;" onchange="OnOnchangeDdlTransformasi()">
+                        <option value=2>All</option>
+                        <option value=1 selected="selected">Transformasi</option>
+                        <option value=0>Non Transformasi</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label class="form-label label-header" for="ddlDirektorat">Direktorat</label>
+                    <span class="desc"></span>
+                    <select id="ddlDirektorat" class="form-control ddlDirektorat" style="width:100%;">
+                        <option value="0">All</option>
+                        @foreach (var item in Model.ListDirektoratModel)
+                        {
+                            <option value="@item.IDDirektorat">@item.DirektoratName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <div class="form-group has-warning">
+                    <label class="form-label label-header" for="ddlYear">&nbsp;</label>
+                    <span class="desc"></span>
+                    <div class="controls">
+                        <button onclick="Search()" type="button" class="btn btn-info btn-corner">@*<a href="">*@<i class="fa fa-search"></i>&nbsp;&nbsp; Search@*</a>*@</button>
+                        <!--<button onclick="ExportToExcelReportGptfPerWeek()" id="btnReportGptf" type="button" class="btn btn-success btn-corner">-->@*<a href="">*@<!--<i class="fa fa-print"></i>&nbsp;&nbsp; Download-->@*</a>*@<!--</button>-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row padding-top-5">
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label class="form-label label-header" for="ddlJenisFile">Jenis File</label>
+                    <span class="desc"></span>
+                    <select id="ddlJenisFile" class="form-control ddlIsTransformasi" style="width:100%;" onchange="OnOnchangeDdlJenisFile()">
+                        <option value=1 selected="selected">Pdf</option>
+                        <option value=2>Excel</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="kategoriFileNonTransformasi">
+                <div class="form-group">
+                    <label class="form-label label-header" for="ddlKategoriFileNonTransformasi">Kateogori</label>
+                    <span class="desc"></span>
+                    <select id="ddlKategoriFileNonTransformasi" class="form-control ddlKategoriFileNonTransformasi" style="width:100%;">
+                        <option value=1 selected="selected">Evaluasi Per SO</option>
+                        <option value=2>Evaluasi Per Direktorat</option>
+                        <option value=3>Evaluasi Per KPI</option>
+                        <option value=4>Evaluasi Per Kategori</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="kategoriFileTransformasi">
+                <div class="form-group">
+                    <label class="form-label label-header" for="ddlKategoriFileTransformasi">Kateogori</label>
+                    <span class="desc"></span>
+                    <select id="ddlKategoriFileTransformasi" class="form-control ddlKategoriFileTransformasi" style="width:100%;">
+                        <option value=1 selected="selected">Evaluasi Per SO</option>
+                        <option value=2>Evaluasi Per Direktorat</option>
+                        <option value=3>Evaluasi Per KPI</option>
+                        <option value=4>Evaluasi Per Kategori</option>
+                        <option value=5>Evaluasi Per Program</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <div class="form-group has-warning">
+                    <label class="form-label label-header" for="ddlYear">&nbsp;</label>
+                    <span class="desc"></span>
+                    <div class="controls">
+                        <button onclick="Download()" id="btnDownloadTransformasi" type="button" class="btn btn-success btn-corner">@*<a href="">*@<i class="fa fa-print"></i>&nbsp;&nbsp; Download@*</a>*@</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="row padding-top-5">
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group has-warning">
+                    <label class="form-label label-header">&nbsp;</label>
+                    <span class="desc"></span>
+                    <div class="controls">
+                        <button onclick="ExportToPdf()" type="button" class="btn btn-warning btn-corner">-->@*<a href="">*@<!--<i class="fa fa-print"></i>&nbsp;&nbsp; Evaluasi Per SO--> @*</a>*@<!--</button>
+                        <button onclick="ExportToPdfPerDir()" type="button" class="btn btn-warning btn-corner">-->@*<a href="">*@<!--<i class="fa fa-print"></i>&nbsp;&nbsp; Evaluasi Per Direktorat-->@*</a>*@<!--</button>
+                        <button onclick="ExportToPdfPerKpi()" type="button" class="btn btn-warning btn-corner">-->@*<a href="">*@<!--<i class="fa fa-print"></i>&nbsp;&nbsp; Evaluasi Per KPI-->@*</a>*@<!--</button>
+                        <button onclick="ExportToPdfPerCategory()" type="button" class="btn btn-warning btn-corner">-->@*<a href="">*@<!--<i class="fa fa-print"></i>&nbsp;&nbsp; Evaluasi Per Category-->@*</a>*@<!--</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row padding-top-5">
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group has-warning">
+                    <label class="form-label label-header">&nbsp;</label>
+                    <span class="desc"></span>
+                    <div class="controls">
+                        <button onclick="ExportToExcel()" type="button" class="btn btn-success btn-corner">-->@*<a href="">*@<!--<i class="fa fa-print"></i>&nbsp;&nbsp; Print Excel Evaluasi Per SO-->@*</a>*@<!--</button>
+                        <button onclick="ExportToExcelPerDirektorat()" type="button" class="btn btn-success btn-corner">-->@*<a href="">*@<!--<i class="fa fa-print"></i>&nbsp;&nbsp; Print Excel Evaluasi Per Direktorat-->@*</a>*@<!--</button>
+                        <button onclick="ExportToExcelPerKpi()" type="button" class="btn btn-success btn-corner">-->@*<a href="">*@<!--<i class="fa fa-print"></i>&nbsp;&nbsp; Print Excel Evaluasi Per KPI-->@*</a>*@<!--</button>
+                        <button onclick="ExportToExcelPerKategori()" type="button" class="btn btn-success btn-corner">-->@*<a href="">*@<!--<i class="fa fa-print"></i>&nbsp;&nbsp; Print Excel Evaluasi Per Kategori-->@*</a>*@<!--</button>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+        <div class="row padding-top-0">
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <table id="tblReport" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width:5%">No.</th>
+                            <th>Nama Program</th>
+                            <th>Nomor Program</th>
+                            <th style="text-align:center">Detil</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblBodyReport">
+                    </tbody>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    @*var obj = @Html.Raw(Json.Encode(Model));*@
+    var urlLaporanEvaluasi = '@Url.Action("LaporanEvaluasi", "Laporan")';
+    var urlListLaporanEvaluasi = '@Url.Action("ListLaporanEvaluasi", "Laporan")';
+    var urlLaporanTransformasi = '@Url.Action("LaporanTransformasi", "Laporan")';
+    var urlMasterDirektorat = '@Url.Action("MasterDirektoratJson", "Master")';
+
+    function format(d,data) {
+        debugger;
+        var Html = '';
+        Html = //'ID Program : ' + d.IDProgram + '<br>' +
+        //    'Month : ' + d.Month + '<br>' +
+        //    'Year : ' + d.Year + '<br>' +
+        //    'Is Transformasi : ' + d.IsTransformasi + '<br>' +
+            '<div class="row padding-top-0"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">'+
+            '<table id="tblReportChild' + d.IDProgram + '" class="cell-border" style="width:100%">' +
+            '<thead>' +
+            '    <tr>' +
+            '        <th rowspan="2" style="white-space:nowrap"></th>' +
+            '        <th colspan="2" style="text-align:center; white-space:nowrap">Keterangan</th>' +
+            '        <th rowspan="2" style="text-align:center; white-space:nowrap">Nilai (Rp. Juta)</th>' +
+            //'        <th rowspan="2" style="text-align:center; white-space:nowrap">Target</th>' +
+            //'        <th rowspan="2" style="text-align:center; white-space:nowrap">Realisasi</th>' +
+            '        <th rowspan="2" style="text-align:center; white-space:nowrap">Capaian</th>' +
+            '        <th rowspan="2" style="text-align:center; white-space:nowrap">Realisasi Ang.</th>' +
+            '        <th rowspan="2" style="text-align:center; white-space:nowrap">Real+Komit</th>' +
+            '        <th rowspan="2" style="text-align:center; white-space:nowrap">Tren Thdp. Bulan Sebelumnya</th>' +
+            '    </tr>' +
+            '    <tr>' +
+            '        <th style="text-align:center; white-space:nowrap">PIC</th>' +
+            '        <th style="text-align:center; white-space:nowrap">Waktu</th>' +
+            '    </tr>' +
+            '</thead>';
+
+        Html = Html +
+            '<tbody>';
+
+        for (var i = 0; i < data.length; i++) {
+
+            Html = Html +
+                '   <tr>' +
+                '       <td style="text-align:left; vertical-align:top">' + data[i].Name + '</td>' +
+                '       <td style="text-align:left">' + data[i].PIC + '</td>' +
+                '       <td style="text-align:left">' + data[i].Waktu + '</td>' +
+                '       <td style="text-align:right; vertical-align:top">' + data[i].ContractIDR + '</td>' +
+                //'       <td style="text-align:left">' + data[i].Target + '</td>' +
+                //'       <td style="text-align:left"></td>' +
+                '       <td style="text-align:right;">' + data[i].Capaian + '</td>' +
+                '       <td style="text-align:right; vertical-align:top">' + data[i].RealisasiAnggaran + '</td>' +
+                '       <td style = "text-align:right; vertical-align:top">' + data[i].RealisasiKomit + '</td>' +
+                '       <td style = "text-align:center; vertical-align:top">';
+            debugger;
+            if (data[i].Tren === "Sama") {
+                Html = Html + ' <span class="fa fa-arrow-right" style="color:yellow"></span>';
+            }
+            else if (data[i].Tren === "Naik") {
+                Html = Html + ' <span class="fa fa-arrow-up" style="color:green"></span>';
+            }
+            else if (data[i].Tren === "Turun") {
+                Html = Html + ' <span class="fa fa-arrow-down" style="color:red"></span>';
+            }
+            else {
+                Html = Html + ' <span class="fa fa-circle" style="color:grey"></span>';
+            }
+                //Tren +
+                //' <span class="fa fa-arrow-up" style="color:blue"></span> +
+                '</td > ' +
+                '   </tr>';
+        }
+
+        Html = Html +
+            '</tbody>';
+
+        Html = Html + '</table></div></div>';
+
+        return Html;
+
+    }
+
+    $(document).ready(function () {
+
+        //$.ajax({
+        //    url: urlMasterDirektorat,
+        //    success: function (result) {
+        //        var select = document.getElementById("ddlDirektorat");
+        //        debugger;
+
+        //        for (var i = 0; i < result.data.length; i++) {
+        //            var opt = result.data[i].DirektoratName;
+        //            var vle = result.data[i].IDDirektorat;
+        //            var el = document.createElement("option");
+        //            el.textContent = opt;//.DirektoratName;
+        //            el.value = vle;//.IDDirektorat;
+        //            select.appendChild(el);
+        //        }
+        //    }
+        //});
+
+        $('#tblListProjectCharter').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            info: false
+        });
+
+        $('#tblReport').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            info: false
+        });
+
+        $('.ddlYear').select2({
+            placeholder: 'Pilih Tahun',
+            selectOnClose: true
+        });
+
+        $('.ddlMonth').select2({
+            placeholder: 'Pilih Bulan',
+            selectOnClose: true
+        });
+
+        $('.ddlWeek').select2({
+            placeholder: 'Pilih Minggu',
+            selectOnClose: true
+        });
+
+        $('.ddlIsTransformasi').select2({
+            placeholder: 'Pilih Bulan',
+            selectOnClose: true
+        });
+
+        $('.ddlDirektorat').select2({
+            placeholder: 'Pilih Bulan',
+            selectOnClose: true
+        });
+
+        $('.ddlJenisFile').select2({
+            placeholder: 'Pilih Jenis File',
+            selectOnClose: true
+        });
+        $('.ddlKategoriFileNonTransformasi').select2({
+            placeholder: 'Pilih Kategori',
+            selectOnClose: true
+        });
+        $('.ddlKategoriFileTransformasi').select2({
+            placeholder: 'Pilih Kategori',
+            selectOnClose: true
+        });
+
+        OnOnchangeDdlJenisFile();
+        //OnOnchangeDdlMonth();
+        //OnOnchangeDdlTransformasi();
+
+    });
+
+    function Search() {
+
+        var ddlIsTransformasi = document.getElementById("ddlIsTransformasi");
+        var result = ddlIsTransformasi.options[ddlIsTransformasi.selectedIndex].value;
+        var IsTransformasi;
+        var week = null;
+        if (result === '1') {
+            IsTransformasi = 'true';
+            week = $('#ddlWeek').val();
+        }
+        else if (result === '2') {
+            IsTransformasi = null;
+        }
+        else {
+            IsTransformasi = 'false';
+        }
+
+        var param = {
+            Month: $('#ddlMonth').val(),
+            Year: $('#ddlYear').val(),
+            Week: week,
+            IsTransformasi: IsTransformasi,
+            IDDirektorat: $('#ddlDirektorat').val()
+        }
+
+        $.ajax({
+            url: urlListLaporanEvaluasi,
+            data: param,
+            success: function (result) {
+                debugger;
+                $('#tblReport').DataTable().destroy();
+                $('#tblReport').empty();
+
+                var dt = $('#tblReport').DataTable({
+                    "bLengthChange": false,
+                    searching: true,
+                    info: false,
+                    data: result.Data,
+                    "columns": [
+                        { "data": "NoUrut", "title": "No." },
+                        { "data": "ProgramName", "title": "Nama Program" },
+                        { "data": "ProgramNo", "title": "Nomor Program" },
+                        {
+                            "class": "details-control",
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": "",
+                            "title": "Detil"
+                        }
+                    ]
+                });
+
+                // Array to track the ids of the details displayed rows
+                var detailRows = [];
+
+                $('#tblReport tbody').on('click', 'tr td.details-control', function () {
+                    var tr = $(this).closest('tr');
+                    var row = dt.row(tr);
+                    var idx = $.inArray(tr.attr('id'), detailRows);
+                    var dataBaris = row.data();
+                    //debugger;
+                    var ecpm = {
+                        Month: $('#ddlMonth').val(),
+                        Year: $('#ddlYear').val(),
+                        IsTransformasi: IsTransformasi,
+                        IDProgram: dataBaris.IDProgram,
+                        IDDirektorat: $('#ddlDirektorat').val(),
+                        Week: week
+                    }
+
+                    if (row.child.isShown()) {
+                        tr.removeClass('details');
+                        row.child.hide();
+
+                        // Remove from the 'open' array
+                        detailRows.splice(idx, 1);
+                    }
+                    else {
+
+                        $.ajax({
+                            url: urlLaporanEvaluasi,
+                            data: ecpm,
+                            success: function (result) {
+
+                                tr.addClass('details');
+                                row.child(format(row.data(), result.Data)).show();
+
+                                $('#tblReportChild' + dataBaris.IDProgram).DataTable({
+                                    "bLengthChange": false,
+                                    searching: false,
+                                    info: false,
+                                    "scrollX": true,
+                                    order: false,
+                                    "colReorder": true,
+                                    scrollCollapse: true,
+                                    fixedColumns: {
+                                        leftColumns: 1
+                                    }
+                                });
+
+                                // Add to the 'open' array
+                                if (idx === -1) {
+                                    detailRows.push(tr.attr('id'));
+                                }
+                            },
+                            error: function (request, status, error) {
+                                alert(request.responseText);
+                            }
+                        });//
+
+                    }
+
+                });
+
+                // On each draw, loop over the `detailRows` array and show any child rows
+                dt.on('draw', function () {
+                    $.each(detailRows, function (i, id) {
+                        $('#' + id + ' td.details-control').trigger('click');
+                    });
+                });
+            }
+        });
+
+    }
+
+    function ExportToPdf() {
+
+        var ddlIsTransformasi = document.getElementById("ddlIsTransformasi");
+        var result = ddlIsTransformasi.options[ddlIsTransformasi.selectedIndex].value;
+        var IsTransformasi;
+        var week = null;
+
+        if (result === '1') {
+            IsTransformasi = 'true';
+            week = $('#ddlWeek').val();
+        }
+        else if (result === '2') {
+            IsTransformasi = null;
+        }
+        else {
+            IsTransformasi = 'false';
+        }
+
+        location.href = '@Url.Action("PrintCapaianEvaluasi", "Laporan")' + '?IsTransformasi=' + IsTransformasi + '&Month=' + $('#ddlMonth').val() + '&Year=' + $('#ddlYear').val() + '&IDDirektorat=' + $('#ddlDirektorat').val() + '&Week=' + week;
+
+    }
+
+    function ExportToPdfPerKpi() {
+
+        var ddlIsTransformasi = document.getElementById("ddlIsTransformasi");
+        var result = ddlIsTransformasi.options[ddlIsTransformasi.selectedIndex].value;
+        var IsTransformasi;
+        var week = null;
+
+        if (result === '1') {
+            IsTransformasi = 'true';
+            week = $('#ddlWeek').val();
+        }
+        else if (result === '2') {
+            IsTransformasi = null;
+        }
+        else {
+            IsTransformasi = 'false';
+        }
+
+        location.href = '@Url.Action("PrintCapaianEvaluasiGroupByKpi", "Laporan")' + '?IsTransformasi=' + IsTransformasi + '&Month=' + $('#ddlMonth').val() + '&Year=' + $('#ddlYear').val() + '&IDDirektorat=' + $('#ddlDirektorat').val() + '&Week=' + week;
+    }
+
+    function ExportToPdfPerCategory() {
+
+        var ddlIsTransformasi = document.getElementById("ddlIsTransformasi");
+        var result = ddlIsTransformasi.options[ddlIsTransformasi.selectedIndex].value;
+        var IsTransformasi;
+        var week = null;
+
+        if (result === '1') {
+            IsTransformasi = 'true';
+            week = $('#ddlWeek').val();
+        }
+        else if (result === '2') {
+            IsTransformasi = null;
+        }
+        else {
+            IsTransformasi = 'false';
+        }
+
+        location.href = '@Url.Action("PrintCapaianEvaluasiGroupByCategory", "Laporan")' + '?IsTransformasi=' + IsTransformasi + '&Month=' + $('#ddlMonth').val() + '&Year=' + $('#ddlYear').val() + '&IDDirektorat=' + $('#ddlDirektorat').val() + '&Week=' + week;
+    }
+
+    function ExportToExcelReportGptfPerWeek() {
+        var ddlIsTransformasi = document.getElementById("ddlIsTransformasi");
+        var result = ddlIsTransformasi.options[ddlIsTransformasi.selectedIndex].value;
+        var IsTransformasi;
+        var week = null;
+
+        if (result === '1') {
+            IsTransformasi = 'true';
+            week = $('#ddlWeek').val();
+        }
+        else if (result === '2') {
+            IsTransformasi = null;
+        }
+        else {
+            IsTransformasi = 'false';
+        }
+
+        window.open('@Url.Action("ExportExcelReportGptfPerWeek", "Laporan")' + '?Month=' + $('#ddlMonth').val() + '&Year=' + $('#ddlYear').val() + '&Week=' + week);
+    }
+
+    function ExportToExcel() {
+
+        var ddlIsTransformasi = document.getElementById("ddlIsTransformasi");
+        var result = ddlIsTransformasi.options[ddlIsTransformasi.selectedIndex].value;
+        var IsTransformasi;
+        var week = null;
+
+        if (result === '1') {
+            IsTransformasi = 'true';
+            week = $('#ddlWeek').val();
+        }
+        else if (result === '2') {
+            IsTransformasi = null;
+        }
+        else {
+            IsTransformasi = 'false';
+        }
+
+        window.open('@Url.Action("ExportExcelCapaianEvaluasi", "Laporan")' + '?IsTransformasi=' + IsTransformasi + '&Month=' + $('#ddlMonth').val() + '&Year=' + $('#ddlYear').val() + '&IDDirektorat=' + $('#ddlDirektorat').val() + '&Week=' + week);
+    }
+
+    function ExportToExcelPerDirektorat() {
+
+        var ddlIsTransformasi = document.getElementById("ddlIsTransformasi");
+        var result = ddlIsTransformasi.options[ddlIsTransformasi.selectedIndex].value;
+        var IsTransformasi;
+        var week = null;
+
+        if (result === '1') {
+            IsTransformasi = 'true';
+            week = $('#ddlWeek').val();
+        }
+        else if (result === '2') {
+            IsTransformasi = null;
+        }
+        else {
+            IsTransformasi = 'false';
+        }
+
+        window.open('@Url.Action("ExportExcelCapaianEvaluasiDirektorat", "Laporan")' + '?IsTransformasi=' + IsTransformasi + '&Month=' + $('#ddlMonth').val() + '&Year=' + $('#ddlYear').val() + '&IDDirektorat=' + $('#ddlDirektorat').val() + '&Week=' + week);
+    }
+
+    function ExportToExcelPerKpi() {
+
+        var ddlIsTransformasi = document.getElementById("ddlIsTransformasi");
+        var result = ddlIsTransformasi.options[ddlIsTransformasi.selectedIndex].value;
+        var IsTransformasi;
+        var week = null;
+
+        if (result === '1') {
+            IsTransformasi = 'true';
+            week = $('#ddlWeek').val();
+        }
+        else if (result === '2') {
+            IsTransformasi = null;
+        }
+        else {
+            IsTransformasi = 'false';
+        }
+
+        window.open('@Url.Action("ExportExcelCapaianEvaluasiKpi", "Laporan")' + '?IsTransformasi=' + IsTransformasi + '&Month=' + $('#ddlMonth').val() + '&Year=' + $('#ddlYear').val() + '&IDDirektorat=' + $('#ddlDirektorat').val() + '&Week=' + week);
+    }
+
+    function ExportToExcelPerKategori() {
+
+        var ddlIsTransformasi = document.getElementById("ddlIsTransformasi");
+        var result = ddlIsTransformasi.options[ddlIsTransformasi.selectedIndex].value;
+        var IsTransformasi;
+        var week = null;
+
+        if (result === '1') {
+            IsTransformasi = 'true';
+            week = $('#ddlWeek').val();
+        }
+        else if (result === '2') {
+            IsTransformasi = null;
+        }
+        else {
+            IsTransformasi = 'false';
+        }
+
+        window.open('@Url.Action("ExportExcelCapaianEvaluasiKategori", "Laporan")' + '?IsTransformasi=' + IsTransformasi + '&Month=' + $('#ddlMonth').val() + '&Year=' + $('#ddlYear').val() + '&IDDirektorat=' + $('#ddlDirektorat').val() + '&Week=' + week);
+    }
+
+    function ExportToPdfPerDir() {
+
+        var ddlIsTransformasi = document.getElementById("ddlIsTransformasi");
+        var result = ddlIsTransformasi.options[ddlIsTransformasi.selectedIndex].value;
+        var IsTransformasi;
+        var week = null;
+
+        if (result === '1') {
+            IsTransformasi = 'true';
+            week = $('#ddlWeek').val();
+        }
+        else if (result === '2') {
+            IsTransformasi = null;
+        }
+        else {
+            IsTransformasi = 'false';
+        }
+
+        var ecpm = {
+            IsTransformasi: IsTransformasi,
+            Month: $('#ddlMonth').val(),
+            Year: $('#ddlYear').val(),
+            IDDirektorat: $('#ddlDirektorat').val()
+        }
+
+        location.href = '@Url.Action("PrintCapaianEvaluasiGroupByDirektorat", "Laporan")' + '?IsTransformasi=' + IsTransformasi + '&Month=' + $('#ddlMonth').val() + '&Year=' + $('#ddlYear').val() + '&IDDirektorat=' + $('#ddlDirektorat').val() + '&Week=' + week;
+
+    }
+
+    function OnOnchangeDdlYear(CurrentYear, CurrentMonth) {
+
+        var ListMonth = @Html.Raw(Json.Encode(GlobalHelper.ListDropDowMonth()));
+
+        debugger;
+
+        var Year = $('#ddlYear').val();
+        var select = document.getElementById("ddlMonth");
+
+        select.innerHTML = "";
+
+        if (Year == CurrentYear) {
+            for (var i = 0; i < 12; i++) {
+                if (ListMonth[i].Month == CurrentMonth) {
+                    select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+                    i = 12;
+                }
+                else {
+                    select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+                }
+            }
+        } else {
+            for (var i = 0; i < 12; i++) {
+                select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+            }
+        }
+
+    }
+
+    function OnOnchangeDdlMonth() {
+        var data = {
+            Year: $('#ddlYear').val(),
+            Month: $('#ddlMonth').val()
+        }
+        var da = new Date();
+        var Cyear = da.getFullYear();
+        var Cmonth = da.getMonth() + 1;
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetDdlWeek", "Beranda")',
+            data: data,
+            traditional: true,
+            success: function (result) {
+                var select = document.getElementById("ddlWeek");
+
+                // Optional: Clear all existing options first:
+                select.innerHTML = "";
+                // Populate list with options:
+                if (result.Month < Cmonth || result.Year < Cyear) {
+                    for (var i = 1; i <= result.JumlahWeek; i++) {
+                        var opt = i;
+                        select.innerHTML += "<option value=\"" + opt + "\">Minggu Ke-" + opt + "</option>";
+                    }
+                }
+                else {
+                    for (var i = 1; i <= result.Week; i++) {
+                        var opt = i;
+                        select.innerHTML += "<option value=\"" + opt + "\">Minggu Ke-" + opt + "</option>";
+                    }
+                }
+            }
+        });
+    }
+
+    function OnOnchangeDdlTransformasi() {
+        if ($('#ddlIsTransformasi').val() != 1) {
+            $('#week').hide();
+            $('#btnReportGptf').hide();
+        }
+        else if ($('#ddlIsTransformasi').val() == 1){
+            $('#week').show();
+            $('#btnReportGptf').show();
+        }
+        OnOnchangeDdlJenisFile();
+    }
+
+    function Download() {
+        if ($('#ddlJenisFile').val() == 1) {
+            if ($('#ddlKategoriFileNonTransformasi').val() == 1) {
+                ExportToPdf();
+            }
+            else if ($('#ddlKategoriFileNonTransformasi').val() == 2) {
+                ExportToPdfPerDir();
+            }
+            else if ($('#ddlKategoriFileNonTransformasi').val() == 3) {
+                ExportToPdfPerKpi();
+            }
+            else if ($('#ddlKategoriFileNonTransformasi').val() == 4) {
+                ExportToPdfPerCategory();
+            }
+        }
+        else if ($('#ddlJenisFile').val() == 2) {
+            if ($('#ddlIsTransformasi').val() != 1) {
+                if ($('#ddlKategoriFileNonTransformasi').val() == 1) {
+                    ExportToExcel();
+                }
+                else if ($('#ddlKategoriFileNonTransformasi').val() == 2) {
+                    ExportToExcelPerDirektorat();
+                }
+                else if ($('#ddlKategoriFileNonTransformasi').val() == 3) {
+                    ExportToExcelPerKpi();
+                }
+                else if ($('#ddlKategoriFileNonTransformasi').val() == 4) {
+                    ExportToExcelPerKategori();
+                }
+            }
+            else if ($('#ddlIsTransformasi').val() == 1) {
+                var aas = $('#ddlKategoriFileTransformasi').val;
+                if ($('#ddlKategoriFileTransformasi').val() == 1) {
+                    ExportToExcel();
+                }
+                else if ($('#ddlKategoriFileTransformasi').val() == 2) {
+                    ExportToExcelPerDirektorat();
+                }
+                else if ($('#ddlKategoriFileTransformasi').val() == 3) {
+                    ExportToExcelPerKpi();
+                }
+                else if ($('#ddlKategoriFileTransformasi').val() == 4) {
+                    ExportToExcelPerKategori();
+                }
+                else if ($('#ddlKategoriFileTransformasi').val() == 5) {
+                    ExportToExcelReportGptfPerWeek();
+                }
+            }
+        }
+    }
+
+    function OnOnchangeDdlJenisFile() {
+        var z = $('#ddlJenisFile').val();
+        if ($('#ddlJenisFile').val() == 1) {
+            $('#kategoriFileNonTransformasi').show();
+            $('#kategoriFileTransformasi').hide();
+        }
+        else if ($('#ddlJenisFile').val() == 2) {
+            if ($('#ddlIsTransformasi').val() != 1) {
+                $('#kategoriFileNonTransformasi').show();
+                $('#kategoriFileTransformasi').hide();
+            }
+            if ($('#ddlIsTransformasi').val() == 1) {
+                $('#kategoriFileNonTransformasi').hide();
+                $('#kategoriFileTransformasi').show();
+            }
+        }
+    }
+
+</script>

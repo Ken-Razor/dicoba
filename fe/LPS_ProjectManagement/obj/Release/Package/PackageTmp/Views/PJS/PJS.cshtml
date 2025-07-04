@@ -1,0 +1,111 @@
+﻿
+@model List<LPS_ProjectManagement.Models.PJSModels.PJSModel>
+@using LPS_ProjectManagement.Models
+
+@{
+    ViewBag.Title = "PJS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    RoleProject[] RoleAplikasi = (RoleProject[])Session["Roles"];
+}
+
+<input id="hdf" type="hidden" value="@Session["PersonalNumber"].ToString()" />
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Daftar PJS</h2>
+        </header>
+        <div class="content-body padding-top-45">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-info btn-corner" id="btnTambah" onclick="location.href='@Url.Action("PJSDetil","PJS", new {ID = 0})';"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Tambah PJS</button>
+                        </div>
+                    </div>
+
+                    <table id="tblListPJS" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center" width="3%">No.</th>
+                                <th style="text-align:left" width="20%">User yang diwakilkan</th>
+                                <th style="text-align:left" width="20%">User yang mewakilkan</th>
+                                <th style="text-align:left">Tanggal Mulai</th>
+                                <th style="text-align:left">Tanggal Berakhir</th>
+                                <th style="text-align:center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var data in Model)
+                            {
+                                <tr>
+                                    <td style="text-align:center">@data.NoUrut</td>
+                                    <td style="text-align:left">@data.ExistingName</td>
+                                    <td style="text-align:left">@data.PJSName</td>
+                                    <td style="text-align:left">@data.StartDateString</td>
+                                    <td style="text-align:left">@data.EndDateString</td>
+                                    <td style="text-align:center">
+                                        <a href='@Url.Action("PJSDetil","PJS", new {ID= data.ID})' class="btn btn-warning tooltipcustom margin-top-5 margin-bottom-5">
+                                            <i class="fa fa-edit"></i>
+                                            <span class="tooltiptext">Detil</span>
+                                        </a>
+                                        <a onclick="deleteData(@data.ID)" class="btn btn-danger tooltipcustom margin-top-5 margin-bottom-5">
+                                            <i class="fa fa-trash"></i>
+                                            <span class="tooltiptext">Hapus</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#tblListPJS').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            info: false,
+            "scrollX": true
+        });
+    });
+
+    function deleteData(ID) {
+
+        debugger;
+
+        var PJSModel = {
+            ID: ID,
+            TypeTransaction: "Delete"
+        };
+
+        var r = confirm("Anda yakin ingin menghapus data ini ?");
+        if (r == true) {
+            $.ajax({
+            type: "POST",
+            url: '@Url.Action("PJSDelete", "PJS")',
+            data: PJSModel,
+            success: function (result) {
+                if (result.Result == "Success") {
+                    alert(result.Message);
+                    window.location.href = '@Url.Action("PJS", "PJS")';
+                }
+                else {
+                    alert(result.Message);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            }
+        });
+        }
+        
+    }
+
+</script>

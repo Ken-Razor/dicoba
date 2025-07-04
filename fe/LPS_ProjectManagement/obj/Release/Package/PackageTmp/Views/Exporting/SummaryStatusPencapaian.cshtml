@@ -1,0 +1,106 @@
+﻿@model List<LPS_ProjectManagement.Models.ReportModels.SummaryPenyampaianModel>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ReportCapaian</title>
+</head>
+<body>
+    <style>
+        .circle {
+            border-radius: 50%;
+            width: 3px;
+            height: 3px;
+            margin: auto;
+            padding: 3px;
+            /* width and height can be anything, as long as they're equal */
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        thead, th, tbody, td {
+            text-align: center;
+            font-size: 11pt;
+        }
+
+        td {
+            border-top: 1px dashed #ddd !important;
+            border-bottom: 1px dashed #ddd !important;
+        }
+
+        thead {
+            display: table-header-group;
+            background-color: rgb(252,213,180) !important;
+            border-top: 1px solid rgb(151,71,6) !important;
+            height: 20px;
+            border-bottom: 1px solid rgb(151,71,6) !important;
+        }
+
+        /*tr {
+            border-bottom: 1px solid rgb(0,0,0);
+        }*/
+        tfoot {
+            display: table-row-group
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+        th {
+            background-color: rgb(252,213,180);
+            border-color: rgb(151,71,6);
+            border-width: 2px;
+        }
+
+        body, h3, h2, h1 {
+            font-family: 'Book Antiqua' !important;
+            font-size: 14pt;
+        }
+    </style>
+    <div>
+
+        @if (Model.Count > 0)
+        {
+            <center>
+                <h2>Laporan Summary Status Pencapaian </h2>
+            </center>
+            <table style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Direktorat</th>
+                        <th>Status Draft</th>
+                        <th>Status Submit</th>
+                        <th>Approve Project Manager</th>
+                        <th>Approve Program Manager</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:left">@item.Direktorat</td>
+                            <td style="text-align:center">@item.DraftProjAdmin</td>
+                            <td style="text-align:center">@item.SubmitProjAdmin</td>
+                            <td style="text-align:center">@item.ApproveProjManager</td>
+                            <td style="text-align:center">@item.ApproveProgManager</td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        }
+    </div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,223 @@
+﻿@model LPS_ProjectManagement.Models.ReportModels.LaporanGptfViewModel
+@{
+    Layout = null;
+    string monthName = new DateTime(int.Parse(Model.Param.Year), Model.Param.Month, 1).ToString("MMMM", new System.Globalization.CultureInfo("Id"));
+    int no = 1;
+}
+
+<style>
+    .circle {
+        border-radius: 50%;
+        width: 3px;
+        height: 3px;
+        margin: auto;
+        padding: 3px;
+        /* width and height can be anything, as long as they're equal */
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    thead, th, tbody, td {
+        text-align: center;
+        font-size: 11pt;
+    }
+
+    td {
+        border-top: 1px dashed #ddd !important;
+        border-bottom: 1px dashed #ddd !important;
+    }
+
+    thead {
+        display: table-header-group;
+        background-color: rgb(252,213,180) !important;
+        border-top: 1px solid rgb(151,71,6) !important;
+        height: 20px;
+        border-bottom: 1px solid rgb(151,71,6) !important;
+    }
+
+    /*tr {
+            border-bottom: 1px solid rgb(0,0,0);
+        }*/
+    tfoot {
+        display: table-row-group
+    }
+
+    tr {
+        page-break-inside: avoid;
+    }
+
+    th {
+        background-color: rgb(252,213,180);
+        border-color: rgb(151,71,6);
+        border-width: 2px;
+    }
+
+    body, h3, h2, h1 {
+        font-family: 'Book Antiqua' !important;
+        font-size: 14pt;
+    }
+</style>
+<table style="width:100%;" id="tableData">
+
+    <tr>
+        <td colspan="10"></td>
+    </tr>
+
+    <tr>
+        <td colspan="10"></td>
+    </tr>
+
+    <tr>
+        <td colspan="10" style="text-align:center; font-size:14px;">
+            <b>
+                Laporan GPTF Bulan @monthName  @Model.Param.Year
+            </b>
+        </td>
+    </tr>
+
+    <thead>
+        <tr>
+            <th style="background-color:#cccccc;border:1px solid;">Kode Proyek</th>
+            <th style="background-color:#cccccc;border:1px solid;">Nama Proyek</th>
+            <th style="background-color:#cccccc;border:1px solid;">Waktu</th>
+            <th style="background-color:#cccccc;border:1px solid;">Rencana Pelaksanaan Proyek</th>
+            <th style="background-color:#cccccc;border:1px solid;">Target (%)</th>
+            <th style="background-color:#cccccc;border:1px solid;">Realisasi (%)</th>
+            <th style="background-color:#cccccc;border:1px solid;">Status Capaian Bulanan (%)</th>
+            <th style="background-color:#cccccc;border:1px solid;">Target Bulanan</th>
+            <th style="background-color:#cccccc;border:1px solid;">Realisasi Bulanan</th>
+            <th style="background-color:#cccccc;border:1px solid;">Kendala</th>
+            @*<th>Status Capaian</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LaporanGptf)
+        {
+            int i = 1;
+            int j = 1;
+            int k = 1;
+            item.Kendala = item.Kendala != null? item.Kendala.Replace("\\n", "\n"): null;
+            var targetBulanan = item.TargetBulanan != null? item.TargetBulanan.Split('\n'): null;
+            var realisasiBulanan = item.RealisasiBulanan != null? item.RealisasiBulanan.Split('\n'):null;
+            var kendala = item.Kendala != null? item.Kendala.Split('\n') : null;
+            <tr>
+                <td style="border:1px solid;vertical-align:top">@item.ProjectNo</td>
+                <td style="border:1px solid;vertical-align:top">@item.ProjectName</td>
+                <td style="border:1px solid;vertical-align:top">@item.Waktu</td>
+                <td style="border:1px solid;vertical-align:top">@item.Approach</td>
+                <td style="text-align:center;border:1px solid;vertical-align:top">@item.PlanPercentage</td>
+                <td style="text-align:center;border:1px solid;vertical-align:top">@item.CompletePercentage</td>
+                @if (@item.Capaian < 85)
+                {
+                    <td style="border:1px solid;background-color:red;color:white;text-align:center;vertical-align:top">@item.Capaian %</td>
+                }
+                else if (@item.Capaian < 100)
+                {
+                    <td style="border:1px solid;background-color:yellow;color:black;text-align:center;vertical-align:top">@item.Capaian %</td>
+                }
+                else if (@item.Capaian < 110)
+                {
+                    <td style="border:1px solid;background-color:green;color:white;text-align:center;vertical-align:top">@item.Capaian %</td>
+                }
+                else
+                {
+                    <td style="border:1px solid;background-color:royalblue;color:white;text-align:center;vertical-align:top">@item.Capaian %</td>
+                }
+                <td style="text-align:left; white-space:pre;border:1px solid;vertical-align:top">
+                    @if (targetBulanan != null)
+                    {
+                        foreach (var val in targetBulanan)
+                        {
+                            if (val != "")
+                            {
+                                @val <br />
+                            }
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        @item.TargetBulanan
+                    }
+                </td>
+                <td style="text-align:left; white-space:pre;border:1px solid;vertical-align:top">
+                    @if (realisasiBulanan != null)
+                    {
+                        foreach (var val in realisasiBulanan)
+                        {
+                            if (val != "")
+                            {
+                                @val <br />
+                            }
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        @item.RealisasiBulanan
+                    }
+                </td>
+                <td style="text-align:left; white-space:pre;border:1px solid;vertical-align:top">
+                    @if (kendala != null)
+                    {
+                        foreach (var val in kendala)
+                        {
+                            if (val != "")
+                            {
+                                @val <br />
+                            }
+                            k++;
+                        }
+                    }
+                    else
+                    {
+                        @item.Kendala
+                    }
+                </td>
+                @*<td style="text-align:center">@item.Status</td>*@
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function ($) {
+        
+        tableToExcel('tableData', 'Sheet 1');
+        setTimeout(function () {
+            self.close();
+        }, 500);
+    });
+
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; })
+            }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = {
+                worksheet: name || 'Worksheet', table: table.innerHTML
+            }
+            //window.location.href = uri + base64(format(template, ctx))
+            console.log(table);
+            debugger;
+            var link = document.createElement("a");
+            link.download = "Report-GPTF.xls";
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+
+        }
+    })();
+
+</script>
+

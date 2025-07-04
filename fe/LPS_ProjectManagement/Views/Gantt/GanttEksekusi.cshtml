@@ -1,0 +1,883 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GanttEksekusi</title>
+    <link href="~/Scripts/dhtmlxent/dhtmlxgantt.css" rel="stylesheet" />
+    <link href="~/Content/normalize.css" rel="stylesheet" />
+    <link href="~/Content/skeleton.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/flatpickr.min.css" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/dhtmlxent/dhtmlxgantt.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_undo.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_auto_scheduling.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_critical_path.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_csp.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_fullscreen.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_grouping.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_keyboard_navigation.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_marker.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_multiselect.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_smart_rendering.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_tooltip.js")"></script>
+    <script src="@Url.Content("~/Scripts/dhtmlx.js")"></script>
+    <script src="@Url.Content("~/Scripts/GanttApi.js")"></script>
+    @*<link rel='stylesheet' href='https://cdn.dhtmlx.com/edge/skins/terrace/dhtmlx.css?v=6.0.7' />*@
+    <link rel="stylesheet" href="~/Content/dhtmlx/dhtmlx.css" />
+
+</head>
+
+<body>
+
+    <style>
+
+        /*
+            loaders
+        */
+        .gantt_grid_head_cell {
+            font-size: 11px !important;
+        }
+
+        .gantt_cell {
+            font-size: 11px !important;
+        }
+
+        .spin {
+            -webkit-animation: spin 750ms infinite linear;
+            -moz-animation: spin 750ms infinite linear;
+            animation: spin 750ms infinite linear;
+        }
+
+        @@-webkit-keyframes spin {
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @@-moz-keyframes spin {
+            to {
+                -moz-transform: rotate(360deg);
+            }
+        }
+
+        .rspin {
+            -webkit-animation: rspin 2250ms infinite linear;
+            -moz-animation: rspin 2250ms infinite linear;
+            animation: rspin 2250ms infinite linear;
+        }
+
+        @@-webkit-keyframes rspin {
+            to {
+                -webkit-transform: rotate(-360deg);
+            }
+        }
+
+        @@-moz-keyframes rspin {
+            to {
+                -moz-transform: rotate(-360deg);
+            }
+        }
+
+        /* let's style that thing */
+        .loader {
+            background-color: #eeeeee;
+            border-radius: 100%;
+            position: relative;
+            height: 75px;
+            width: 75px;
+            overflow: hidden;
+        }
+
+            .loader .c {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin: -34% 0 0 -34%;
+                width: 68%;
+                height: 68%;
+                background-color: #ffffff;
+                border-radius: 100%;
+                z-index: 3;
+            }
+
+            .loader .d {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+
+                .loader .d .e {
+                    position: absolute;
+                    top: 1%;
+                    left: 50%;
+                    margin: 0 0 0 -7.5px;
+                    height: 14px;
+                    width: 15px;
+                    -webkit-transform: rotate(10deg) skew(20deg);
+                    -moz-transform: rotate(10deg) skew(20deg);
+                    border-radius: 3px;
+                    background: #999;
+                }
+
+            .loader .r {
+                z-index: 2;
+                position: absolute;
+                left: 50%;
+                top: -1px;
+                bottom: -1px;
+                margin-left: -3.75px;
+                background-color: #ffffff;
+                width: 7.5px;
+            }
+
+            .loader .r1 {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+            }
+
+            .loader .r2 {
+                -webkit-transform: rotate(45deg);
+                -moz-transform: rotate(45deg);
+            }
+
+            .loader .r3 {
+                -webkit-transform: rotate(90deg);
+                -moz-transform: rotate(90deg);
+            }
+
+            .loader .r4 {
+                -webkit-transform: rotate(135deg);
+                -moz-transform: rotate(135deg);
+            }
+
+        /***/
+
+        .dhx_calendar_cont input {
+            width: 96px;
+            padding: 0;
+            margin: 3px 10px 10px 10px;
+            font-size: 11px;
+            height: 17px;
+            text-align: center;
+            border: 1px solid #ccc;
+            color: #646464;
+        }
+
+        .dhtmlxcalendar_dhx_skyblue, .dhtmlxcalendar_dhx_web, .dhtmlxcalendar_dhx_terrace {
+            z-index: 999999 !important;
+        }
+
+        .updColor {
+            background-color: #ff6666 !important;
+        }
+    </style>
+
+    <div class="loader rspin ll" style="margin-left : 50px;">
+        <span class="c"></span>
+        <span class="d spin"><span class="e"></span></span>
+        <span class="r r1"></span>
+        <span class="r r2"></span>
+        <span class="r r3"></span>
+        <span class="r r4"></span>
+    </div>
+    <span id="statusRed" style="display:none">Ok</span>
+    <div id="gantt-eksekusi" style='width:100%; height:550px;'></div>
+
+    <div id="buttonDownloadGanttChart" style="display:none;" align="right" class="twelve columns">
+        <button type="button" class="button-primary" onclick="DonwloadFile()"><i class="fa fa-download"></i>&nbsp;&nbsp;Donwload Gantt Chart (Excel)</button>
+    </div>
+
+    <script>
+
+        var isTransformasi = "1";
+        var isSession = "@Session["IsTransformasi"]";
+        if (isSession == null |isSession== ""| isSession== "null") {
+            isTransformasi = "1";
+        } else {
+            isTransformasi = "@Session["IsTransformasi"]";
+        }
+
+
+        $(document).ready(function () {
+            if (isTransformasi == "1" || isTransformasi == "0") { GetMPPData(); }
+            else { GetMPPDataNonTransformasi(); }
+
+            GetHoliday();
+
+            Milestone();
+
+        });
+
+        var duration = function (a, b, c) {
+            var res = gantt.calculateDuration(a.getDate(false), b.getDate(false));
+            c.innerHTML = res + ' days';
+        };
+
+        var calendar_init = function (id, data, date) {
+            var obj = new dhtmlXCalendarObject(id);
+            obj.setHolidays(Holiday);
+            obj.setDateFormat(data.date_format ? data.date_format : '');
+            obj.setDate(date ? date : (new Date()));
+            obj.hideTime();
+
+            if (data.skin)
+                obj.setSkin(data.skin);
+            return obj;
+        };
+
+        var Holiday = [];
+
+        function GetHoliday() {
+            $.ajax({
+                url:  '@Url.Action("GetHariLibur", "Gantt")',
+                type: 'POST',
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (result) {
+
+                    var values = JSON.parse(result);
+                    let libur = values.map(a => a.Holiday);
+                    Holiday = libur;
+
+                }
+            });
+        }
+
+        function DonwloadFile() {
+            var test = '@Url.Action("GetMPPExecution", "ProjectExec", new { ProjectHeaderID = Request["ProjectHeaderID"] +"|"+ Request["Keys"] })';
+            gantt.exportToExcel({
+                name: "Gantt Chart Execution.xlsx",
+                //columns: [
+                //    { name: "wbs", label: " ", width: 40, template: gantt.getWBSCode, resize: true },
+                //    {
+                //        name: "text", label: "Task name", tree: true, width: 400, resize: true,
+                //    },
+                //    {
+                //        name: "plant", label: "Plan(%)", align: "center", width: 50, resize: true,
+                //        template: function (dur) {
+                //            if (dur.plant == 0) {
+                //                return "0%";
+                //            } else {
+                //                return dur.plant + "%";
+                //            }
+                //        }
+                //    },
+                //    {
+                //        name: "progress", label: "Real(%)", width: 50, align: "center", resize: true,
+                //        template: function (item) {
+                //            if (item.progress >= 1) return "100%";
+                //            if (item.progress == 0) return "0%";
+                //            return Math.round(item.progress * 100) + "%";
+                //        }
+                //    },
+                //    { name: "durasi", label: "Duration (Days)", align: "center", width: 80, resize: true },
+                //    { name: "start_date", label: "Start time", align: "center", width: 65, resize: true },
+                //    { name: "end_date", label: "End time", align: "center", width: 65, resize: true },
+                //    { name: "actual_start", label: "Actual Start time", align: "center", width: 95, resize: true },
+                //    { name: "actual_end", label: "Actual End time", align: "center", width: 95, resize: true },
+                //    //{ name: "kpi", label: "KPI", align: "center", width: 50, resize: true },
+                //    { name: "notes", label: "Notes", align: "center", width: 300, resize: true }
+                //],
+                //server: test,
+                //callback: function (res) {
+                //    alert(res.url);
+                //},
+                //visual: true,
+                //cellColors: true,
+                //data: {},
+                //date_format: "dddd d, mmmm yyyy"
+            });
+        }
+
+        function isNumeric(num) {
+            num = "" + num; //coerce num to be a string
+            return !isNaN(num) && !isNaN(parseFloat(num));
+        }
+
+        function roundAccurately(number,decimalPlaces) {
+            return Number(Math.round(number + "e" + decimalPlaces) + "e-" + decimalPlaces);
+        }
+
+        var idall;
+        var z;
+        var milestonecomp = [];
+
+        function GetMPPData() {
+
+            var test = '@Url.Action("GetMPPExecution", "ProjectExec", new { ProjectHeaderID = Request["ProjectHeaderID"] +"|"+ Request["Keys"] })';
+
+            $.ajax({
+                url: test,
+                type: 'POST',
+                dataType: 'json',
+                beforeSend: function () {
+                    $(".ll").show();
+                },
+                complete: function () {
+                    $(".ll").hide();
+                },
+                contentType: false,
+                processData: false,
+                success: function (result) {
+
+                    var Datas = result.GanttChart;
+                    var links = result.GanttChartLink;
+                    var tasks = {
+                        data: Datas,
+                        links: links
+                    };
+
+                    gantt.attachEvent("onGanttReady", function () {
+                        gantt.config.buttons_left = ["gantt_save_btn"];
+                        gantt.config.buttons_right = ["gantt_cancel_btn"];
+                    });
+
+                    gantt.templates.scale_cell_class = function (date) {
+                        if (date.getDay() == 0 || date.getDay() == 6) {
+                            return "weekend";
+                        }
+                    };
+
+                    gantt.templates.task_cell_class = function (item, date) {
+                        if (date.getDay() == 0 || date.getDay() == 6) {
+                            return "weekend"
+                        }
+                    };
+
+                    gantt.templates.grid_row_class = function (start_date, end_date, item) {
+                        if (item.progress == 0) return "red";
+                        if (item.progress >= 1) return "green";
+                    };
+
+                    gantt.templates.task_row_class = function (start_date, end_date, item) {
+                        if (item.progress == 0) return "red";
+                        if (item.progress >= 1) return "green";
+                    };
+
+                    gantt.config.layout = {
+                        css: "gantt_container",
+                        cols: [
+                            {
+                                width: 400,
+                                min_width: 400,
+
+                                // adding horizontal scrollbar to the grid via the scrollX attribute
+                                rows: [
+                                    { view: "grid", scrollX: "gridScroll", scrollable: true, scrollY: "scrollVer" },
+                                    { view: "scrollbar", id: "gridScroll" }
+                                ]
+                            },
+                            { resizer: true, width: 1 },
+                            {
+                                rows: [
+                                    { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+                                    { view: "scrollbar", id: "scrollHor" }
+                                ]
+                            },
+                            { view: "scrollbar", id: "scrollVer" }
+                        ]
+                    };
+
+                    gantt.config.columns = [
+                        { name: "wbs", label: " ", width: 40, template: gantt.getWBSCode, resize: true },
+                        {
+                            name: "text", label: "Task name", tree: true, width: 400, resize: true,
+                        },
+                        {
+                            name: "plant", label: "Plan(%)", align: "center", width: 50, resize: true,
+                            template: function (dur) {
+                                if (dur.plant == 0) {
+                                    return "0%";
+                                } else {
+                                    return dur.plant + "%";
+                                }
+                            }
+                        },
+                        {
+                            name: "progress", label: "Real(%)", width: 50, align: "center", resize: true,
+                            template: function (item) {
+                                if (item.progress >= 1) return "100%";
+                                if (item.progress == 0) return "0%";
+                                return Math.round(item.progress * 100) + "%";
+                            }
+                        },
+                        { name: "durasi", label: "Duration (Days)", align: "center", width: 80, resize: true },
+                        { name: "start_date", label: "Start time", align: "center", width: 65, resize: true },
+                        { name: "end_date", label: "End time", align: "center", width: 65, resize: true },
+                        { name: "actual_start", label: "Actual Start time", align: "center", width: 95, resize: true },
+                        { name: "actual_end", label: "Actual End time", align: "center", width: 95, resize: true },
+                        //{ name: "kpi", label: "KPI", align: "center", width: 50, resize: true },
+                        { name: "notes", label: "Notes", align: "center", width: 300, resize: true }
+                    ];
+
+                    gantt.templates.grid_row_class = function (start, end, task) {
+                        if (task.plant > (task.progress * 100)) {
+                            $("#statusRed").text("Red");
+                            return "updColor";
+                        }
+
+                    };
+
+                    gantt.config.layout = {
+                        css: "gantt_container",
+                        cols: [
+                            {
+                                width: 940,
+                                min_width: 300,
+
+                                // adding horizontal scrollbar to the grid via the scrollX attribute
+                                rows: [
+                                    { view: "grid", scrollX: "gridScroll", scrollable: true, scrollY: "scrollVer" },
+                                    { view: "scrollbar", id: "gridScroll" }
+                                ]
+                            },
+                            { resizer: true, width: 1 },
+                            {
+                                rows: [
+                                    { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+                                    { view: "scrollbar", id: "scrollHor" }
+                                ]
+                            },
+                            { view: "scrollbar", id: "scrollVer" }
+                        ]
+                    };
+
+                    gantt.attachEvent("onLightboxSave", function (id, item) {
+
+                        var isnum = isNumeric(item.progress);
+                        var isValid = /^[0-9]*$/.test(item.progress);
+
+                        if (isValid === true) {
+
+                            if (isnum == true) {
+
+                                var status = item.stat;
+
+                                if (item.type == 'milestone' && item.progress > 95) {
+
+                                    var found = milestonecomp.find(function (element) { return element == item.id; });
+
+                                    if (found === undefined || found === null) {
+
+                                        gantt.message({ type: "error", text: "File Pendukung Belum di upload, Realisasi belum bisa lebih dari 95%" });
+                                        item.progress = 95;
+
+                                    }
+
+                                }
+
+                                var itemm = item.actual_end;
+
+                                item.progress = item.progress / 100;
+
+                                if (item.progress != 1) { item.actual_end = null; }
+
+                                if (parseFloat(item.progress) > 1) {
+
+                                    gantt.message({ type: "error", text: "Progress is invalid!" });
+                                    return false;
+
+                                }
+
+                                if (parseFloat(item.progress) > 1) {
+
+                                    gantt.message({ type: "error", text: "Progress is invalid!" });
+                                    return false;
+
+                                }
+
+                                if (parseFloat(item.progress) < 0) {
+
+                                    gantt.message({ type: "error", text: "Progress is invalid!" });
+                                    return false;
+
+                                }
+
+                                if (id == null) {
+
+                                    task = gantt.getTask(idall);
+
+                                    task.progress = item.progress;
+
+                                    gantt.updateTask(idall);
+
+                                }
+                                //add by yr
+                                if (item.notes.trim() == '' || item.notes == null) {
+
+                                    gantt.message({ type: "error", text: "Notes is invalid!" });
+                                    return false;
+
+                                }
+
+                                return true;
+
+                            }
+                            else {
+
+                                gantt.message({ type: "error", text: "Progress is invalid!" });
+                                return false;
+
+                            }
+
+                        }
+                        else {
+
+                            gantt.message({ type: "error", text: "Progress is invalid!" });
+                            return false;
+
+                        }
+                    });
+
+                    gantt.attachEvent("onLightboxCancel", function (id) {
+
+                        var task;
+
+                        if (id != null) {
+                            task = gantt.getTask(id);
+                        }
+                        else {
+                            task = gantt.getTask(idall);
+                        }
+
+                        task.progress = task.progress / 100;
+                        return true;
+
+                    });
+
+                    gantt.config.lightbox.sections = [
+                        { name: "progress", height: 30, map_to: "progress", type: "textarea", focus: true },
+                        { name: "notes", height: 30, map_to: "notes", type: "textarea", focus: false },
+                        { name: "actual", height: 30, type: "dhx_calendar", focus: true, map_to: { actual_start: "actual_start", actual_end: "actual_end" }, date_format: '%d %M %Y' }
+                        //,{ name: "kpi", height: 30, map_to: "kpi", type: "textarea", focus: false }
+                    ];
+
+                    gantt.config.lightbox.milestone_sections = [
+                        { name: "progress", height: 30, map_to: "progress", type: "textarea", focus: true },
+                        { name: "notes", height: 30, map_to: "notes", type: "textarea", focus: false },
+                        { name: "actual", height: 30, type: "dhx_miles", focus: true, map_to: { actual_start: "actual_start" }, date_format: '%d %M %Y' }
+                        //,{ name: "kpi", height: 30, map_to: "kpi", type: "textarea", focus: false }
+                    ];
+
+                    gantt.locale.labels.section_progress = "Progress Update (%)";
+
+                    gantt.locale.labels.section_notes = "Notes";
+
+                    gantt.locale.labels.section_actual = "Actual Date";
+
+                    //gantt.locale.labels.section_kpi = "KPI";
+
+                    gantt.locale.labels.section_isnull = "Status Project";
+
+                    gantt.form_blocks["dhx_calendar"] = {
+
+                        render: function (sns) {
+                            return "<div class='dhx_calendar_cont'><input type='text' readonly='true' id='calendar1'/> &#8211; "
+                                + "<input type='text' readonly='true' id='calendar2'/><label id='duration'></label></div>";
+                        },
+                        set_value: function (node, value, task, data) {
+
+                            var AS = new Date(task.actual_start);
+                            var AE;
+
+                            if (task.actual_end == null) {
+                                AE = new Date(task.end_date);
+                            }
+                            else {
+                                AE = new Date(task.actual_end);
+                            }
+
+                            var a = node._cal_start = (task.actual_start === "") ? calendar_init('calendar1', data, new Date()) : calendar_init('calendar1', data, AS);
+                            var b = node._cal_end = (task.actual_end === "") ? calendar_init('calendar2', data, task.end_date) : calendar_init('calendar2', data, AE);
+                            var c = node.lastChild;
+
+                            b.setInsensitiveRange(null, new Date(a.getDate(false) - 86400000));
+
+                            var a_click = a.attachEvent("onClick", function (date) {
+                                b.setInsensitiveRange(null, new Date(date.getTime() - 86400000));
+                            });
+
+                            var b_click = b.attachEvent("onClick", function (date) {
+                                //duration(a, b, c);
+                            });
+
+                            var a_time_click = a.attachEvent("onChange", function (d) {
+                                b.setInsensitiveRange(null, new Date(d.getTime() - 86400000));
+                                //duration(a, b, c);
+                            });
+
+                            var b_time_click = b.attachEvent("onChange", function (d) {
+                                //duration(a, b, c);
+                            });
+
+                            var id = gantt.attachEvent("onAfterLightbox", function () {
+
+                                a.detachEvent(a_click);
+                                a.detachEvent(a_time_click);
+                                a.unload();
+                                b.detachEvent(b_click);
+                                b.detachEvent(b_time_click);
+                                b.unload();
+                                a = b = null;
+                                this.detachEvent(id);
+                            });
+
+                            document.getElementById('calendar1').value = a.getDate(true);
+                            document.getElementById('calendar2').value = b.getDate(true);
+                            //duration(a, b, c);
+                        },
+                        get_value: function (node, task) {
+                            task.actual_start = node._cal_start.getDate(false);
+                            task.actual_end = node._cal_end.getDate(false);
+                            return task;
+                        },
+                        focus: function (node) { }
+                    };
+
+                    gantt.form_blocks["dhx_miles"] = {
+
+                        render: function (sns) {
+                            return "<div class='dhx_calendar_cont'><input type='text' readonly='true' id='calendar1'/>"
+                                + "</div>";
+                        },
+                        set_value: function (node, value, task, data) {
+
+                            var AS = new Date(task.actual_start);
+                            var AE = new Date(task.actual_end);
+                            var a = node._cal_start = (task.actual_start != "") ? calendar_init('calendar1', data, AS) : calendar_init('calendar1', data, task.start_date);
+                            var id = gantt.attachEvent("onAfterLightbox", function () {
+                                a.unload();
+                                a = null;
+                                this.detachEvent(id);
+                            });
+
+                            document.getElementById('calendar1').value = a.getDate(true);
+
+                        },
+                        get_value: function (node, task) {
+                            task.actual_start = node._cal_start.getDate(false);
+                            task.actual_end = node._cal_start.getDate(false);
+                            return task;
+                        },
+                        focus: function (node) { }
+
+                    };
+
+                    gantt.attachEvent("onBeforeLightbox", function (id) {
+
+                        var task = gantt.getTask(id);
+                        idall = id;
+                        var haschild = gantt.hasChild(id);
+
+                        if (haschild == true) {
+                            gantt.message({ type: "error", text: "Hanya bisa Mengisi Sub Task" });
+                            return false;
+                        }
+                        else {
+                            task.progress = Math.round(task.progress * 100);
+                            return true;
+                        }
+
+                    });
+
+                    gantt.attachEvent("onAfterTaskUpdate", function (id, item) {
+                        debugger;
+                        if (id == null) { id = idall; }
+                        var task = gantt.getTask(id);
+                        var parent = task.parent;
+
+                        if (parent == 1) {
+
+                            var final_value = 0;
+                            var final_value_final = 0;
+                            var sum_child_duration = 0;
+                            var parent_task = gantt.getTask(parent);
+                            var parent_duration = parseInt(parent_task.durasi);
+                            var all_childs = gantt.getChildren(parent);
+
+                            all_childs.forEach(x => {
+                                var y = gantt.getTask(x);
+                                var child_duration = y.durasi;
+                                //if (y.durasi == 0) {
+                                //    child_duration = 1;
+                                //}
+                                var child_progress = y.progress;
+                                final_value += child_duration * child_progress;
+                                sum_child_duration += parseInt(child_duration);
+                            });
+
+                            //gantt.eachTask(function something(all_childs) {
+
+                            //    var checkLeaf = gantt.getChildren(all_childs.id);
+
+                            //    if (checkLeaf.length <= 0) {
+
+                            //        var child_duration = all_childs.durasi;
+                            //        var child_progress = all_childs.progress;
+                            //        final_value += child_duration * child_progress;
+                            //        sum_child_duration += parseInt(child_duration);
+
+                            //    }
+
+                            //}, parent);
+
+                            //gantt.eachTask(function something(all_childs) {
+
+                            //    var checkLeaf = gantt.getChildren(all_childs.id);
+
+                            //    //if (checkLeaf.length <= 0) {
+                            //    //    final_value_final += (all_childs.durasi / sum_child_duration).toFixed(2) * all_childs.progress;
+                            //    //}
+
+                            //    if (checkLeaf.length <= 0) {
+                            //        final_value_final += all_childs.durasi * all_childs.progress;
+                            //    }
+
+                            //}, parent);
+
+                            final_value_final = final_value_final / sum_child_duration;
+
+                            if (final_value_final > '0.99' && final_value_final < '1') {
+                                final_value_final = '0.99';
+                            }
+                            //else {
+                            //    final_progress = Math.round(final_progress * 100) / 100;
+                            //}
+
+                            parent_task.progress = final_value_final;
+
+                            gantt.updateTask(parent);
+                        }
+
+                        if (parent != 0 && parent != 1) {
+
+                            var final_value = 0;
+                            var sum_child_duration = 0;
+                            var parent_task = gantt.getTask(parent);
+                            var parent_duration = parseInt(parent_task.durasi);
+                            var all_childs = gantt.getChildren(parent);
+
+                            all_childs.forEach(x => {
+                                var y = gantt.getTask(x);
+                                var child_duration = y.durasi;
+                                //if (y.durasi == 0) {
+                                //    child_duration = 1;
+                                //}
+                                var child_progress = y.progress;
+                                final_value += child_duration * child_progress;
+                                sum_child_duration += parseInt(child_duration);
+                            });
+
+                            //gantt.eachTask(function something(all_childs) {
+
+                            //    var child_duration = all_childs.durasi;
+                            //    var child_progress = all_childs.progress;
+                            //    final_value += child_duration * child_progress;
+                            //    sum_child_duration += parseInt(child_duration);
+
+                            //}, parent);
+
+                            var dif;
+
+                            if (sum_child_duration < parent_duration) {
+
+                                //dif = Math.abs(sum_child_duration - parent_duration);
+                                //var final_progress = final_value / (parent_duration - dif);
+                                var final_progress = final_value / sum_child_duration;
+
+                                if (final_progress > '0.99' && final_progress < '1') {
+                                    final_progress = '0.99';
+                                }
+                                else {
+                                    final_progress = roundAccurately(final_progress, 4);
+                                }
+                            }
+                            else if (sum_child_duration > parent_duration) {
+
+                                //dif = Math.abs(sum_child_duration - parent_duration);
+                                //var final_progress = final_value / (parent_duration + dif);
+                                var final_progress = final_value / sum_child_duration;
+
+                                if (final_progress > '0.99' && final_progress < '1') {
+                                    final_progress = '0.99';
+                                }
+                                else {
+                                    final_progress = roundAccurately(final_progress , 4);
+                                }
+                            }
+                            else {
+
+                                dif = 0;
+                                //var final_progress = final_value / (parent_duration - dif);
+                                var final_progress = final_value / sum_child_duration;
+                                if (final_progress > '0.99' && final_progress < '1') {
+                                    final_progress = '0.99';
+                                }
+                                else if (item.$rendered_type === 'milestone' && parent_duration === 0) {
+                                    final_progress = item.progress;//Math.round(final_progress * 100) / 100;
+                                }
+                                else {
+                                    final_progress = roundAccurately(final_progress,4);
+                                }
+                            }
+
+                            parent_task.progress = final_progress;
+                            gantt.updateTask(parent);
+
+                        }
+                        else { }
+
+                    });
+
+                    gantt.config.open_tree_initially = true;
+
+                    gantt.init("gantt-eksekusi");
+
+                    gantt.parse(tasks);
+
+                    document.getElementById("buttonDownloadGanttChart").style.display = "block";
+
+                }
+            });
+
+        }
+
+        function getGanttData() { return gantt.serialize(); }
+
+        function Milestone() {
+
+            $.ajax({
+                url: '@Url.Action("CheckMilestone", "Exporting" )' + '?ProjectHeaderID=@Request["ProjectHeaderID"]&TaskID=1',
+                type: 'POST',
+                success: function (result) {
+
+                    var rr = JSON.parse(result);
+                    z = JSON.parse(rr);
+                    let mile = z.map(a => a.TaskID);
+                    milestonecomp = mile;
+
+                },
+                error: function (xhr, status, error) {
+
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage);
+
+                }
+            });
+
+        }
+
+    </script>
+
+</body>
+</html>

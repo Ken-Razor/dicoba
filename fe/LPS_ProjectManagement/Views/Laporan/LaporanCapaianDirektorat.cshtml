@@ -1,0 +1,308 @@
+﻿@model LPS_ProjectManagement.Models.ReportModels.LaporanPencapaian
+@using LPS_ProjectManagement.Helper;
+@{
+    /**/
+
+    ViewBag.Title = "Laporan Capaian Direktorat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .circle {
+        border-radius: 50%;
+        width: 5px;
+        height: 5px;
+        margin: auto;
+        padding: 5px;
+        /* width and height can be anything, as long as they're equal */
+    }
+
+    thead, th, tbody, td {
+        text-align: center;
+    }
+</style>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Laporan Pencapaian</h2>
+        </header>
+        <div class="content-body padding-top-45">
+            <div class="row padding-left-30 padding-right-30">
+                <div>
+                    <div class="row">
+                        <div class="tab-group">
+                            <section id="tab1" title="Direktorat">
+                                <div class="row padding-top-30">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-1"><i class="material-icons pull-right" style="color:blue">brightness_1</i></div>
+                                        <div class="col-md-2"><label>Pencapaian di atas target <br />( >= 110% )</label></div>
+                                        <div class="col-md-1"><i class="material-icons pull-right" style="color:green">brightness_1</i></div>
+                                        <div class="col-md-2"><label>Pencapaian sesuai target <br />( >= 100% dan < 110%)</label></div>
+                                        <div class="col-md-1"><i class="material-icons pull-right" style="color:yellow">brightness_1 </i></div>
+                                        <div class="col-md-2"><label>Pencapaian sedikit di bawah target <br />(  >= 85% dan < 100% )</label></div>
+                                        <div class="col-md-1"><i class="material-icons pull-right" style="color:red">brightness_1 </i></div>
+                                        <div class="col-md-2"><label>Pencapaian jauh di bawah target <br />( < 85% )</label></div>
+                                    </div>
+                                </div>
+
+                                <div class="row padding-top-30">
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                        <div class="form-group has-warning">
+                                            <label class="form-label label-header" for="ddlYear">Tahun</label>
+                                            <span class="desc"></span>
+                                            <div class="controls">
+                                                <select id="ddlYear" class="form-control ddlYear" style="width:100%;" onchange="OnOnchangeDdlYear(@DateTime.Now.Year, @DateTime.Now.Month)">
+                                                    @for (int year = Convert.ToInt32(DateTime.Now.Year.ToString()) - 10; year <= Convert.ToInt32(DateTime.Now.Year.ToString()); year++)
+                                                    {
+                                                        if (Convert.ToInt32(DateTime.Now.Year.ToString()) == year)
+                                                        {
+                                                            <option value=@year selected="selected">@year</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value=@year>@year</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                        <div class="form-group has-warning">
+                                            <label class="form-label label-header" for="ddlMonth">Bulan</label>
+                                            <span class="desc"></span>
+                                            <div class="controls">
+                                                <select id="ddlMonth" class="form-control ddlMonth" style="width:100%">
+                                                    @{ var ListMonth = GlobalHelper.ListDropDowMonth(); }
+
+                                                    @for (int i = 0; i < 12; i++)
+                                                    {
+                                                        if (ListMonth[i].Month == DateTime.Now.Month)
+                                                        {
+                                                            <option value="@ListMonth[i].Month" selected="selected">@ListMonth[i].Description</option>
+                                                            i = 12;
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@ListMonth[i].Month">@ListMonth[i].Description</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <div class="form-group has-warning">
+                                            <label class="form-label label-header" for="ddlYear">&nbsp;</label>
+                                            <span class="desc"></span>
+                                            <div class="controls">
+                                                <button onclick="Search()" type="button" class="btn btn-info btn-corner">@*<a href="">*@<i class="fa fa-search"></i>&nbsp;&nbsp; Search@*</a>*@</button>
+                                                <button onclick="tableToExcel('tblDirektoratPrint', 'Capaian Direktorat');" type="button" class="btn btn-warning btn-corner">@*<a href="">*@<i class="fa fa-print"></i>&nbsp;&nbsp; Export To Excel@*</a>*@</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 pull-right">
+                                        <div class="form-group has-warning">
+                                            <label class="form-label label-header" for="ddlYear">&nbsp;</label>
+                                            <span class="desc"></span>
+                                            <div class="controls">
+                                                <button onclick="Print()" type="button" class="btn btn-warning btn-corner">@*<a href="">*@<i class="fa fa-print"></i>&nbsp;&nbsp; Download PDF@*</a>*@</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row padding-top-10">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <div id="divFile">
+                                                <table id="tblDirektorat" class="table table-bordered" style="width:100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Direktorat</th>
+                                                            <th>Anggaran (Rp.Juta)</th>
+                                                            <th>Status</th>
+                                                            <th>Pencapaian (%)</th>
+                                                            <th>Realisasi Anggaran (%)</th>
+                                                            <th>Real + Komit (%)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.Dir.Count > 0)
+                                                        {
+                                                            foreach (var item in Model.Dir)
+                                                            {
+                                                                <tr>
+                                                                    <td style="text-align:left !important;">@item.NamaDirektorat</td>
+                                                                    <td>@item.TotalAnggaran</td>
+                                                                    <td>@Html.Raw(item.Status)</td>
+                                                                    <td>@item.RataPencapain</td>
+                                                                    <td>@item.Realisasi</td>
+                                                                    <td>
+                                                                        @item.Realkomit
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<table id="tblDirektoratPrint" class="table table-bordered" style="display:none;">
+    <thead>
+        <tr>
+            <th>Direktorat</th>
+            <th>Anggaran (Rp.Juta)</th>
+            <th>Status</th>
+            <th>Pencapaian (%)</th>
+            <th>Realisasi Anggaran (%)</th>
+            <th>Real + Komit (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Dir.Count > 0)
+        {
+            foreach (var item in Model.Dir)
+            {
+                string str = "";
+                if (item.Status != null)
+                {
+                    str = item.Status.Remove(0, 19).Remove(item.Status.Remove(0, 19).Length - 7);
+                }
+                <tr>
+                    <td style="text-align:left !important;">@item.NamaDirektorat</td>
+                    <td>@item.TotalAnggaran</td>
+                    <td @Html.Raw(str)></td>
+                    <td>@item.RataPencapain</td>
+                    <td>@item.Realisasi</td>
+                    <td>
+                        @item.Realkomit
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+<script>
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            //window.location.href = uri + base64(format(template, ctx))
+
+            var link = document.createElement("a");
+            link.download = "Report-CapaianDirektorat.xls";
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+        }
+    })();
+    $(document).ready(function () {
+        $('.tab-group').tabify();
+        $('#tblPencapaianTrans').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            "scrollX": true,
+            info: false
+        });
+        $('#tblSO').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            "scrollX": true,
+            info: false
+        });
+        $('#tblDirektorat').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            "scrollX": true,
+            info: false
+        });
+
+        $('.ddlYear').select2({
+            placeholder: 'Pilih Tahun',
+            selectOnClose: true
+        });
+
+        $('.ddlMonth').select2({
+            placeholder: 'Pilih Bulan',
+            selectOnClose: true
+        });
+
+        $('.ddlIsTransformasi').select2({
+            placeholder: 'Pilih Bulan',
+            selectOnClose: true
+        });
+    });
+
+    function Search() {
+        var Month = $('#ddlMonth').val();
+        var Year = $('#ddlYear').val();
+        var Week = 0;
+        var Tipe = $('#ddlIsTransformasi').val();
+
+
+        location.href = '@Url.Action("LaporanCapaianDirektorat", "Laporan")' + '?week=' + Week + '&month=' + Month + '&year=' + Year ;
+    }
+
+     function Print() {
+        var Month = $('#ddlMonth').val();
+        var Year = $('#ddlYear').val();
+        var Week = 0;
+
+
+        location.href = '@Url.Action("PrintCapaianProyek", "Exporting")' + '?week=' + Week + '&month=' + Month + '&year=' + Year + '&jenis=Direktorat|2' ;
+    }
+    
+    function OnOnchangeDdlYear(CurrentYear, CurrentMonth) {
+
+        var ListMonth = @Html.Raw(Json.Encode(GlobalHelper.ListDropDowMonth()));
+
+        debugger;
+
+        var Year = $('#ddlYear').val();
+        var select = document.getElementById("ddlMonth");
+
+        select.innerHTML = "";
+
+        if (Year == CurrentYear) {
+            for (var i = 0; i < 12; i++) {
+                if (ListMonth[i].Month == CurrentMonth) {
+                    select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+                    i = 12;
+                }
+                else {
+                    select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+                }
+            }
+        } else {
+            for (var i = 0; i < 12; i++) {
+                select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+            }
+        }
+        
+    }
+
+</script>
+
+
+

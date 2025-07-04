@@ -1,0 +1,346 @@
+﻿@model LPS_ProjectManagement.Models.DashboardModels.DashboardProject.DashboardProjectHeaderModel
+
+@{
+    ViewBag.Title = "Laporan Kendala";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using LPS_ProjectManagement.Helper;
+
+@*<link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet" />*@
+<link href="~/Content/datatables/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="~/Scripts/dataTables/dataTables.buttons.min.js"></script>
+@*<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>*@
+<script src="~/Assets/jszip.min.js"></script>
+
+<style>
+
+    td {
+        white-space: nowrap;
+    }
+
+        td.wrapok {
+            white-space: nowrap;
+            width: 500px;
+        }
+</style>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <section class="box">
+            <div class="content-body padding-15" style=" max-height: none; overflow: auto;">
+                <div class="row padding-15">
+
+                    <div class="col-md-2 padding-top-30">
+                        <h4>Year</h4>
+                        <select id="ddlYear" class="form-control ddlYear" style="width:100%;" onchange="OnOnchangeDdlYear(@DateTime.Now.Year, @DateTime.Now.Month)">
+                            @for (int year = Convert.ToInt32(DateTime.Now.Year.ToString()) - 10; year <= Convert.ToInt32(DateTime.Now.Year.ToString()); year++)
+                            {
+                                if (Convert.ToInt32(DateTime.Now.Year.ToString()) == year)
+                                {
+                                    <option value=@year selected="selected">@year</option>
+                                }
+                                else
+                                {
+                                    <option value=@year>@year</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 padding-top-30">
+                        <h4>Month</h4>
+                        <select id="ddlMonth" class="form-control ddlMonth" style="width:100%" onchange="OnOnchangeDdlMonth()">
+                            @{ var ListMonth = GlobalHelper.ListDropDowMonth(); }
+
+                            @for (int i = 0; i < 12; i++)
+                            {
+                                if (ListMonth[i].Month == Model.Month)
+                                {
+                                    <option value="@ListMonth[i].Month" selected="selected">@ListMonth[i].Description</option>
+                                    i = 12;
+                                }
+                                else
+                                {
+                                    <option value="@ListMonth[i].Month">@ListMonth[i].Description</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 padding-top-30" style="vertical-align:central">
+                        <h4>Week</h4>
+                        <select id="ddlWeek" class="form-control ddlWeek" style="width:100%">
+
+                            @for (int x = 1; x <= Model.JumlahWeek; x++)
+                            {
+                                if (x == (Model.Week))
+                                {
+                                    <option value="@x" selected="selected">Minggu Ke-@x</option>
+                                }
+                                else
+                                {
+                                    if (x <= Model.Week)
+                                    {
+                                        <option value="@x">Minggu Ke-@x</option>
+                                    }
+                                }
+                            }
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 padding-top-30" style="text-align:center">
+                        &nbsp;
+                        <button class="btn btn-success" onclick="AllDataSearch()"><i class="fa fa-search"></i> Search</button>
+                        &nbsp;
+                        <button class="btn btn-success" onclick="DownloadAllData()"><i class="fa fa-download"></i> Download</button>
+                    </div>
+
+                </div>
+
+                <div class="row padding-15 padding-right-15">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <table id="tblListAllData" class="display" style="width:100%">
+                            <thead>
+                              
+                                <tr>
+                                    <th style="text-align:center; white-space:nowrap">Kode Proyek</th>
+                                    <th style="text-align:center; white-space:nowrap">Nama Proyek</th>
+                                    <th style="text-align:center; white-space:nowrap">PIC</th>
+                                    <th style="text-align:center; white-space:nowrap">Pencapaian</th>
+                                    <th style="text-align:center; white-space:nowrap">Tipe Kendala</th>
+                                    <th style="text-align:center; white-space:nowrap">Kendala</th>
+                                    <th style="text-align:center; white-space:nowrap">Rencana Aksi</th>
+                                    <th style="text-align:center; white-space:nowrap">Resiko</th>
+                                    <th style="text-align:center; white-space:nowrap">Mitigasi</th>
+                                    <th style="text-align:center; white-space:nowrap">Status</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#tblListAllData').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            "scrollX": true,
+            info: false,
+            buttons: [
+               'excel' 
+            ]
+        });
+
+        $('.ddlYear').select2({
+            placeholder: 'Pilih Tahun',
+            selectOnClose: true
+        });
+
+        $('.ddlMonth').select2({
+            placeholder: 'Pilih Bulan',
+            selectOnClose: true
+        });
+
+        $('.ddlWeek').select2({
+            placeholder: 'Pilih Minggu',
+            selectOnClose: true
+        });
+
+    });
+
+    function AllDataSearch() {
+
+        data = {
+            Year: $('#ddlYear').val(),
+            Month: $('#ddlMonth').val(),
+            Week: $('#ddlWeek').val()
+        }
+
+        $.ajax({
+            url: '@Url.Action("LaporanKendala", "Laporan")',
+            data: data,
+            success: function (result) {
+                debugger;
+
+                if (result.Result === "Success") {
+
+                } else {
+                    alert(result.Message);
+                }
+
+                $('#tblListAllData').DataTable().destroy();
+                //$('#tblListAllData').empty();
+                //$("#tblListAllData tr").remove();
+
+                $('#tblListAllData').DataTable({
+                    "bLengthChange": false,
+                    "autoWidth": false,
+                    searching: true,
+                    "scrollX": true ,//Use This (Add This Line)
+                    info: false,
+                    data: result.data,
+                    "columns": [
+                        {
+                            "data": "ProjectNo",
+                            "className": "text-left"
+                        },
+                        {
+                            "data": "ProjectName",
+                            "className": "text-left"
+                        },
+                        {
+                            "data": "DepartmentCode",
+                            "className": "text-left",
+                        },
+                        {
+                            "data": "Pencapaian",
+                            "className": "text-left"
+                        },
+                        {
+                            "data": "ConstraintName",
+                            "className": "text-left",
+                        },
+                        {
+                            "data": "Description",
+                            "className": "text-left",
+                        },
+                        {
+                            "data": "remarks",
+                            "className": "text-left"
+                        },
+                        {
+                            "data": "problem",
+                            "className": "text-left"
+                        },
+                        {
+                            "data": "mitigasi",
+                            "className": "text-left",
+                        },
+                        {
+                            "data": "mitigasi",
+                            "className": "text-left"
+                        },
+                        {
+                            "data": "status",
+                            "className": "text-left"
+                        }
+                    ]
+                });
+                $('#tblListAllData').columns.adjust();
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                debugger;
+                    alert(xhr.status);
+                    alert(thrownError);
+            }
+        });
+    }
+
+    function DownloadAllData() {
+
+        //location.href = '@Url.Action("ExportExcelAllDataRow", "Laporan")' + '?Year=' + $('#ddlYear').val() + '&Month=' + $('#ddlMonth').val() + '&Week=' + $('#ddlWeek').val();
+        window.open('@Url.Action("PrintKendala", "Laporan")' + '?Year=' + $('#ddlYear').val() + '&Month=' + $('#ddlMonth').val() + '&Week=' + $('#ddlWeek').val());
+    }
+    
+    function OnOnchangeDdlYear(CurrentYear, CurrentMonth) {
+
+        var ListMonth = @Html.Raw(Json.Encode(GlobalHelper.ListDropDowMonth()));
+
+        debugger;
+
+        var Year = $('#ddlYear').val();
+        var select = document.getElementById("ddlMonth");
+
+        select.innerHTML = "";
+
+        if (Year == CurrentYear) {
+            for (var i = 0; i < 12; i++) {
+                if (ListMonth[i].Month == CurrentMonth) {
+                    select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+                    i = 12;
+                }
+                else {
+                    select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+                }
+            }
+        } else {
+            for (var i = 0; i < 12; i++) {
+                select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+            }
+        }
+
+        OnOnchangeDdlMonth();
+
+    }
+
+    @*function OnOnchangeDdlMonth() {
+        var data = {
+            Year: $('#ddlYear').val(),
+            Month: $('#ddlMonth').val()
+        }
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetDdlWeek", "Beranda")',
+            data: data,
+            traditional: true,
+            success: function (result) {
+                var select = document.getElementById("ddlWeek");
+
+                // Optional: Clear all existing options first:
+                select.innerHTML = "";
+                // Populate list with options:
+                for (var i = 1; i <= result.JumlahWeek; i++) {
+                    var opt = i;
+                    select.innerHTML += "<option value=\"" + opt + "\">Minggu Ke-" + opt + "</option>";
+                }
+            }
+        });
+    }*@
+    function OnOnchangeDdlMonth() {
+        var data = {
+            Year: $('#ddlYear').val(),
+            Month: $('#ddlMonth').val()
+        }
+        var da = new Date();
+        var Cyear = da.getFullYear();
+        var Cmonth = da.getMonth() + 1;
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetDdlWeek", "Beranda")',
+            data: data,
+            traditional: true,
+            success: function (result) {
+                var select = document.getElementById("ddlWeek");
+
+                // Optional: Clear all existing options first:
+                select.innerHTML = "";
+                // Populate list with options:
+                if (result.Month < Cmonth || result.Year < Cyear) {
+                    for (var i = 1; i <= result.JumlahWeek; i++) {
+                        var opt = i;
+                        select.innerHTML += "<option value=\"" + opt + "\">Minggu Ke-" + opt + "</option>";
+                    }
+                }
+                else {
+                    for (var i = 1; i <= result.Week; i++) {
+                        var opt = i;
+                        select.innerHTML += "<option value=\"" + opt + "\">Minggu Ke-" + opt + "</option>";
+                    }
+                }
+            }
+        });
+    }
+</script>

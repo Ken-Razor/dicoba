@@ -1,0 +1,90 @@
+D:\Net Promise Kairos\LPS\LPS_API\LPS_BLL\bin\Release\LPS_BLL.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_BLL\bin\Release\LPS_BLL.pdb
+D:\Net Promise Kairos\LPS\LPS_API\LPS_BLL\bin\Release\LPS_DAL.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_BLL\bin\Release\LPS_DAL.pdb
+D:\Net Promise Kairos\LPS\LPS_API\LPS_BLL\obj\Release\LPS_BLL.csprojAssemblyReference.cache
+D:\Net Promise Kairos\LPS\LPS_API\LPS_BLL\obj\Release\LPS_BLL.csproj.CoreCompileInputs.cache
+D:\Net Promise Kairos\LPS\LPS_API\LPS_BLL\obj\Release\LPS_BLL.csproj.CopyComplete
+D:\Net Promise Kairos\LPS\LPS_API\LPS_BLL\obj\Release\LPS_BLL.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_BLL\obj\Release\LPS_BLL.pdb
+D:\PROMISE_API\LPS_BLL\bin\Release\LPS_BLL.dll
+D:\PROMISE_API\LPS_BLL\bin\Release\LPS_BLL.pdb
+D:\PROMISE_API\LPS_BLL\bin\Release\LPS_DAL.dll
+D:\PROMISE_API\LPS_BLL\bin\Release\LPS_DAL.pdb
+D:\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csprojAssemblyReference.cache
+D:\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csproj.CoreCompileInputs.cache
+D:\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csproj.CopyComplete
+D:\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.dll
+D:\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.pdb
+D:\LPS\PROMISE_API\LPS_BLL\bin\Release\LPS_BLL.dll
+D:\LPS\PROMISE_API\LPS_BLL\bin\Release\LPS_BLL.pdb
+D:\LPS\PROMISE_API\LPS_BLL\bin\Release\LPS_DAL.dll
+D:\LPS\PROMISE_API\LPS_BLL\bin\Release\LPS_DAL.pdb
+D:\LPS\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csprojAssemblyReference.cache
+D:\LPS\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csproj.CoreCompileInputs.cache
+D:\LPS\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csproj.CopyComplete
+D:\LPS\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.dll
+D:\LPS\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.pdb
+D:\LPS1\PROMISE_API\LPS_BLL\bin\Release\LPS_BLL.dll
+D:\LPS1\PROMISE_API\LPS_BLL\bin\Release\LPS_BLL.pdb
+D:\LPS1\PROMISE_API\LPS_BLL\bin\Release\LPS_DAL.dll
+D:\LPS1\PROMISE_API\LPS_BLL\bin\Release\LPS_DAL.pdb
+D:\LPS1\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csprojAssemblyReference.cache
+D:\LPS1\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csproj.CoreCompileInputs.cache
+D:\LPS1\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csproj.CopyComplete
+D:\LPS1\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.dll
+D:\LPS1\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.pdb
+D:\LPS1\Backup\PROMISE_API\LPS_BLL\bin\Release\LPS_BLL.dll
+D:\LPS1\Backup\PROMISE_API\LPS_BLL\bin\Release\LPS_BLL.pdb
+D:\LPS1\Backup\PROMISE_API\LPS_BLL\bin\Release\LPS_DAL.dll
+D:\LPS1\Backup\PROMISE_API\LPS_BLL\bin\Release\LPS_DAL.pdb
+D:\LPS1\Backup\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csprojAssemblyReference.cache
+D:\LPS1\Backup\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csproj.CoreCompileInputs.cache
+D:\LPS1\Backup\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csproj.CopyComplete
+D:\LPS1\Backup\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.dll
+D:\LPS1\Backup\PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.pdb
+C:\LPS1\_PROMISE_API\LPS_BLL\bin\Release\LPS_BLL.dll
+C:\LPS1\_PROMISE_API\LPS_BLL\bin\Release\LPS_BLL.pdb
+C:\LPS1\_PROMISE_API\LPS_BLL\bin\Release\LPS_DAL.dll
+C:\LPS1\_PROMISE_API\LPS_BLL\bin\Release\LPS_DAL.pdb
+C:\LPS1\_PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csprojAssemblyReference.cache
+C:\LPS1\_PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csproj.CopyComplete
+C:\LPS1\_PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.dll
+C:\LPS1\_PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.pdb
+C:\LPS1\_PROMISE_API\LPS_BLL\obj\Release\LPS_BLL.csproj.CoreCompileInputs.cache
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_BLL\bin\Release\LPS_BLL.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_BLL\bin\Release\LPS_BLL.pdb
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_BLL\bin\Release\LPS_DAL.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_BLL\bin\Release\LPS_DAL.pdb
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_BLL\obj\Release\LPS_BLL.csprojAssemblyReference.cache
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_BLL\obj\Release\LPS_BLL.csproj.CoreCompileInputs.cache
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_BLL\obj\Release\LPS_BLL.csproj.CopyComplete
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_BLL\obj\Release\LPS_BLL.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_BLL\obj\Release\LPS_BLL.pdb
+C:\Promise\BE\PROMISE API\LPS_BLL\bin\Release\LPS_BLL.dll
+C:\Promise\BE\PROMISE API\LPS_BLL\bin\Release\LPS_BLL.pdb
+C:\Promise\BE\PROMISE API\LPS_BLL\bin\Release\LPS_DAL.dll
+C:\Promise\BE\PROMISE API\LPS_BLL\bin\Release\LPS_DAL.pdb
+C:\Promise\BE\PROMISE API\LPS_BLL\obj\Release\LPS_BLL.csproj.AssemblyReference.cache
+C:\Promise\BE\PROMISE API\LPS_BLL\obj\Release\LPS_BLL.csproj.CoreCompileInputs.cache
+C:\Promise\BE\PROMISE API\LPS_BLL\obj\Release\LPS_BLL.csproj.CopyComplete
+C:\Promise\BE\PROMISE API\LPS_BLL\obj\Release\LPS_BLL.dll
+C:\Promise\BE\PROMISE API\LPS_BLL\obj\Release\LPS_BLL.pdb
+C:\Promise\PromiseBE\LPS_BLL\bin\Release\LPS_BLL.dll
+C:\Promise\PromiseBE\LPS_BLL\bin\Release\LPS_BLL.pdb
+C:\Promise\PromiseBE\LPS_BLL\bin\Release\LPS_DAL.dll
+C:\Promise\PromiseBE\LPS_BLL\bin\Release\LPS_DAL.pdb
+C:\Promise\PromiseBE\LPS_BLL\obj\Release\LPS_BLL.csproj.AssemblyReference.cache
+C:\Promise\PromiseBE\LPS_BLL\obj\Release\LPS_BLL.csproj.CoreCompileInputs.cache
+C:\Promise\PromiseBE\LPS_BLL\obj\Release\LPS_BLL.csproj.CopyComplete
+C:\Promise\PromiseBE\LPS_BLL\obj\Release\LPS_BLL.dll
+C:\Promise\PromiseBE\LPS_BLL\obj\Release\LPS_BLL.pdb
+C:\Promise\BePromise\LPS_BLL\bin\Release\LPS_BLL.dll
+C:\Promise\BePromise\LPS_BLL\bin\Release\LPS_BLL.pdb
+C:\Promise\BePromise\LPS_BLL\bin\Release\LPS_DAL.dll
+C:\Promise\BePromise\LPS_BLL\bin\Release\LPS_DAL.pdb
+C:\Promise\BePromise\LPS_BLL\obj\Release\LPS_BLL.csproj.AssemblyReference.cache
+C:\Promise\BePromise\LPS_BLL\obj\Release\LPS_BLL.csproj.CoreCompileInputs.cache
+C:\Promise\BePromise\LPS_BLL\obj\Release\LPS_BLL.csproj.CopyComplete
+C:\Promise\BePromise\LPS_BLL\obj\Release\LPS_BLL.dll
+C:\Promise\BePromise\LPS_BLL\obj\Release\LPS_BLL.pdb

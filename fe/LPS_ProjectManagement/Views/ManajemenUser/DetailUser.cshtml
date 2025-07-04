@@ -1,0 +1,920 @@
+﻿@model LPS_ProjectManagement.Models.UserManagementModels.UserDetailInOut
+
+@{
+    ViewBag.Title = "Detail User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Status = ViewBag.Status;
+    string RoleUser = ViewBag.Role;
+    var inc = 0;
+
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<style>
+    a.buttonu {
+        appearance: button;
+        text-decoration: none;
+        padding: 10px;
+        font-size: 12px;
+        font-weight: bold;
+        background: #5DDBB5;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+    }
+
+    .modalu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 99999;
+        opacity: 0;
+        transition: opacity 400ms ease-in;
+        pointer-events: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        min-height: 100vh;
+    }
+
+    .content-modalu {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 50%;
+        height: 60vh;
+    }
+
+    .modalu:target {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modalu h1 {
+        font-size: 42px;
+    }
+
+    .content-modalu a {
+        font-weight: bold;
+    }
+
+    .close {
+        align-self: flex-end;
+        text-decoration: none;
+        color: red;
+    }
+
+    .thumb-pic {
+        object-fit: cover;
+        border-radius: 50%;
+        height: 150px;
+        width: 150px;
+    }
+
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        vertical-align: middle !important;
+        text-align: center !important;
+    }
+
+    .table > thead > tr > th {
+        text-align: center !important;
+    }
+
+    .vertical-center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+</style>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Daftar Akun Terdaftar</h2>
+        </header>
+        <div class="content-body padding-top-45">
+            <div class="row padding-left-30 padding-right-30">
+                <div>
+                    @if (Status == "INPUT")
+                    {
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                            <div class="row">
+                                <div class="form-group col-md-9 col-xs-6">
+
+                                    <div class="controls col-md-4 col-xs-8">
+                                        <div>
+                                            <input type="text" class="form-control" placeholder="Username" id="txtUsername" readonly="readonly" />
+
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+                                    <div class="controls col-md-4 col-xs-8">
+                                        <div>
+                                            <a href="#openmodalu" class="buttonu"><i class="fa fa-search"></i>&nbsp; Tambah</a>
+
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    }
+                    <div class="row">
+                        <label class="form-label" style="font-weight : bold;">Detail Pengguna</label>
+                        <br />
+                        <br />
+                        <div class="col-md-2 padding-right-0  margin-right-0 margin-top-30">
+
+                            <img src="~/Assets/Images/no-image.png" class="thumb-pic" />
+
+                        </div>
+                        <div class="col-md-10 no-padding no-margin ">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <div class="row">
+                                        <div class="col-md-2 padding-left-0">
+                                            <label class="form-label" style="font-weight : bold;">Employee ID</label>
+                                        </div>
+                                        <div class="col-md-3 padding-left-0">
+                                            <label class="form-label" id="txtNIK">@Html.DisplayFor(model => model.NIK)</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 padding-left-0">
+                                            <label class="form-label" style="font-weight : bold;">Display Name</label>
+                                        </div>
+                                        <div class="col-md-3 padding-left-0">
+                                            <label class="form-label" id="txtNama">@Html.DisplayFor(model => model.Nama)</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 padding-left-0">
+                                            <label class="form-label" style="font-weight : bold;">Title</label>
+                                        </div>
+                                        <div class="col-md-3 padding-left-0">
+                                            <label class="form-label" id="txtPosisi">@Html.DisplayFor(model => model.Posisi)</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 padding-left-0">
+                                            <label class="form-label" style="font-weight : bold;">Company</label>
+                                        </div>
+                                        <div class="col-md-3 padding-left-0">
+                                            <label class="form-label">Lembaga Penjamin Simpanan</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 padding-left-0">
+                                            <label class="form-label" style="font-weight : bold;">Department</label>
+                                        </div>
+                                        <div class="col-md-3 padding-left-0">
+                                            <label class="form-label" id="txtDepartement">@Html.DisplayFor(model => model.UnitKerja)</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 padding-left-0">
+                                            <label class="form-label" style="font-weight : bold;">Email</label>
+                                        </div>
+                                        <div class="col-md-3 padding-left-0">
+                                            <label class="form-label" id="txtEmail">@Html.DisplayFor(model => model.Email)</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 padding-left-0">
+                                            <label class="form-label" style="font-weight : bold;">Address</label>
+                                        </div>
+                                        <div class="col-md-3 padding-left-0">
+                                            <label class="form-label" id="txtAlamat">@Html.DisplayFor(model => model.Alamat)</label>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="tab-group">
+                            <section id="tab1" title="Role Aplikasi">
+                                <div class="row padding-top-30">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <div id="divAddRole">
+                                                <table id="tblListRole" class="table table-bordered" style="width:100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Role</th>
+                                                            <th>Active</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var data in Model.DDLUm.Roles)
+                                                        {
+                                                            if (@data.RoleGroupName == "Manajemen" || @data.RoleGroupName == "Group Admin" || @data.RoleGroupName == "Administrator" || @data.RoleGroupName == "Internal Auditor" || @data.RoleGroupName == "Admin PMO" || data.RoleGroupName == "Project Member")
+                                                            {
+                                                                <tr>
+                                                                    <td>@data.RoleGroupName</td>
+                                                                    <td>
+                                                                        <div class="checkbox" style="text-align:center">
+                                                                            <label class="icheck icheck-success">
+                                                                                @if (data.RoleGroupName == RoleUser)
+                                                                                {
+                                                                                    <input id="@data.IDRoleGroup" type="checkbox" value="@data.RoleGroupName" checked="checked" name="approle">
+
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <input id="@data.IDRoleGroup" type="checkbox" value="@data.RoleGroupName" name="approle">
+
+                                                                                }
+                                                                                <i></i>
+                                                                            </label>
+                                                                        </div>
+                                                                    </td>
+
+                                                                </tr>
+                                                            }
+
+                                                        }
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row  padding-15">
+                                    @if (Status == "INPUT")
+                                    {
+                                        <button class="btn btn-success" onclick="SaveSystemRole()"> Tambah Pengguna</button>
+                                        <input type="text" style="display:none" id="hfdPersnom" />
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-success" onclick="SaveSystemRole()"> Ubah Role Aplikasi</button>
+                                        <input type="text" style="display:none" id="hfdPersnom" value="@ViewBag.Persnum" />
+                                    }
+                                    <button class="btn btn-danger" onclick="location.href='@Url.Action("Index", "ManajemenUser")';"> Cancel</button>
+                                </div>
+
+                            </section>
+                            @if (Status == "EDIT" && RoleUser == "Project Member")
+                            {
+                                <section @*id="tab2"*@
+                                         title="Role Project" style="display:none;">
+                                    <div class="row padding-top-30">
+                                        <div class="col-md-5">
+                                            <label class="form-label" style="font-weight : bold;">Program</label>
+                                            <br />
+                                            <input id="IDProgram" type="hidden" value="0" />
+                                            <input id="ProgramName" class="form-control" disabled="disabled" value="-" />
+                                            @*<select class="form-control ddlprogram">
+                            <option></option>
+                            @foreach (var data in Model.DDLUm.Programs)
+                            {
+                                <option value="@data.IDProgram">@data.ProgramName</option>
+                            }
+                        </select>*@
+                                        </div>
+                                    </div>
+                                    <div class="row padding-top-30">
+                                        <div class="col-md-5">
+                                            <label class="form-label" style="font-weight : bold;">Project</label>
+                                            <br />
+                                            <select id="ddlProject" class="form-control ddlProject " onchange="OnChangeDdlProject()"></select>
+                                        </div>
+                                    </div>
+                                    <div class="row padding-top-10">
+                                        <div class="col-md-5">
+                                            <label class="form-label" style="font-weight : bold;">Role Project</label>
+                                            <br />
+                                            <div class="form-group">
+                                                <div id="divAddRole">
+                                                    <table id="tblListRoleEdit" class="table table-bordered" style="width:100%;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Role</th>
+                                                                <th>Active</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var data in Model.DDLUm.Roles)
+                                                            {
+                                                                if (@data.RoleGroupName != "Manajemen" && @data.RoleGroupName != "Group Admin" && @data.RoleGroupName != "Administrator" && @data.RoleGroupName != "Internal Auditor" && @data.RoleGroupName != "Admin PMO" && data.RoleGroupName != "Project Member")
+                                                                {
+                                                                    <tr>
+                                                                        <td>@data.RoleGroupName</td>
+                                                                        <td>
+                                                                            <div class="checkbox" style="text-align:center">
+                                                                                <label class="icheck icheck-success">
+
+                                                                                    <input id="@data.IDRoleGroup" type="checkbox" value="@data.RoleGroupName" name="projrole">
+
+
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                        </td>
+
+                                                                    </tr>
+                                                                }
+
+                                                            }
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row padding-top-10">
+                                        <div class="col-md-5">
+                                            <button class="btn btn-success" id="btnTambahRole" onclick="addRoles()">Tambah Role</button>
+                                        </div>
+                                    </div>
+                                    <div class="row padding-top-10">
+                                        <div class="col-md-12">
+                                            <table id="tblRole" class="display">
+
+                                                <thead>
+                                                    <tr>
+                                                        <th style="display : none">ProgramID</th>
+                                                        <th>Program</th>
+                                                        <th style="display : none">ProjectID</th>
+                                                        <th>Project</th>
+                                                        <th style="display : none">RolesID</th>
+                                                        <th>Roles</th>
+                                                        <th>Aksi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.AllRole != null)
+                                                    {
+                                                        if (Model.AllRole.Count > 0)
+                                                        {
+                                                            foreach (var data in Model.AllRole)
+                                                            {
+                                                                <tr>
+                                                                    <td style="display : none">@data.IDProgram</td>
+                                                                    <td>@data.ProgramName</td>
+                                                                    <td style="display : none">@data.IDProject</td>
+                                                                    <td>@data.ProjectName</td>
+                                                                    <td style="display : none">@data.IDRoleGroup</td>
+                                                                    <td>@data.RoleGroupName</td>
+                                                                    <td>
+                                                                        <button class="btn btn-danger" onclick="deleteRow(this)"> Hapus Role</button>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="row  padding-15">
+                                        @if (Status == "INPUT")
+                                        {
+                                            <button class="btn btn-success" onclick="savedata()"> Tambah</button>
+                                            <input type="text" style="display:none" id="hfdPersnom" />
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-success" style="display:none" onclick="editdata()"> Ubah Role Project </button>
+                                            <input type="text" style="display:none" id="hfdPersnom" value="@ViewBag.Persnum" />
+                                        }
+                                        <button class="btn btn-danger" onclick="location.href='@Url.Action("Index", "ManajemenUser")';"> Cancel</button>
+                                    </div>
+                                </section>
+
+                                <!--New Account Management-->
+                                <section id="tab2" title="Role Project">
+                                    <div class="row padding-top-30">
+                                        <div class="col-md-12">
+                                           
+                                            <table id="tblNewUser" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th style="display:none;">IDProjectHeader </th>
+                                                        <th>Nama Program     </th>
+                                                        <th>Kode Proyek       </th>
+                                                        <th>Nama Proyek     </th>
+                                                        <th>Project Team     </th>
+                                                        <th>Project Admin    </th>
+                                                        <th>Project Manager  </th>
+                                                        <th>Admin PMO        </th>
+                                                        <th>PMO             </th>
+                                                        <th>Head Of PMO       </th>
+                                                        <th>Project Owner    </th>
+                                                        <th>Project Sponsor  </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.NUM)
+                                                    {
+                                                        inc = inc + 1;
+                                                        <tr>
+                                                            <td>@inc</td>
+                                                            <td style="display:none;">@item.IDProjectHeader </td>
+                                                            <td>@item.ProgramName     </td>
+                                                            <td>@item.ProjectNo       </td>
+                                                            <td>@item.ProjectName     </td>
+                                                            <td>@Html.Raw(item.ProjectTeam) </td>
+                                                            <td>@Html.Raw(item.ProjectAdmin) </td>
+                                                            <td>@Html.Raw(item.ProjectManager) </td>
+                                                            <td>@Html.Raw(item.AdminPMO) </td>
+                                                            <td>@Html.Raw(item.PMO) </td>
+                                                            <td>@Html.Raw(item.HeadOfPMO) </td>
+                                                            <td>@Html.Raw(item.ProjectOwner) </td>
+                                                            <td>@Html.Raw(item.ProjectSponsor) </td>
+                                                        </tr>
+
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row  padding-15">
+                                        @if (Status == "INPUT")
+                                        {
+                                            <button class="btn btn-success" onclick="savedata()"> Tambah</button>
+                                            <input type="text" style="display:none" id="hfdPersnom" />
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-success" style="display:none" onclick="editdata()"> Ubah Role Project </button>
+                                            <input type="text" style="display:none" id="hfdPersnom" value="@ViewBag.Persnum" />
+                                            <button class="btn btn-success" onclick="NewSave()"> Ubah Role Project </button>
+                                        }
+                                        <button class="btn btn-danger" onclick="location.href='@Url.Action("Index", "ManajemenUser")';"> Cancel</button>
+                                    </div>
+                                </section>
+
+                            }
+
+                        </div>
+                    </div>
+
+                    <br />
+                    
+                    <br />
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+<div id="openmodalu" class="modalu">
+    <div class="content-modalu">
+        <h1>Tambah User</h1>
+        <div class="form-group col-md-6">
+            <label class="form-label" for="field-1" style="font-weight : bold;">Nama User</label>
+            <div class="controls">
+                <input type="text" placeholder="Nama Pegawai" class="form-control ng-pristine ng-untouched ng-invalid" name="txtFullName" id="txtFullName" required="">
+            </div>
+        </div>
+        <table id="tblListUser" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th style="width: 40%">Nama User</th>
+                    <th style="width: 40%">Posisi</th>
+                    <th style="width: 20%">Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="ListUserBody"></tbody>
+        </table>
+
+        <a href="#close" title="Close" class="close" id="btnClose">CLOSE</a>
+    </div>
+</div>
+
+<script src="~/Scripts/Views/ManagementUser/DetailUser.js"></script>
+<script>
+
+    var Datatype = [];
+    var rolesIDs = [];
+    var rolesName = [];
+    var rolesIDsProj = [];
+    var rolesNameProj = [];
+
+    function addRoles() {
+        debugger;
+        var ProjectSelect = $('#ddlProject').val();
+        if (ProjectSelect == 0) {
+            alert('Pilih Project Terlebih Dahulu');
+        } else {
+            if (rolesIDsProj.length == 0) {
+                alert("Belum Memilih Roles")
+            } else {
+                if ($('#tblRole tr').length = 0) {
+                    $('#tblRole').DataTable().clear();
+                }
+                $('#tblRole').DataTable().destroy();
+
+                var program = $('#ProgramName').val(),//$(".ddlprogram option:selected").text(),
+                    project = $(".ddlProject option:selected").text(),
+                    projectID = $(".ddlProject option:selected").val(),
+                    programID = $('#IDProgram').val(),//$(".ddlProject option:selected").val(),
+                    rolesID = rolesIDsProj.join("|"),
+                    roles = rolesNameProj.join(", ");
+
+                $('#tblRole tbody').append('<tr><td style="display : none">' + programID + '</td><td>' + program + '</td><td style="display : none">' + projectID + '</td><td>' + project + '</td><td style="display : none">' + rolesID + '</td><td>' + roles + '</td><td>  <button class="btn btn-danger" onclick="deleteRow(this)"> Hapus Role</button> </td></tr>');
+
+                $('#tblRole').DataTable({
+                    "bLengthChange": false,
+                    searching: false,
+                    info: false,
+                    "pageLength": 4
+                });
+
+                $('.ddlRoles').on("select2:unselecting", function (e) {
+                    var unselected_value = $('.ddlRoles').val();
+                    alert(unselected_value);
+                }).trigger('change');
+            }
+        }
+        
+    }
+
+    $('input:checkbox').click(function () {
+        if (this.name === "approle") {
+                $('input[name="' + this.name + '"]:checkbox').not(this).prop('checked', false);
+                if ($(this).is(":checked")) {
+                    rolesIDs.push($(this).attr("id"));
+                    rolesName.push($(this).val());
+                } else {
+                    for (var i = 0; i < rolesIDs.length - 1; i++) {
+                        if (rolesIDs[i] === $(this).attr("id")) {
+                            rolesIDs.splice(i, 1);
+                            rolesName.splice(i, 1);
+                        }
+                    }
+                }
+        } else if (this.name === "projrole") {
+            if ($(this).is(":checked")) {
+                rolesIDsProj.push($(this).attr("id"));
+                rolesNameProj.push($(this).val());
+            } else {
+                for (var i = 0; i < rolesIDs.length - 1; i++) {
+                    if (rolesIDs[i] === $(this).attr("id")) {
+                        rolesIDsProj.splice(i, 1);
+                        rolesNameProj.splice(i, 1);
+                    }
+                }
+            }
+        }
+
+    });
+    
+    function tablevalidation(project) {
+        var value = project;
+
+        $("#tblRole tbody").each(function (index) {
+            if (index !== 0) {
+
+                $row = $(this);
+
+                var id = $row.find("td:nth-child(4)").text();
+
+                if (id.indexOf(value) !== 0) {
+                    return true
+                }
+                else {
+                    return false
+                }
+            }
+        });
+
+    }
+
+    function deleteRow(btn) {
+        if ($('#tblRole tr').length = 0) {
+            $('#tblRole').DataTable().clear();
+        }
+        $('#tblRole').DataTable().destroy();
+
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+
+        $('#tblRole').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "pageLength": 4
+        });
+    }
+
+    var username = '@Session["Nama"].ToString()';
+
+    function savedata() {
+        AddObject();
+        var Username = username;
+        var Persnum = $("#hfdPersnom").val();
+        var UserData = {
+            PersonNumber: Persnum,
+            CreateBy: Username,
+            RolesGroup: Datatype
+        }
+
+         $.ajax({
+                url: '@Url.Action("InsertDataUser", "ManajemenUser")',
+                type: 'POST',
+                data: {
+                   __RequestVerificationToken: token,
+                    Data: UserData
+                },
+               success: function (result) {
+
+                       location.href = '@Url.Action("Index", "ManajemenUser")';
+
+                }
+            });
+    }
+
+    function editdata() {
+        AddObject();
+        var Username = username;
+        var Persnum = $("#hfdPersnom").val();
+        var UserData = {
+            PersonNumber: Persnum,
+            CreateBy: Username,
+            RolesGroup: Datatype
+        }
+
+        debugger;
+
+         $.ajax({
+                url: '@Url.Action("UpdateDataUser", "ManajemenUser")',
+                type: 'POST',
+                data: {
+                   __RequestVerificationToken: token,
+                    Data: UserData
+                },
+               success: function (result) {
+                   location.href='@Url.Action("Index", "ManajemenUser")'
+                }
+            });
+
+    }
+
+
+
+    function AddObject() {
+        
+        Datatype = [];
+        var table = $('#tblRole').DataTable();
+        var dataTable = table.rows().data();
+
+        for (i = 0; i < dataTable.length; i++) {
+            var dataRows = dataTable[i];
+
+            var object = {
+                IDProgram: parseInt(dataRows[0]),
+                IDProject: parseInt(dataRows[2]),
+                IDRoles: String(dataRows[4])
+            }
+
+            Datatype.push(object);
+
+        }
+        
+    }
+
+    var form = $('#__AjaxAntiForgeryForm');
+    var token = $('input[name="__RequestVerificationToken"]', form).val();
+    var GetDetailKaryawanURl = '@Url.Action("GetDetailEmployeeByPersonNumber", "ManajemenUser")';
+    var GetListProject = '@Url.Action("GetProjectByProgram", "ManajemenUser")';
+    var GetListProgram = '@Url.Action("GetProgramByProject", "ManajemenUser")';
+
+    //$('.ddlprogram').on('change', function () {
+    //    var data = $(".ddlprogram option:selected").val();
+    //    GetListProjectByID(data);
+    //})
+
+    function OnChangeDdlProject() {
+
+        var Getproject = {
+            idproject: $('#ddlProject').val()
+        };
+        debugger;
+        $.ajax({
+            url: GetListProgram,
+            type: 'POST',
+            data: {
+                __RequestVerificationToken: token,
+                GetProject: Getproject
+            },
+            success: function (result) {
+
+                debugger;
+                $('#IDProgram').val(result._ListProgram.IDProgram);
+                $('#ProgramName').val(result._ListProgram.ProgramName);
+
+            }
+        });
+        
+    }
+    
+    function SaveSystemRole() {
+        var createby = '@Session["PersonalNumber"].ToString()';
+        var Persnum = $("#hfdPersnom").val();
+        var data = Persnum + '|' + rolesIDs[0] + '|' + createby
+        var UserData = {
+            ID: data
+        }
+        $.ajax(
+            {
+                url: '@Url.Action("InsertDataUserWithRole", "ManajemenUser")',
+                type: 'POST',
+                data: {
+                   __RequestVerificationToken: token,
+                    Data: UserData
+                },
+                success: function (result) {
+                    if (result.result.includes("Success")) {
+                        alert(result.result);
+                        location.href = '@Url.Action("Index", "ManajemenUser")';
+                    } else {
+                        alert(result.result);
+                    }
+                }
+            }
+        );
+    }
+
+
+    $(document).ready(function () {
+        $('.tab-group').tabify();
+        //$('.ddlprogram').select2({placeholder: 'Pilih Project'});
+        $('.ddlRoles').select2();
+        $('.ddlProject').select2({
+            selectOnClose: false
+        });
+        $('#tblRole').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false
+        });
+
+        $('#tblListUser').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false
+        });
+
+        $('#tblNewUser').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            info: false
+        });
+        
+        GetListProjectByID(1);
+    });
+
+    $('#txtFullName').donetyping(function () {
+        var GetEmployeeData = {
+                ID : $('#txtFullName').val()
+        }
+        $.ajax({
+            url: '@Url.Action("GetDataEmployeeByNameNewUser", "ManajemenUser")',
+            type: 'POST',
+            data: {
+                   __RequestVerificationToken: token,
+                    GetEmployeeData: GetEmployeeData
+            },
+            success: function (result) {
+                   $('#tblListUser').DataTable().clear();
+                   $('#tblListUser').DataTable().destroy();
+
+                   var obj = result._search;
+                   var html = "";
+                   for (var prop in obj) {
+                       if (obj.hasOwnProperty(prop)) {
+                            html += "<tr>" +
+                               "<td>" + obj[prop]["nama"] + "</td>" +
+                               "<td>" + obj[prop]["posisi"] + "</td>" +
+                               "<td>" +
+                                "<button type='button' class='btn btn-info btn-corner' id='btnTambah' onclick='GetListKarayawan(" + obj[prop]["personalnumber"] + ")'> <i class='fa fa-plus'></i>&nbsp;&nbsp; Pilih</button>" +
+                               "</a>" +
+                               "</td>" +
+                               "</tr>";
+                       }
+                   }
+                   $("#ListUserBody").append(html);
+                   $('#tblListUser').DataTable({
+                       "bLengthChange": false,
+                       searching: false,
+                       info: false,
+                       "pageLength": 4
+                   });
+
+            }
+        });
+    });
+    
+    function searchfunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("txtSearch");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tblListUser");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    function NewSave() {
+        var aTable = $('#tblNewUser').DataTable();
+
+        var RowsCount = aTable.rows().count();
+        var tbl = [];
+
+        for (var i = 0; i < RowsCount; i++) {
+            var roleidss = [];
+
+            for (var j = 5; j < 13; j++) {
+                if (aTable.cell(i, j).nodes().to$().find('input[type="checkbox"]:checked').length > 0) {
+                    roleidss.push(aTable.cell(i, j).nodes().to$().find('input[type="checkbox"]:checked').val());
+                }
+            }
+
+            var rolesIDd = roleidss.join("|");
+
+            tbl.push(
+                {
+                    IDProject: aTable.cell(i, 1).data(),
+                    IDProgram: 0,
+                    IDRoles: rolesIDd
+                }
+            )
+        }
+
+        var z = tbl.filter(function (obj) {
+            return obj.IDRoles !== "";
+        });
+
+        debugger
+
+        var Username = username;
+        var Persnum = $("#hfdPersnom").val();
+        var UserData = {
+            PersonNumber: Persnum,
+            CreateBy: Username,
+            RolesGroup: z
+        }
+
+         $.ajax({
+                url: '@Url.Action("InsertDataUser", "ManajemenUser")',
+                type: 'POST',
+                data: {
+                   __RequestVerificationToken: token,
+                    Data: UserData
+                },
+               success: function (result) {
+
+                       location.href = '@Url.Action("Index", "ManajemenUser")';
+
+                }
+            });
+    }
+
+</script>

@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "Summary Status Penyampaian";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using LPS_ProjectManagement.Helper;
+<style>
+    .circle {
+        border-radius: 50%;
+        width: 5px;
+        height: 5px;
+        margin: auto;
+        padding: 5px;
+        /* width and height can be anything, as long as they're equal */
+    }
+
+    thead, th, tbody, td {
+        text-align: center;
+    }
+
+    .th {
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    .align-l {
+        text-align: left;
+    }
+</style>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="content-body">
+
+        <div class="row padding-top-45">
+
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="form-group has-warning">
+                    <label class="form-label label-header" for="btnSearch">&nbsp;</label>
+                    <span class="desc"></span>
+                    <div class="controls">
+                        <button onclick="Search()" type="button" class="btn btn-info btn-corner"><i class="fa fa-search"></i>&nbsp;&nbsp; Search</button>
+                        &nbsp;
+                        <button onclick="ExportToPdf()" type="button" class="btn btn-warning btn-corner">@*<a href="">*@<i class="fa fa-print"></i>&nbsp;&nbsp; Export To PDF@*</a>*@</button>
+                        <button onclick="ExportToExcel()" type="button" class="btn btn-warning btn-corner">@*<a href="">*@<i class="fa fa-print"></i>&nbsp;&nbsp; Export To Excel@*</a>*@</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="table" class="row">
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <table id="tblSummaryPenyampaian" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Group</th>
+                            <th>Status Draft</th>
+                            <th>Status Submit</th>
+                            <th>Approve Project Manager</th>
+                            <th>Approve Program Manager</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    var urlSummaryPenyampaianSearch = '@Url.Action("SummaryPenyampaianSearch", "Laporan")';
+
+    $(document).ready(function () {
+
+        $('#tblSummarySeriesPenyampaian').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            "scrollX": true,
+            info: false
+        });
+
+    });
+
+    function Search() {
+
+        document.getElementById('tblSummaryPenyampaian').style.fontFamily = "'Segoe UI', Arial, Helvetica, sans-serif";
+
+        var param = {
+            tipe: 1
+        }
+
+        $.ajax({
+            url: urlSummaryPenyampaianSearch,
+            success: function (result) {
+
+                $('#tblSummaryPenyampaian').DataTable().destroy();
+
+                $('#tblSummaryPenyampaian').DataTable({
+                    "bLengthChange": false,
+                    searching: true,
+                    "scrollX": true,
+                    info: false,
+                    data: result.Data,
+                    "columns": [
+                        { "data": "Direktorat", "className": "align-l", "width" : "20%" },
+                        { "data": "DraftProjAdmin", "className": "text-right", "width": "10%"},
+                        { "data": "SubmitProjAdmin", "className": "text-right", "width": "10%" },
+                        { "data": "ApproveProjManager", "className": "text-right", "width": "10%" },
+                        { "data": "ApproveProgManager", "className": "text-right", "width": "10%" }
+                    ]
+                });
+            }
+        });
+    }
+
+    function ExportToPdf() {
+        //var Month = $('#ddlMonth').val();
+        //var Year = $('#ddlYear').val();
+        //var Week = 0;
+        //var isTransformasi = $('#ddlTipe').val();
+        //if (isTransformasi == 1) {
+        //    Week = $('#ddlWeek').val()
+        //}
+
+
+        //location.href = '@Url.Action("SummaryPencapaian", "Exporting")' + '?week=' + Week + '&month=' + Month + '&year=' + Year + '&jenis=Trans|' + isTransformasi;
+        location.href = '@Url.Action("PrintSummaryStatusPencapaian", "Exporting")';
+    }
+
+    function DownloadAllData() {
+        var Month = $('#ddlMonth').val();
+        var Year = $('#ddlYear').val();
+        var Week = 0;
+        var isTransformasi = $('#ddlTipe').val();
+        //location.href = '@Url.Action("ExportExcelAllDataRow", "Laporan")' + '?Year=' + $('#ddlYear').val() + '&Month=' + $('#ddlMonth').val() + '&Week=' + $('#ddlWeek').val();
+        window.open('@Url.Action("LaporanProgramPrintint", "Laporan")' + '?year=' + Year + '&month=' + Month + '&week=' + Week + '&tipe=' + isTransformasi );
+    }
+
+    function ExportToExcel() {
+        window.open('@Url.Action("PrintExcelSummaryStatusPencapaian", "Exporting")');
+    }
+
+</script>
+
+

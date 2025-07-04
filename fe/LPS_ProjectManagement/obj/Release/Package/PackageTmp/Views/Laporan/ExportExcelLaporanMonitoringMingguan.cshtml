@@ -1,0 +1,130 @@
+﻿
+@model System.Data.DataSet
+
+@using System.Data;
+@using LPS_ProjectManagement.Helper;
+
+@{
+    Layout = null;
+    int RowNumber = 0;
+    GlobalHelper gh = new GlobalHelper();
+    DataTable table = Model.Tables[0];
+    DataTable dt1 = Model.Tables[1];
+}
+
+<table id="tableData">
+    <tr>
+        <td></td>
+        <td colspan="10"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="10" style="font-family:'Book Antiqua'; font-size:19px; text-align:center;"><b>Status Progres Proyek @dt1.Rows[0]["Year"].ToString()</b></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="10" style="font-family:'Book Antiqua'; font-size:19px; text-align:center;"><b>per tanggal : @table.Rows[0]["Tanggal"].ToString() @gh.getMonthName(Convert.ToInt32(dt1.Rows[0]["Month"])) @dt1.Rows[0]["Year"].ToString()</b></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td rowspan="1" style="background-color:darkgray; font-family:'Book Antiqua'; font-size:14px; text-align:center; vertical-align:central;"><b>No.</b></td>
+        <td rowspan="1" style="background-color:darkgray; font-family:'Book Antiqua'; font-size:14px; text-align:center; vertical-align:central;"><b>Nama Project</b></td>
+        <td rowspan="1" style="background-color:darkgray; font-family:'Book Antiqua'; font-size:14px; text-align:center; vertical-align:central;"><b>Status Pelaporan</b></td>
+        <td rowspan="1" style="background-color:darkgray; font-family:'Book Antiqua'; font-size:14px; text-align:center; vertical-align:central;"><b>Next Approval</b></td>
+        <td rowspan="1" style="background-color:darkgray; font-family:'Book Antiqua'; font-size:14px; text-align:center; vertical-align:central;"><b>Unit Kerja</b></td>
+        <td rowspan="1" style="background-color:darkgray; font-family:'Book Antiqua'; font-size:14px; text-align:center; vertical-align:central;"><b>Nama Project Manager</b></td>
+        <td rowspan="1" style="background-color:darkgray; font-family:'Book Antiqua'; font-size:14px; text-align:center; vertical-align:central;"><b>Nama Program Manager</b></td>
+        @*<td colspan="3" style="background-color:darkgray; font-family:'Book Antiqua'; font-size:14px; text-align:center; vertical-align:central;"><b>Project</b></td>*@
+    </tr>
+    @*<tr>
+            <td></td>
+            <td style="background-color:darkgray; font-family:'Book Antiqua'; font-size:14px; text-align:center; vertical-align:central;"><b>Target</b></td>
+            <td style="background-color:darkgray; font-family:'Book Antiqua'; font-size:14px; text-align:center; vertical-align:central;"><b>Realisasi</b></td>
+            <td style="background-color:darkgray; font-family:'Book Antiqua'; font-size:14px; text-align:center; vertical-align:central;"><b>Pencapaian</b></td>
+        </tr>*@
+
+    @foreach (DataRow dr in table.Rows)
+    {
+        RowNumber = RowNumber + 1;
+        <tr>
+            <td></td>
+            <td style="font-family:'Book Antiqua'; font-size:14px; text-align:right;">@RowNumber</td>
+            <td style="font-family:'Book Antiqua'; font-size:14px; text-align:left;">@dr["ProjectName"].ToString()</td>
+            <td style="font-family:'Book Antiqua'; font-size:14px; text-align:left;">@dr["StatusProject"].ToString()</td>
+            <td style="font-family:'Book Antiqua'; font-size:14px; text-align:left;">@dr["LastUpdated"].ToString()</td>
+            <td style="font-family:'Book Antiqua'; font-size:14px; text-align:left;">@dr["DepartmentCode"].ToString()</td>
+            <td style="font-family:'Book Antiqua'; font-size:14px; text-align:left;">@dr["NamaProjectManager"].ToString()</td>
+            <td style="font-family:'Book Antiqua'; font-size:14px; text-align:left;">@dr["NamaProgramManager"].ToString()</td>
+            @*<td style="font-family:'Book Antiqua'; font-size:14px; text-align:right;">@dr["PlanPencapaian"].ToString()%</td>
+                <td style="font-family:'Book Antiqua'; font-size:14px; text-align:right;">@dr["RealisasiPencapaian"].ToString()%</td>*@
+
+            @*@if (Convert.ToInt32(dr["Pencapaian"].ToString()) >= 110)
+                {
+                    <td style="font-family:'Book Antiqua'; font-size:14px; text-align:right; background-color:blue;">@dr["Pencapaian"].ToString()%</td>
+                }
+                else if (Convert.ToInt32(dr["Pencapaian"].ToString()) >= 100 && Convert.ToInt32(dr["Pencapaian"].ToString()) < 110)
+                {
+                    <td style="font-family:'Book Antiqua'; font-size:14px; text-align:right; background-color:green;">@dr["Pencapaian"].ToString()%</td>
+                }
+                else if (Convert.ToInt32(dr["Pencapaian"].ToString()) >= 85 && Convert.ToInt32(dr["Pencapaian"].ToString()) < 100)
+                {
+                    <td style="font-family:'Book Antiqua'; font-size:14px; text-align:right; background-color:yellow;">@dr["Pencapaian"].ToString()%</td>
+                }
+                else
+                {
+                    <td style="font-family:'Book Antiqua'; font-size:14px; text-align:right; background-color:red;">@dr["Pencapaian"].ToString()%</td>
+                }*@
+
+        </tr>
+
+    }
+
+</table>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function ($) {
+
+        tableToExcel('tableData', 'Sheet 1');
+        setTimeout(function () {
+            self.close();
+        }, 500);
+    });
+
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            //window.location.href = uri + base64(format(template, ctx))
+
+            var link = document.createElement("a");
+            link.download = "Laporan-Monitoring.xls";
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+
+        }
+    })();
+
+</script>
+
+
+

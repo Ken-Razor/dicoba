@@ -1,0 +1,195 @@
+﻿
+@{
+    ViewBag.Title = "Laporan Tren Pencapaian";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using LPS_ProjectManagement.Helper;
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <section class="box">
+            <div class="content-body padding-15" style=" max-height: none; overflow: auto;">
+                <div class="row padding-15">
+
+                    <div class="col-md-2 padding-top-30">
+                        <h4>Year</h4>
+                        <select id="ddlYear" class="form-control ddlYear" style="width:100%;" onchange="OnOnchangeDdlYear(@DateTime.Now.Year, @DateTime.Now.Month)">
+                            @for (int year = Convert.ToInt32(DateTime.Now.Year.ToString()) - 10; year <= Convert.ToInt32(DateTime.Now.Year.ToString()); year++)
+                            {
+                                if (Convert.ToInt32(DateTime.Now.Year.ToString()) == year)
+                                {
+                                    <option value=@year selected="selected">@year</option>
+                                }
+                                else
+                                {
+                                    <option value=@year>@year</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 padding-top-30">
+                        <h4>Month</h4>
+                        <select id="ddlMonth" class="form-control ddlMonth" style="width:100%">
+                            @{ var ListMonth = GlobalHelper.ListDropDowMonth(); }
+
+                            @for (int i = 0; i < 12; i++)
+                            {
+                                if (ListMonth[i].Month == DateTime.Now.Month)
+                                {
+                                    <option value="@ListMonth[i].Month" selected="selected">@ListMonth[i].Description</option>
+                                    i = 12;
+                                }
+                                else
+                                {
+                                    <option value="@ListMonth[i].Month">@ListMonth[i].Description</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 padding-top-30" style="text-align:center">
+                        &nbsp;
+                        <button class="btn btn-success" onclick="TrenPencapaianSearch()"><i class="fa fa-search"></i> Search</button>
+                        &nbsp;
+                        <button class="btn btn-success" onclick="DownloadTrenPencapaian()"><i class="fa fa-download"></i> Download</button>
+                    </div>
+
+                </div>
+
+                <div class="row padding-15 padding-right-15">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <table id="tblListTrenPencapaian" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center; white-space:nowrap">No.</th>
+                                    <th style="text-align:center; white-space:nowrap">Tren Pencapaian</th>
+                                    <th style="text-align:center; white-space:nowrap">Transformasi</th>
+                                    <th style="text-align:center; white-space:nowrap">Non Transformasi</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#tblListTrenPencapaian').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            "scrollX": true,
+            info: false,
+            "paging": false
+        });
+
+        $('.ddlYear').select2({
+            placeholder: 'Pilih Tahun'
+        });
+
+        $('.ddlMonth').select2({
+            placeholder: 'Pilih Bulan'
+        });
+        
+    });
+
+    function TrenPencapaianSearch() {
+
+        data = {
+            Year: $('#ddlYear').val(),
+            Month: $('#ddlMonth').val()
+        }
+
+        $.ajax({
+            url: '@Url.Action("LaporanTrenPencapaianSearch", "Laporan")',
+            data: data,
+            success: function (result) {
+                debugger;
+
+                if (result.Result === "Success") {
+
+                    $('#tblListTrenPencapaian').DataTable().destroy();
+
+                    $('#tblListTrenPencapaian').DataTable({
+                        "bLengthChange": false,
+                        "autoWidth": false,
+                        searching: true,
+                        "scrollX": true,
+                        info: false,
+                        data: result.Data,
+                        "paging": false,
+                        "columns": [
+                            {
+                                "data": "NoUrut",
+                                "className": "text-left"
+                            },
+                            {
+                                "data": "Keterangan",
+                                "className": "text-left"
+                            },
+                            {
+                                "data": "TrenPencapaianTrans",
+                                "className": "text-center"
+                            },
+                            {
+                                "data": "TrenPencapaianNonTrans",
+                                "className": "text-center",
+                            }
+                        ]
+                    });
+
+                } else {
+                    alert(result.Message);
+                }
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                debugger;
+                    alert(xhr.status);
+                    alert(thrownError);
+            }
+        });
+    }
+    
+    function DownloadTrenPencapaian() {
+        window.open('@Url.Action("DownloadTrenPencapaian", "Laporan")' + '?Year=' + $('#ddlYear').val() + '&Month=' + $('#ddlMonth').val());
+    }
+    
+    function OnOnchangeDdlYear(CurrentYear, CurrentMonth) {
+
+        var ListMonth = @Html.Raw(Json.Encode(GlobalHelper.ListDropDowMonth()));
+
+        debugger;
+
+        var Year = $('#ddlYear').val();
+        var select = document.getElementById("ddlMonth");
+
+        select.innerHTML = "";
+
+        if (Year == CurrentYear) {
+            for (var i = 0; i < 12; i++) {
+                if (ListMonth[i].Month == CurrentMonth) {
+                    select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+                    i = 12;
+                }
+                else {
+                    select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+                }
+            }
+        } else {
+            for (var i = 0; i < 12; i++) {
+                select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+            }
+        }
+        
+    }
+
+</script>

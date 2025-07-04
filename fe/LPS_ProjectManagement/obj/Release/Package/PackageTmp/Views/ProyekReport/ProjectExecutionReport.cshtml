@@ -1,0 +1,350 @@
+﻿@using LPS_ProjectManagement.Helper
+@model LPS_ProjectManagement.Models.EksekusiModels.ExecutionReport2ModelList
+
+@{
+    ViewBag.Title = "Execution Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string minus = "-";
+    GlobalHelper GH = new GlobalHelper();
+    string projectname = GH.GetProjectName(Convert.ToInt32(Request["ProjectHeaderID"]));
+}
+
+<style>
+    thead, th, tbody, td {
+        text-align: center;
+    }
+    td {
+        white-space: normal;
+    }
+    .width-500 {
+        width: 500px;
+    }
+    .width-400 {
+        width: 400px;
+    }
+    .width-300 {
+        width: 300px;
+    }
+
+    .width-200 {
+        width: 200px;
+    }
+
+    .width-100 {
+        width: 100px;
+    }
+
+    .width-150 {
+        width: 150px;
+    }
+</style>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Daftar Report Realisasi Project</h2>
+        </header>
+        <div class="content-body padding-top-45">
+            <br />
+            <h3 class="title pull-left">Realisasi: @projectname </h3>
+            <br />
+            <br />
+            <br />
+            <div class="row">
+                <br />
+                <div class="tab-group">
+                    <section id="tab1" title="Trend Realisasi">
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                            <br>
+                            <button class="btn btn-success" onclick="DownloadRP()"><i class="fa fa-download"></i> Download</button>
+                            <table id="tblListProjectCharter" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5px;">No.</th>
+                                        <th>Periode</th>
+                                        <th>Plan</th>
+                                        <th>Real</th>
+                                        <th>Status</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.AllDesc.Count > 0)
+                                    {
+                                        /**/
+
+                                        foreach (var item in Model.AllDesc)
+                                        {
+                                            <tr>
+                                                <td style="width: 5px;">
+                                                    @Html.DisplayFor(modelItem => item.NoUrut)
+                                                </td>
+                                                <td class="text-wrap width-200" style="text-align: left !important;">
+                                                    @Html.DisplayFor(modelItem => item.Tanggal)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Plan) %
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Real) %
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Status)
+                                                </td>
+                                                <td class="text-wrap width-500"> 
+                                                        @Html.Raw(item.Keterangan)
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </section>
+                    <section id="tab2" title="Problem dan Mitigasi">
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                            <br>
+                            <button class="btn btn-success" onclick="DownloadMitigasi()"><i class="fa fa-download"></i> Download</button>
+                            <table id="tblListProjectMitigasi" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5px;">No.</th>
+                                        <th>Jenis</th>
+                                        <th>Deskripsi</th>
+                                        <th>Keterangan</th>
+                                        <th>Kendala</th>
+                                        <th>Mitigasi</th>
+                                        <th>Created date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.ProblemnMitigasi.Count > 0)
+                                    {
+                                        /**/
+                                        var no = 0;
+                                        foreach (var item in Model.ProblemnMitigasi)
+                                        {
+                                            no++;
+                                            <tr>
+                                                <td style="width: 5px;">
+                                                   @no.ToString()
+                                                </td>
+                                                <td style="text-align: left !important;">
+                                                    @Html.DisplayFor(modelItem => item.Jenis)
+                                                </td>
+                                                <td style="text-align: left !important;">
+                                                    @Html.DisplayFor(modelItem => item.Deskripsi)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Remark) %
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Problem) %
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Mitigasi)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <section class="box">
+                        <div class="content-body">
+
+                            <div class="row padding-bottom-25" style="text-align:center;">
+                                <h3><label>TIME SERIES PROJECT</label></h3>
+                            </div>
+                            <div id="ProjectTimeSeriesTrans"></div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.tab-group').tabify();
+        $('#tblListProjectCharter').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            info: false
+        });
+        $('#tblListProjectMitigasi').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            info: false
+        });
+        GetTimeSeriesInit();
+    });
+
+    function GetTimeSeriesInit(resultTrans, resultNonTrans) {
+        var model = '@Html.Raw(Json.Encode(Model.All))';
+        var resultTrans = JSON.parse(model);
+        GetTimeSeriesChart('Transformasi', resultTrans);
+
+    }
+
+    function GetTimeSeriesChart(tittle, data) {
+
+        var Realisasi = [];
+        var Target = [];
+        var Periode = [];
+
+        Periode.push('-');
+
+        for (var x in data) {
+            var obj = data[x];
+            Periode.push(obj.Keys);
+            Realisasi.push(obj.Real);
+            Target.push(obj.Plan);
+        }
+
+
+            Highcharts.chart('ProjectTimeSeriesTrans', {
+
+                title: {
+                    text: ''
+                },
+                exporting: {
+                    enabled: false
+                },
+                credits: {
+                    enabled: false
+                },
+                yAxis: {
+                    title: {
+                        text: 'Percentage'
+                    }
+                },
+                xAxis: {
+                    categories: Periode
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        },
+                        pointStart: 1,
+                        cursor: 'pointer',
+                    }
+                },
+                series: [{
+                    name: 'Realisasi',
+                    data: Realisasi
+                }, {
+                    name: 'Target',
+                    data: Target
+                }],
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                }
+
+            });
+
+    }
+
+    function DownloadRP() {
+        let params = new URLSearchParams(document.location.search);
+        let idP = params.get("ProjectHeaderID");
+        window.open('@Url.Action("ExportExcelEksekusi", "ProyekReport")' + '?ProjectHeaderID=' + idP);
+    }
+    function DownloadMitigasi() {
+        let params = new URLSearchParams(document.location.search);
+        let idP = params.get("ProjectHeaderID");
+        window.open('@Url.Action("ExportExcelMitigasi", "ProyekReport")' + '?ProjectHeaderID=' + idP);
+    }
+
+    function searchfunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("txtSearch");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tblListProjectCharter");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function AddNew() {
+        debugger;
+        $.ajax({
+            type: "get",
+            url: '@Url.Action("ProjectCharterCreate", "Form")'
+        });
+    }
+</script>
+
+<script>
+
+    function CheckBeforePeriode(IDProjectHeader, Periode) {
+        debugger;
+        var data = {
+            IDProjectHeader: IDProjectHeader,
+            Periode: Periode
+        }
+        var urlCheckBeforePeriode = '@Url.Action("CheckBeforePeriode", "Proyek")';
+
+        $.ajax({
+            type: "POST",
+            url: urlCheckBeforePeriode,
+            data: data,
+            success: function (result) {
+                if (result.Result === "Success") {
+                    debugger;
+
+                    window.location.href = "@Url.Action("ProjectExecutionCreate", "Proyek")" + "?ProjectHeaderID=" + IDProjectHeader + "&Keys="+Periode;
+
+                }
+                else {
+                    alert(result.Message);
+                }
+            }
+        });
+
+    }
+
+</script>

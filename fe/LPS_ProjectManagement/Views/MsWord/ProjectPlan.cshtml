@@ -1,0 +1,443 @@
+﻿@model LPS_ProjectManagement.Models.ProjectCharterandPlanningModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ProjectCharterandPlanning</title>
+    <link href="~/Content/bootstrap3.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/fileserver.js"></script>
+    <script src="~/Scripts/jquery-word-export.js"></script>
+    <style>
+        /*table.print-friendly tr td, table.print-friendly tr th {
+            page-break-inside: avoid !important;
+        }*/
+        * {
+            font-family: 'Book Antiqua' !important;
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-row-group
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: solid 1px black;
+        }
+
+        body, h3, h2, h1 {
+            font-family: 'Book Antiqua' !important;
+        }
+
+        body {
+            font-size: 11pt;
+        }
+
+        .marginleft-10 {
+            margin-left: 10px;
+        }
+
+        .margintop-10 {
+            margin-top: 10px;
+        }
+
+        .marginright-10 {
+            margin-right: 5px;
+        }
+
+        .marginleft-5 {
+            margin-left: 5px;
+        }
+
+        .margintop-5 {
+            margin-top: 5px;
+        }
+
+        .marginright-5 {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+
+        <div class="row">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12" style="margin-bottom: 0; padding-bottom:0;">
+                    <h1 style="font-style: italic; font-weight:bold;">
+                        PROJECT PLAN
+                    </h1>
+                </div>
+                <div class="col-md-12" style="margin-top: -15px; padding-top:-15px;">
+                    <h2 style="font-weight:bold;">
+                        @Model.Charter[0].Nama
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <!--1. Latar Belakang Region-->
+
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12">
+                    <h3>
+                        1. Latar Belakang
+                    </h3>
+                </div>
+            </div>
+            <div class="row  marginleft-10 marginright-10">
+                <div class="col-md-12" style="border-bottom : 2px solid black">
+                </div>
+            </div>
+        </div>
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12" style="text-align:justify;">
+                    @Html.Raw(Model.Charter[0].LatarBelakang.Replace('}', '>').Replace('{', '<'))
+                </div>
+            </div>
+        </div>
+
+
+        <!--2. Tujuan Project Region-->
+
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12">
+                    <h3>
+                        2. Tujuan Project
+                    </h3>
+                </div>
+            </div>
+            <div class="row  marginleft-10 marginright-10">
+                <div class="col-md-12" style="border-bottom : 2px solid black">
+                </div>
+            </div>
+        </div>
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12" style="text-align:justify;">
+                    @Html.Raw(Model.Charter[0].TujuanProject.Replace('}', '>').Replace('{', '<'))
+                </div>
+            </div>
+        </div>
+
+
+        <!--3. Ruang Lingkup Region-->
+
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12">
+                    <h3>
+                        3. Ruang Lingkup
+                    </h3>
+                </div>
+            </div>
+            <div class="row  marginleft-10 marginright-10">
+                <div class="col-md-12" style="border-bottom : 2px solid black">
+                </div>
+            </div>
+        </div>
+        <div class="row margintop-10">
+
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12" style="text-align:justify;">
+                    @Html.Raw(Model.Charter[0].RuangLingkup.Replace('}', '>').Replace('{', '<'))
+                </div>
+            </div>
+        </div>
+
+        <!--4. Project Timeline Region-->
+
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12">
+                    <h3>
+                        4. Project Timeline
+                    </h3>
+                </div>
+            </div>
+            <div class="row  marginleft-10 marginright-10">
+                <div class="col-md-12" style="border-bottom : 2px solid black">
+                </div>
+            </div>
+        </div>
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12">
+                    Proyek ini dilaksanakan selama @Model.Charter[0].TotalBulan bulan, mulai dari @Model.Charter[0].Mulai sampai dengan @Model.Charter[0].Selesai. Detail <i>schedule</i> disebutkan pada tabel berikut:
+                </div>
+            </div>
+            <div class="row margintop-10">
+                <div class="col-md-12">
+                    <table style="width:100%;">
+                        <thead>
+                            <tr style="background-color:#dfe3e8;">
+                                <th style="text-align:center">No</th>
+                                <th style="text-align:center">Aktivitas</th>
+                                <th style="text-align:center">Durasi</th>
+                                <th style="text-align:center">Mulai</th>
+                                <th style="text-align:center">Selesai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Timeline)
+                            {
+                                <tr style="background-color:@item.BGColor; color:@item.FontColor; font-weight:@item.FontWeight;">
+                                    <td>@item.No</td>
+                                    <td>@item.Aktivitas</td>
+                                    <td style="text-align: center;">@item.Durasi</td>
+                                    <td style="text-align: center;">@item.Mulai</td>
+                                    <td style="text-align: center;">@item.Selesai</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!--5. Struktur Organisasi Region-->
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12">
+                    <h3>
+                        5. Struktur Organisasi Project
+                    </h3>
+                </div>
+            </div>
+            <div class="row  marginleft-10 marginright-10">
+                <div class="col-md-12" style="border-bottom : 2px solid black">
+                </div>
+            </div>
+        </div>
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12">
+                    Struktur organisasi proyek adalah sebagai berikut:
+                </div>
+            </div>
+            <div class="row margintop-10">
+                <div class="col-md-12">
+                    <canvas id="jQuery-Word-export_img_0"></canvas>
+                        <img id="img" src="~/Assets/Images/StructurOrganisasi.png" />
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Manajemen Komunikasi-->
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12">
+                    <h3>
+                        6. Manajemen Komunikasi
+                    </h3>
+                </div>
+            </div>
+            <div class="row  marginleft-10 marginright-10">
+                <div class="col-md-12" style="border-bottom : 2px solid black">
+                </div>
+            </div>
+        </div>
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+
+                <div class="col-md-12">
+                    Pertemuan Mingguan : Program Manager dan Project Manager
+                </div>
+
+            </div>
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12">
+                    Pertemuan Bulanan &nbsp; &nbsp;:  Program Manager , Project Manager, Head of PMO , Project Owner dan/atau Project Sponsor
+                </div>
+            </div>
+
+        </div>
+
+        <!--7. Perubahan Project-->
+
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12">
+                    <h3>
+                        7. Perubahan Project
+                    </h3>
+                </div>
+            </div>
+            <div class="row  marginleft-10 marginright-10">
+                <div class="col-md-12" style="border-bottom : 2px solid black">
+                </div>
+            </div>
+        </div>
+        <div class="row margintop-10">
+            <div class="row  marginleft-5 marginright-5">
+                <div class="col-md-12">
+                    Perubahan terhadap ruang lingkup, jangka waktu dan biaya proyek dilakukan berdasarkan ketentuan yang berlaku.
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <!--8. Tanda Tangan-->
+        <div class="page-break-inside: avoid; display: table;">
+            <div class="row margintop-10">
+                <table style="border:none; width:100%;">
+                    @*<tr>
+                            <td style="border:none;"></td>
+                            <td style="border:none; text-align:center">
+                                <div class="row" style="font-weight : bold; text-align: center">
+                                    <div class="row">
+                                        <span>Jakarta,&nbsp;&nbsp;&nbsp;@Model.Charter[0].Tanggal</span>
+                                    </div>
+                                    <div class="row">
+                                        <span>Persetujuan ,</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="border:none;"></td>
+                        </tr>*@
+                </table>
+            </div>
+            @*<br />
+                <br />
+                <br />
+                <br />
+                <br />*@
+            <div class="row margintop-10">
+                <div class="row">
+
+                    <table style="width : 100%; border:0px none;">
+
+                        <tr>
+                            <td style="border:none;"></td>
+                            <td style="border:none; text-align:center">
+                                <div class="row" style="font-weight : bold; text-align: center">
+                                    <div class="row">
+                                        <span>Jakarta,&nbsp;&nbsp;&nbsp;@Model.Charter[0].Tanggal</span>
+                                    </div>
+                                    <div class="row">
+                                        <span>Persetujuan ,</span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                            </td>
+                            <td style="border:none;"></td>
+                        </tr>
+
+                        <tr style="border:0px none;">
+                            <td style="border:0px none;">
+                                @if (Model.ProOwn != null && Model.ProOwn.Count > 0)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <center>
+                                                    <u style="text-align: center">@Model.ProOwn[0].StakeHolder</u>
+                                                </center>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <center>
+                                                    <i style="text-align: center">@Model.ProOwn[0].RoleName</i>
+                                                </center>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            </td>
+                            <td style="border:0px none;">
+                                @if (Model.ProMan != null && Model.ProMan.Count > 0)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <center>
+                                                    <u style="text-align: center">@Model.ProMan[0].StakeHolder</u>
+                                                </center>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <center>
+                                                    <i style="text-align: center">@Model.ProMan[0].RoleName</i>
+                                                </center>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            </td>
+                            <td style="border:0px none;">
+                                @if (Model.PMO != null && Model.PMO.Count > 0)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <center>
+                                                    <u style="text-align: center">@Model.PMO[0].StakeHolder</u>
+                                                </center>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <center>
+                                                    <i style="text-align: center">@Model.PMO[0].RoleName</i>
+                                                </center>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $(".container").wordExport('PP_@Model.Charter[0].Nama');
+        close();
+    });
+
+    </script>
+</body>
+</html>

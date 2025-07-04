@@ -1,0 +1,826 @@
+﻿@model IEnumerable<IEnumerable<LPS_ProjectManagement.Models.ReportModels.LaporanGrafikSeriesPeriode>>
+
+@{
+    ViewBag.Title = "Grafik Time Series";
+}
+
+@using LPS_ProjectManagement.Helper;
+
+<style>
+    .nopadding {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .thumb-pic {
+        object-fit: cover;
+        border-radius: 50%;
+        height: 90px;
+        width: 90px;
+    }
+
+    hr {
+        display: block;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        margin-left: auto;
+        margin-right: auto;
+        border-style: inset;
+        border-width: 1px;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 2px grey;
+        border-radius: 20px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #808080;
+        border-radius: 20px;
+        opacity: 0.5;
+    }
+
+    .task-table {
+        width: 100%;
+    }
+
+        .task-table tr {
+            border-bottom: 1px solid #e2e2e2;
+            height: 70px;
+        }
+
+            .task-table tr td {
+                max-width: 500px;
+            }
+
+    .task-status {
+        width: 80%;
+        height: 2em;
+        border-radius: 100px;
+        text-align: center;
+        margin-right: 100px;
+        margin-left: 20px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .task-selesai {
+        background-color: #46be8a;
+    }
+
+    .task-proses {
+        background-color: #bea446;
+    }
+
+    /* Main Styles */
+    .button {
+        display: block;
+        background-color: #46be8a;
+        width: 200px;
+        height: 50px;
+        line-height: 50px;
+        color: white;
+        position: relative;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        cursor: pointer;
+        overflow: hidden;
+        border-radius: 5px;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+        transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+    }
+
+        .button span,
+        .button .icon {
+            display: block;
+            height: 100%;
+            text-align: center;
+            position: absolute;
+            top: 0;
+        }
+
+        .button span {
+            width: 72%;
+            line-height: inherit;
+            font-size: 22px;
+            text-transform: uppercase;
+            left: 0;
+            transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+        }
+
+            .button span:after {
+                content: '';
+                background-color: #27ae60;
+                width: 2px;
+                height: 70%;
+                position: absolute;
+                top: 15%;
+                right: -1px;
+            }
+
+        .button .icon {
+            width: 28%;
+            right: 0;
+            transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+        }
+
+            .button .icon .fa {
+                font-size: 30px;
+                vertical-align: middle;
+                transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4), height 0.25s ease;
+            }
+
+            .button .icon .fa-remove {
+                height: 36px;
+            }
+
+            .button .icon .fa-check {
+                display: none;
+            }
+
+        .button.success span, .button:hover span {
+            left: -72%;
+            opacity: 0;
+        }
+
+        .button.success .icon, .button:hover .icon {
+            width: 100%;
+        }
+
+            .button.success .icon .fa, .button:hover .icon .fa {
+                font-size: 45px;
+            }
+
+        .button.success {
+            background-color: #27ae60;
+        }
+
+            .button.success .icon .fa-remove {
+                display: none;
+            }
+
+            .button.success .icon .fa-check {
+                display: inline-block;
+            }
+
+        .button:hover {
+            opacity: .9;
+        }
+
+            .button:hover .icon .fa-remove {
+                height: 46px;
+            }
+
+        .button:active {
+            opacity: 1;
+        }
+</style>
+
+<style>
+    /* Center the loader */
+    #loaderTrans {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid blue;
+        border-bottom: 16px solid blue;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    #loaderPencapaian {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid blue;
+        border-bottom: 16px solid blue;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    #loaderHeader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid blue;
+        border-bottom: 16px solid blue;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    #loaderOverAllTrans {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid blue;
+        border-bottom: 16px solid blue;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    #loaderOverAll {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid blue;
+        border-bottom: 16px solid blue;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    @@-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Add animation to "page content" */
+    .animate-bottom {
+        position: relative;
+        -webkit-animation-name: animatebottom;
+        -webkit-animation-duration: 1s;
+        animation-name: animatebottom;
+        animation-duration: 1s
+    }
+
+    @@-webkit-keyframes animatebottom {
+        from {
+            bottom: -100px;
+            opacity: 0
+        }
+
+        to {
+            bottom: 0px;
+            opacity: 1
+        }
+    }
+
+    @@keyframes animatebottom {
+        from {
+            bottom: -100px;
+            opacity: 0
+        }
+
+        to {
+            bottom: 0;
+            opacity: 1
+        }
+    }
+</style>
+
+<style>
+    /*
+     CSS for the main interaction
+    */
+    .tabset > input[type="radio"] {
+        position: absolute;
+        left: -200vw;
+    }
+
+    .tabset .tab-panel {
+        display: none;
+    }
+
+    .tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+    .tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+    .tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+    .tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+    .tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+    .tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6),
+    .tabset > input:nth-child(13):checked ~ .tab-panels > .tab-panel:nth-child(7) {
+        display: block;
+    }
+
+    /*
+     Styling
+    */
+
+
+    .tabset > label {
+        position: relative;
+        display: inline-block;
+        padding: 15px 15px 25px;
+        border: 1px solid transparent;
+        border-bottom: 0;
+        cursor: pointer;
+        font-weight: 600;
+        font-family: 'Segoe UI';
+        background: #d3d3d3;
+    }
+
+        .tabset > label::after {
+            content: "";
+            position: absolute;
+            left: 15px;
+            bottom: 10px;
+            width: 22px;
+            height: 4px;
+            background: #8d8d8d;
+        }
+
+        .tabset > label:hover,
+        .tabset > input:focus + label {
+            color: white;
+            background-color: #dba628;
+        }
+
+            .tabset > label:hover::after,
+            .tabset > input:focus + label::after,
+            .tabset > input:checked + label::after {
+                background: white;
+            }
+
+    .tabset > input:checked + label {
+        border-color: #ccc;
+        border-bottom: 1px solid #fff;
+        margin-bottom: -1px;
+    }
+
+    .tab-panel {
+        padding: 30px 0;
+        border-top: 1px solid #ccc;
+    }
+</style>
+
+<script>
+
+    // -- Table Approval -- \\
+    $("#tab-menu").on("click", "li.auto", function (event) {
+        if ($(this).hasClass("active") == false) {
+            $("#tab-menu>li").removeClass("active");
+            $("#tab-menu>li.auto").removeClass("active");
+            $("#tab-menu>li>a>span.keyss").removeClass("open");
+            $("#tab-menu>li>a>span.keyss").html('keyboard_arrow_right')
+            $(this).addClass("active");
+            $(this).find("span.keyss").addClass("open");
+            $(this).find("span.keyss").html('keyboard_arrow_down')
+
+        } else {
+            if ($(event.target).hasClass('childs') == false) {
+                $(this).removeClass("active");
+                $(this).children().children().removeClass("open");
+                $(this).find("span.keyss").html('keyboard_arrow_right')
+            }
+        }
+    });
+
+</script>
+
+<input id="hdfYear" value="@DateTime.Now.Year.ToString()" hidden="hidden" />
+
+<input id="hdfMonth" value="@DateTime.Now.Month.ToString()" hidden="hidden" />
+
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <section class="box">
+            <div class="content-body padding-top-15" style=" max-height: 450px;overflow: auto;">
+                <div class="row padding-5" style="margin:-15px">
+
+                    
+
+                    <div class="col-md-2 padding-top-30">
+                        <h4>Year</h4>
+                        <select id="ddlYear" class="form-control ddlYear" style="width:100%;">
+                            @for (int year = Convert.ToInt32(DateTime.Now.Year.ToString()) - 10; year <= Convert.ToInt32(DateTime.Now.Year.ToString()); year++)
+                            {
+                                if (Convert.ToInt32(DateTime.Now.Year.ToString()) == year)
+                                {
+                                    <option value=@year selected="selected">@year</option>
+                                }
+                                else
+                                {
+                                    <option value=@year>@year</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 padding-top-30" style="text-align:center">
+                        <h4>&nbsp;</h4>
+                        <button class="btn btn-success" onclick="Search()"><i class="fa fa-search"></i> Search</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <section class="box">
+            <div class="content-body">
+
+                <div class="row padding-bottom-25" style="text-align:center;">
+                    <h3><label>TIME SERIES PER TAHUN</label></h3>
+                </div>
+
+                <div class="tab-group">
+                    <section id="tab1" title="Jumlah Proyek" style="padding-top:2em">
+                        <div id="ProjectTimeSeries"></div>
+                    </section>
+                    <section id="tab2" title="Jumlah Anggaran">
+                        <div id="TimeSeriesAnggaran"></div>
+                    </section>
+                    <section id="tab3" title="Capaian Fisik">
+                        <div id="TimeSeriesCapaianFisik"></div>
+                    </section>
+                    <section id="tab4" title="Capaian KPI">
+                        <div id="TimeSeriesCapaianKPI"></div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script>
+
+    var selectPrjQty;
+
+    $(document).ready(function () {
+
+        Init();
+        $('.ddlYear').select2({
+            placeholder: 'Pilih Tahun'
+        });
+
+
+        // -- Tab -- \\
+        $('.tab-group').tabify();
+    });
+
+
+
+    function Search() {
+
+        GetTimeSeries();
+
+    }
+
+    function Init() {
+        var model = '@Html.Raw(Json.Encode(Model))';
+        var jsonModel = JSON.parse(model);
+        var filterList = ['Proyek', 'Anggaran', 'Fisik', 'KPI'];
+        for (var i = 0; i < filterList.length; i++) {
+            GetTimeSeriesChart(filterList[i], jsonModel[i]);
+        }
+
+    }
+
+    function GetTimeSeries() {
+
+        var data = {
+            Filter: 'Proyek',
+            Year: $('#ddlYear').val()
+        }
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetSeriesGrafik", "Laporan")',
+            data: data,
+            traditional: true,
+            success: function (result) {
+                console.log(result);
+                GetTimeSeriesChart('Proyek', result);
+            }
+        });
+
+        var data = {
+            Filter: 'Anggaran',
+            Year: $('#ddlYear').val()
+        }
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetSeriesGrafik", "Laporan")',
+            data: data,
+            traditional: true,
+            success: function (result) {
+                GetTimeSeriesChart('Anggaran', result);
+            }
+        });
+        var data = {
+            Filter: 'Fisik',
+            Year: $('#ddlYear').val()
+        }
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetSeriesGrafik", "Laporan")',
+            data: data,
+            traditional: true,
+            success: function (result) {
+                console.log(result);
+                GetTimeSeriesChart('Fisik', result);
+            }
+        });
+
+        var data = {
+            Filter: 'KPI',
+            Year: $('#ddlYear').val()
+        }
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetSeriesGrafik", "Laporan")',
+            data: data,
+            traditional: true,
+            success: function (result) {
+                GetTimeSeriesChart('KPI', result);
+            }
+        });
+    }
+
+    function GetTimeSeriesChart(tittle, data) {
+
+        var Hasil = [];
+        var Periode = [];
+        var BelumMulai = [];
+        var Complete = [];
+
+        Periode.push('-');
+        console.log(data);
+
+        for (var x in data) {
+            var obj = data[x];
+            debugger;
+            Periode.push(obj.Periode);
+            Hasil.push(obj.Hasil);
+            BelumMulai.push(obj.BelumMulai);
+            Complete.push(obj.Complete);
+        }
+
+        if (tittle == 'Proyek') {
+
+            Highcharts.chart('ProjectTimeSeries', {
+
+                title: {
+                    text: ''
+                },
+                exporting: {
+                    enabled: true
+                },
+                credits: {
+                    enabled: false
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total Proyek'
+                    }
+                },
+                xAxis: {
+                    categories: Periode
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        },
+                        pointStart: 1,
+                        cursor: 'pointer',
+                    }
+                },
+                series: [{
+                    name: 'Active',
+                    data: Hasil
+                },
+                    {
+                        name: 'Belum Mulai',
+                        data: BelumMulai
+                    },
+                    {
+                        name: 'Complete',
+                        data: Complete
+                    }
+                ],
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                }
+
+            });
+
+        }
+        else if (tittle == 'Anggaran') {
+
+            Highcharts.chart('TimeSeriesAnggaran', {
+
+                title: {
+                    text: ''
+                },
+                exporting: {
+                    enabled: true
+                },
+                credits: {
+                    enabled: false
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total Anggaran'
+                    }
+                },
+                xAxis: {
+                    categories: Periode
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        },
+                        pointStart: 1,
+                        cursor: 'pointer',
+                    }
+                },
+                series: [{
+                    name: 'Anggaran',
+                    data: Hasil
+                }],
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                }
+
+            });
+
+        }
+        else if (tittle == 'Fisik') {
+
+            Highcharts.chart('TimeSeriesCapaianFisik', {
+
+                title: {
+                    text: ''
+                },
+                exporting: {
+                    enabled: true
+                },
+                credits: {
+                    enabled: false
+                },
+                yAxis: {
+                    title: {
+                        text: 'Percentage'
+                    }
+                },
+                xAxis: {
+                    categories: Periode
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        },
+                        pointStart: 1,
+                        cursor: 'pointer',
+                    }
+                },
+                series: [{
+                    name: 'Capaian Fisik',
+                    data: Hasil
+                }],
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                }
+
+            });
+
+        }
+        else if (tittle == 'KPI') {
+
+            Highcharts.chart('TimeSeriesCapaianKPI', {
+
+                title: {
+                    text: ''
+                },
+                exporting: {
+                    enabled: true
+                },
+                credits: {
+                    enabled: false
+                },
+                yAxis: {
+                    title: {
+                        text: 'Percentage'
+                    }
+                },
+                xAxis: {
+                    categories: Periode
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        },
+                        pointStart: 1,
+                        cursor: 'pointer',
+                    }
+                },
+                series: [{
+                    name: 'Nilai',
+                    data: Hasil
+                }],
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                }
+
+            });
+
+        }
+    }
+
+</script>

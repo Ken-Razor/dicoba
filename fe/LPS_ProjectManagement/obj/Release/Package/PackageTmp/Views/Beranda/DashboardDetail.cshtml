@@ -1,0 +1,365 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .nopadding {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .thumb-pic {
+        object-fit: cover;
+        border-radius: 50%;
+        height: 90px;
+        width: 90px;
+    }
+
+    hr {
+        display: block;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        margin-left: auto;
+        margin-right: auto;
+        border-style: inset;
+        border-width: 1px;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 2px grey;
+        border-radius: 20px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #808080;
+        border-radius: 20px;
+        opacity: 0.5;
+    }
+
+    .task-table {
+        width: 100%;
+    }
+
+        .task-table tr {
+            border-bottom: 1px solid #e2e2e2;
+            height: 70px;
+        }
+
+            .task-table tr td {
+                max-width: 500px;
+            }
+
+    .task-status {
+        width: 80%;
+        height: 2em;
+        border-radius: 100px;
+        text-align: center;
+        margin-right: 100px;
+        margin-left: 20px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .task-selesai {
+        background-color: #46be8a;
+    }
+
+    .task-proses {
+        background-color: #bea446;
+    }
+</style>
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Status Proyek</h2>
+            <div class="actions panel_actions pull-right">
+                <i class="box_toggle material-icons">expand_more</i>
+                <i class="box_close material-icons">close</i>
+            </div>
+        </header>
+        <div class="content-body padding-top-45 " style=" max-height: 450px;overflow: auto;">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="progress" animate="false" value="dynamic" type="success">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%"><b>70%</b></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+
+
+
+<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <section class="box">
+
+        <div class="content-body">
+            <div class="padding-top-5">
+                <h4><b>STAKEHOLDER</b></h4>
+                <hr />
+            </div>
+            <div class="padding-top-10" style=" height: 400px; max-height: 400px;overflow: auto;   overflow-x: hidden;">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-20 padding-right-0">
+                        <div class="row">
+                            <div class="col-md-4 padding-right-0 margin-right-0 ">
+                                <img src="~/Assets/Images/DummyPicture/pexels-photo-614810.jpeg" class="thumb-pic" />
+                            </div>
+                            <div class="col-md-8" style="z-index:100; margin-left:-15px; margin-top: 20px;">
+                                <label><b>Halim Alamsyah</b></label>
+                                <br />
+                                <span class="desc"><i>Project Sponsor</i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-20 padding-right-0">
+                        <div class="row">
+                            <div class="col-md-4 padding-right-0 margin-right-0 ">
+                                <img src="~/Assets/Images/DummyPicture/pexels-photo-220453.jpeg" class="thumb-pic" />
+                            </div>
+                            <div class="col-md-8" style="z-index:100; margin-left:-15px; margin-top: 20px;">
+                                <label><b>Erwin Rijanto</b></label>
+                                <br />
+                                <span class="desc"><i>Project Sponsor</i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-20 padding-right-0">
+                        <div class="row">
+                            <div class="col-md-4 padding-right-0 margin-right-0 ">
+                                <img src="~/Assets/Images/DummyPicture/man-in-poppies-1-kuta-bali-indonesia-CRW44X.jpg" class="thumb-pic" />
+                            </div>
+                            <div class="col-md-8" style="z-index:100; margin-left:-15px; margin-top: 20px;">
+                                <label><b>Suwandi</b></label>
+                                <br />
+                                <span class="desc"><i>Project Owner</i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-20 padding-right-0">
+                        <div class="row">
+
+                            <div class="col-md-4 padding-right-0 margin-right-0 ">
+                                <img src="~/Assets/Images/DummyPicture/article-2557079-1B65994A00000578-613_306x423.jpg" class="thumb-pic" />
+                            </div>
+                            <div class="col-md-8" style="z-index:100; margin-left:-15px; margin-top: 20px;">
+                                <label><b>Winza Mutia Rahma</b></label>
+                                <br />
+                                <span class="desc"><i>Program Manager & Project Manager</i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-20 padding-right-0">
+                        <div class="row">
+                            <div class="col-md-4 padding-right-0 margin-right-0 ">
+                                <img src="~/Assets/Images/no-image.png" class="thumb-pic" />
+                            </div>
+                            <div class="col-md-8" style="z-index:100; margin-left:-15px; margin-top: 20px;">
+                                <label><b>Tim Pelaksana Program Transformasi Budaya</b></label>
+                                <br />
+                                <span class="desc"><i>Project Team</i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-20 padding-right-0">
+                        <div class="row">
+                            <div class="col-md-4 padding-right-0 margin-right-0 ">
+                                <img src="~/Assets/Images/no-image.png" class="thumb-pic" />
+                            </div>
+                            <div class="col-md-8" style="z-index:100; margin-left:-15px; margin-top: 20px;">
+                                <label><b>Tim Internalisasi Budaya</b></label>
+                                <br />
+                                <span class="desc"><i>Project Team</i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+    <section class="box">
+        <div class="content-body">
+            <div class="padding-top-5">
+                <h4><b>MILESTONE</b></h4>
+                <hr />
+            </div>
+            <div class="padding-top-10" style=" height: 400px; max-height: 400px;overflow: auto;   overflow-x: hidden;">
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0 ">
+                        <div class="row">
+                            <table class="margin-left-30 task-table table-hover">
+
+                                <tr>
+                                    <td style="width: 100px !important;  "><div class="task-status task-selesai">SELESAI</div></td>
+                                    <td>Laporan Organiazational Culture Health Index
+                                    <td>
+                                    <td>Februari 2018</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px !important;"><div class="task-status task-selesai">SELESAI</div></td>
+                                    <td>Penetapan KKE Perubahan Tim Pelaksana Program Transformasi Budaya dan KKE Perubahan TIM Internalisasi Budaya.
+                                    <td>
+                                    <td>Februari 2018</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px !important; "><div class="task-status task-selesai">SELESAI</div></td>
+                                    <td>Culture Festival
+                                    <td>
+                                    <td>Februari 2018</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px !important;"><div class="task-status task-selesai">SELESAI</div></td>
+                                    <td>Hymne LPS
+                                    <td>
+                                    <td>September 2018</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px !important; "><div class="task-status task-selesai">SELESAI</div></td>
+                                    <td>Seragam LPS ( bahu batik dan baju dinas, logo &Aacute; Pin LPS)
+                                    <td>
+                                    <td>Oktober 2018</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px !important; "><div class="task-status task-proses">On Process</div></td>
+                                    <td>Laporan pemantau program budaya per direktorat
+                                    <td>
+                                    <td>Januari 2019</td>
+
+                                </tr>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <div class="content-body">
+            <div class="padding-top-5">
+                <h4><b>CHART</b></h4>
+                <hr />
+            </div>
+            <div class="padding-top-10" style=" height: 400px; max-height: 400px;overflow: auto;   overflow-x: hidden;">
+
+                <div class="row">
+                    <div id="proyek-chart" style="width : 100%; height:350px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+
+
+<script>
+
+    Highcharts.chart('proyek-chart', {
+        chart: {
+            type: 'area'
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: ['1750', '1800', '1850', '1900', '1950', '1999', '2050'],
+            tickmarkPlacement: 'on',
+            title: {
+                enabled: false
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Billions'
+            },
+            labels: {
+                formatter: function () {
+                    return this.value / 1000;
+                }
+            }
+        },
+        tooltip: {
+            split: false,
+            valueSuffix: ' millions'
+        },
+        plotOptions: {
+            area: {
+                stacking: 'normal',
+                lineColor: '#666666',
+                lineWidth: 1,
+                marker: {
+                    lineWidth: 1,
+                    lineColor: '#666666'
+                }
+            }
+        },
+        series: [{
+            name: 'Asia',
+            data: [502, 635, 809, 947, 1402, 3634, 5268]
+        }, {
+            name: 'Africa',
+            data: [106, 107, 111, 133, 221, 767, 1766]
+        }, {
+            name: 'Europe',
+            data: [163, 203, 276, 408, 547, 729, 628]
+        }, {
+            name: 'America',
+            data: [18, 31, 54, 156, 339, 818, 1201]
+        }, {
+            name: 'Oceania',
+            data: [2, 2, 2, 6, 13, 30, 46]
+        }]
+    });
+</script>
+
+

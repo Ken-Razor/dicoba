@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>index</title>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <div>
+        <input type="file" id="upload" />
+        <button type="button" onclick="upload()">upload</button>
+    </div>
+    <script>
+        function upload() {
+          var $file = document.getElementById('upload'),
+            $formData = new FormData();
+
+        if ($file.files.length > 0) {
+            for (var i = 0; i < $file.files.length; i++) {
+                $formData.append('file-' + i, $file.files[i]);
+            }
+        }
+
+          $.ajax({
+            url: '@Url.Action("Upload", "TESTES")',
+            type: 'POST',
+            data: $formData,
+            dataType: 'json',
+            contentType: false,
+            processData:false,
+            success: function (result) {
+                location.reload();
+            }
+        });
+        }
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+﻿@model LPS_ProjectManagement.Models.EksekusiModels.EksekusiMilestone
+@{
+    ViewBag.Title = "Detail Milestone";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Role = ViewBag.Role;
+    var sysrole = ViewBag.Sysrole;
+}
+<style type="text/css">
+    /*
+        loaders
+    */
+
+
+    .spin {
+        -webkit-animation: spin 750ms infinite linear;
+        -moz-animation: spin 750ms infinite linear;
+        animation: spin 750ms infinite linear;
+    }
+
+    @@-webkit-keyframes spin {
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @@-moz-keyframes spin {
+        to {
+            -moz-transform: rotate(360deg);
+        }
+    }
+
+    .rspin {
+        -webkit-animation: rspin 2250ms infinite linear;
+        -moz-animation: rspin 2250ms infinite linear;
+        animation: rspin 2250ms infinite linear;
+    }
+
+    @@-webkit-keyframes rspin {
+        to {
+            -webkit-transform: rotate(-360deg);
+        }
+    }
+
+    @@-moz-keyframes rspin {
+        to {
+            -moz-transform: rotate(-360deg);
+        }
+    }
+    /* let's style that thing */
+    .loader {
+        background-color: #eeeeee;
+        border-radius: 100%;
+        position: relative;
+        height: 75px;
+        width: 75px;
+        overflow: hidden;
+    }
+
+        .loader .c {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -34% 0 0 -34%;
+            width: 68%;
+            height: 68%;
+            background-color: #ffffff;
+            border-radius: 100%;
+            z-index: 3;
+        }
+
+        .loader .d {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+            .loader .d .e {
+                position: absolute;
+                top: 1%;
+                left: 50%;
+                margin: 0 0 0 -7.5px;
+                height: 14px;
+                width: 15px;
+                -webkit-transform: rotate(10deg) skew(20deg);
+                -moz-transform: rotate(10deg) skew(20deg);
+                border-radius: 3px;
+                background: #999;
+            }
+
+        .loader .r {
+            z-index: 2;
+            position: absolute;
+            left: 50%;
+            top: -1px;
+            bottom: -1px;
+            margin-left: -3.75px;
+            background-color: #ffffff;
+            width: 7.5px;
+        }
+
+        .loader .r1 {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+        }
+
+        .loader .r2 {
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+        }
+
+        .loader .r3 {
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+        }
+
+        .loader .r4 {
+            -webkit-transform: rotate(135deg);
+            -moz-transform: rotate(135deg);
+        }
+
+    /***/
+
+    body {
+        background-color: #fafafa;
+        font-family: 'Segoe UI' !important;
+        font-size: 18px !important;
+    }
+
+    .container {
+        margin: 150px auto;
+    }
+
+    table {
+        position: relative;
+        margin: 4px 0;
+        border-collapse: collapse;
+        font-family: 'Segoe UI' !important;
+        font-size: 18px !important;
+    }
+
+        table, table th, table td {
+            border: 1px solid black;
+        }
+
+            table th, table td {
+                padding: 0 2em;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                line-height: 22px;
+                height: 22px;
+            }
+
+    a.button {
+        position: relative;
+        display: inline-block;
+        font-family: tahoma, arial, helvetica;
+        font-size: 9pt;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #AAAAAA;
+        padding: 5px;
+        text-decoration: none;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Detail Milestone</h2>
+        </header>
+        <div class="content-body padding-top-45">
+            <div class="loader rspin ll" style="margin-left : 50px;">
+                <span class="c"></span>
+                <span class="d spin"><span class="e"></span></span>
+                <span class="r r1"></span>
+                <span class="r r2"></span>
+                <span class="r r3"></span>
+                <span class="r r4"></span>
+            </div>
+            @foreach (var item in Model.miles)
+            {
+                <div class="row">
+                    <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 padding-right-0">
+                        <b>Milestone</b>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4 padding-left-0 padding-right-0">
+
+                        <input type="text" value="@item.Milestones" disabled style="width:100%" />
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 padding-right-0">
+                        <b>Due Date</b>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4 padding-left-0 padding-right-0">
+
+                        <input type="text" value="@item.Selesai" disabled style="width:100%" />
+
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-4 padding-left-0 padding-right-0">
+                    &nbsp;
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4 padding-left-0 padding-right-0">
+
+                </div>
+            </div>
+            <div class="row">
+                @if (Model.ProjectStatus != "Closed" && Model.MilestoneStatus != "Complete")
+                {
+                    if (Role.Count > 0)
+                    {
+                        foreach (var item in Role)
+                        {
+                            if (item.Roles == "Project Manager" || item.Roles == "Project Admin" || sysrole == "Administrator")
+                            {
+                                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                                    <h4 style="font-weight : bold">Upload File Pendukung</h4>
+                                </div>
+                                break;
+                            }
+                        }
+                    }
+                }
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="controls">
+                        <br />
+                        @*@if (Model.ProjectStatus != "Closed")*@
+                        @if (Model.ProjectStatus != "Closed" && Model.MilestoneStatus != "Complete")
+                        {
+                            if (Role.Count > 0)
+                            {
+                                foreach (var item in Role)
+                                {
+                                    if (item.Roles == "Project Manager" || item.Roles == "Project Admin" || sysrole == "Administrator")
+                                    {
+                                        <div class="col-md-3">
+                                            <input type="file" id="uploadMPP" multiple />
+                                        </div>
+                                        <div class="col-md-9">
+                                            <button class="btn btn-success tooltipcustom" type="button" onclick="Upload()">
+                                                <i class="fa fa-cloud-upload"></i>
+                                                <span class="tooltiptext">Upload</span>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-12">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </div>
+                                        <br />
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        <div class="col-md-12">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <br />
+                        <table class="table" style="font-size:18px">
+                            <thead>
+                                <tr>
+                                    <th width="50%">Name</th>
+                                    <th width="10%">Tipe FIle</th>
+                                    <th>Upload Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="uploadmpp-tbody">
+                                @foreach (var item in Model.file)
+                                {
+
+                                    <tr>
+                                        <td>@item.DocumentName</td>
+                                        <td>@item.IDDocumentType</td>
+                                        <td>@item.CreatedDate</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Download", "Upload", new { ProjectHeaderID = Request["ProjectHeaderID"], name = @item.DocumentName })';"><i class="fa fa-cloud-download"></i></button>
+                                      
+                                            @if (Model.ProjectStatus != "Closed" && Model.MilestoneStatus != "Complete")
+                                            {
+
+                                                if (Role.Count > 0)
+                                                {
+                                                    foreach (var itemo in Role)
+                                                    {
+                                                        if (itemo.Roles == "Project Manager" || itemo.Roles == "Project Admin" || sysrole == "Administrator")
+                                                        {
+                                                            <button type="button" class="btn btn-danger" onclick="deletefile(@item.IDDocumentMilestone)"><i class="fa fa-trash"></i></button>
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("ShowFile", "Upload", new { ProjectHeaderID = Request["ProjectHeaderID"], name = @item.DocumentName })';"><i class="fa fa-eye"></i></button>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-warning tooltipcustom" type="button" onclick="location.href='@Url.Action("ProjectExecutionCreate", "Proyek", new {ProjectHeaderID = Request["ProjectHeaderID"], Keys = Session["keys"].ToString()})';">
+                        <i class="fa fa-backward"></i>
+                        <span class="tooltiptext">Back</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+
+    $(".ll").hide();
+
+    function Upload() {
+        var $file = document.getElementById('uploadMPP'),
+            $formData = new FormData();
+
+        if ($file.files.length > 0) {
+            for (var i = 0; i < $file.files.length; i++) {
+                $formData.append('file-' + i, $file.files[i]);
+            }
+        }
+
+        $.ajax({
+            url: '@Url.Action("UploadFile", "Upload", new { ProjHead = Request["ProjectHeaderID"]+"|3|2" + "|" + Request["TaskID"].ToString() })',
+            type: 'POST',
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                //Upload progress
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        //Do something with upload progress
+                        console.log(percentComplete);
+                    }
+                }, false);
+                return xhr;
+            },
+            beforeSend: function () {
+                  $(".ll").show();
+            },
+            complete: function () {
+                  $(".ll").hide();
+            },
+            data: $formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if (result == "OK") {
+                    debugger;
+                    location.reload();
+                } else {
+                    alert("Error Upload Data");
+                }
+            }
+        });
+    }
+
+    function deletefile(id) {
+        var data = '@Url.Action("Delete", "MPP", new { ProjectHeaderID = Request["ProjectHeaderID"] +"|"+ Request["TaskID"] + "|"})' + id;
+        $.ajax({
+            url: data,
+            type: 'GET',
+            contentType: false,
+            processData: false
+        });
+        location.reload();
+    }
+    function goBack() {
+        window.history.back();
+    }
+</script>

@@ -1,0 +1,1517 @@
+﻿@model LPS_ProjectManagement.Models.TransaksiDataModels.ProjectHeaderModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>GanttInisasi</title>
+    <link href="~/Scripts/dhtmlxent/dhtmlxgantt.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/flatpickr.min.css" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/dhtmlxent/dhtmlxgantt.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_undo.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_auto_scheduling.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_critical_path.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_csp.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_fullscreen.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_grouping.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_keyboard_navigation.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_marker.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_multiselect.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_smart_rendering.js")"></script>
+    <script src="@Url.Content("~/Scripts/ext/dhtmlxgantt_tooltip.js")"></script>
+    <script src="@Url.Content("~/Scripts/flatpickr.js")"></script>
+    <script src="@Url.Content("~/Scripts/GanttApi.js")"></script>
+    <script src="~/Scripts/iframeResizer.contentWindow.min.js"></script>
+    <script src="~/Scripts/findAndReplaceDOMText.js"></script>
+    <link href="~/Content/normalize.css" rel="stylesheet" />
+    <link href="~/Content/skeleton.css" rel="stylesheet" />
+    @*<script src="@Url.Content("~/Content/bootstrap3.min.js")"></script>*@
+    @*<link href="~/Content/bootstrap3.min.css" rel="stylesheet" />*@
+    <script src="@Url.Content("~/Scripts/dhtmlx.js")"></script>
+    @*<link rel='stylesheet' href='https://cdn.dhtmlx.com/edge/skins/terrace/dhtmlx.css?v=6.0.7' />*@
+    <link rel="stylesheet" href="~/Content/dhtmlx/dhtmlx.css" />
+
+</head>
+
+<body>
+
+    <style>
+        
+        .spin {
+            -webkit-animation: spin 750ms infinite linear;
+            -moz-animation: spin 750ms infinite linear;
+            animation: spin 750ms infinite linear;
+        }
+        
+        @@-webkit-keyframes spin {
+            to { 
+                -webkit-transform: rotate(360deg);
+            }
+        }
+        
+        @@-moz-keyframes spin {
+            to {
+                -moz-transform: rotate(360deg);
+            }
+        }
+
+        .rspin {
+            -webkit-animation: rspin 2250ms infinite linear;
+            -moz-animation: rspin 2250ms infinite linear;
+            animation: rspin 2250ms infinite linear;
+        }
+
+        @@-webkit-keyframes rspin {
+            to {
+                -webkit-transform: rotate(-360deg);
+            }
+        }
+
+        @@-moz-keyframes rspin {
+            to {
+                -moz-transform: rotate(-360deg);
+            }
+        }
+
+        /* let's style that thing */
+        .loader {
+            background-color: #eeeeee;
+            border-radius: 100%;
+            position: relative;
+            height: 75px;
+            width: 75px;
+            overflow: hidden;
+        }
+
+        .loader .c {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -34% 0 0 -34%;
+            width: 68%;
+            height: 68%;
+            background-color: #ffffff;
+            border-radius: 100%;
+            z-index: 3;
+        }
+
+        .loader .d {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        
+        .loader .d .e {
+            position: absolute;
+            top: 1%;
+            left: 50%;
+            margin: 0 0 0 -7.5px;
+            height: 14px;
+            width: 15px;
+            -webkit-transform: rotate(10deg) skew(20deg);
+            -moz-transform: rotate(10deg) skew(20deg);
+            border-radius: 3px;
+            background: #999;
+        }
+
+        .loader .r {
+            z-index: 2;
+            position: absolute;
+            left: 50%;
+            top: -1px;
+            bottom: -1px;
+            margin-left: -3.75px;
+            background-color: #ffffff;
+            width: 7.5px;
+        }
+
+        .loader .r1 {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+        }
+
+        .loader .r2 {
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+        }
+
+        .loader .r3 {
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+        }
+
+        .loader .r4 {
+            -webkit-transform: rotate(135deg);
+            -moz-transform: rotate(135deg);
+        }
+
+    </style>
+    
+    <style>
+
+        body {
+            overflow-x: hidden;
+            font-size: 14px !important;
+            font-family: 'Segoe UI';
+        }
+
+        .dhx_calendar_cont input {
+            width: 96px;
+            padding: 0;
+            margin: 3px 10px 10px 10px;
+            font-size: 11px;
+            height: 17px;
+            text-align: center;
+            border: 1px solid #ccc;
+            color: #646464;
+        }
+
+        .dhtmlxcalendar_dhx_skyblue, .dhtmlxcalendar_dhx_web, .dhtmlxcalendar_dhx_terrace {
+            z-index: 999999 !important;
+        }
+
+    </style>
+
+    <div class="row">
+        <div class="four column">
+            <label class="form-label label-header" for="field-timeline">Upload File MPP</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="four columns"><input type="file" id="uploadMPP" accept=".mpp" /></div>
+        <div class="twelve columns">
+            <button type="button" class="button-primary" onclick="UploadToSharePoint()"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload File</button>
+        </div>
+    </div>
+
+    <div class="row padding-top-45">
+
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <div class="form-group has-focus">
+
+                <span class="desc"></span>
+                <div class="controls">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-3 col-lg-3">
+
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-lg-4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th width="50%">Name</th>
+                                        <th width="10%">Tipe File</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="uploadmpp-tbody">
+                                    @if (Model.ListFile != null)
+                                    {
+                                        foreach (var item in Model.ListFile)
+                                        {
+                                            <tr>
+                                                <td><strong>@item.DocName</strong></td>
+                                                <td>MPP</td>
+                                                <td class='text-center'>
+                                                    <button type='button' class='btn btn-danger btn-xs' onclick='DeleteFile(@item.ID)'>
+                                                        <span>Delete</span>
+                                                    </button>
+                                                    @*<button type="button" class="btn btn-danger btn-xs" onclick="DownloadFile(@item.ID)">
+                                                            <span>Download</span>
+                                                        </button>*@
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row padding-top-45" style="display : none;">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="from-group">
+                <label class="form-label" for="field-1">Resources </label>
+                <span class="desc"></span>
+                <br />
+                @*<a href="#openmodaluUser" class="buttonu"><i class="fa fa-search"></i>&nbsp; Tambah Resource</a>*@
+                <div class="col-md-2 no-margin no-padding">
+                    <input type="text" class="form-control" id="txtResources" />
+                </div>
+                <div class="col-md-2">
+                    @*<button class="btn btn-success">Tambah</button>*@
+                    <button type="button" class="btn btn-success" onclick="AddResources()"><i class="fa fa-search"></i>&nbsp;&nbsp;Tambah Resource</button>
+                </div>
+                <br />
+                <div class="controls">
+                    <br />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="50%">Resource Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resources-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="loader rspin ll" style="margin-left : 50px;">
+        <span class="c"></span>
+        <span class="d spin"><span class="e"></span></span>
+        <span class="r r1"></span>
+        <span class="r r2"></span>
+        <span class="r r3"></span>
+        <span class="r r4"></span>
+    </div>
+
+    <div class="row padding-top-45">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="from-group">
+                <label class="form-label label-header" for="field-1">Gantt Chart</label>
+                
+                <span class="desc"></span>
+                <div class="gantcontainer">
+                    <div id="gantt-inisiasi" style='width:100%; height:500px;'></div>
+                </div>
+                <div id="buttonDownloadGanttChart" style="display:none;" align="right" class="twelve columns">
+                    <button type="button" class="button-primary" onclick="DonwloadFile()"><i class="fa fa-download"></i>&nbsp;&nbsp;Donwload Gantt Chart (Excel)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row padding-top-45">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group has-warning">
+                <span class="desc"></span>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="controls miles">
+                            <table class="table" id="milestone-table">
+                                <thead>
+                                    <tr>
+                                        <th fulltable-field-name="milestone">Milestone</th>
+                                        <th fulltable-field-name="selesai">Selesai</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblmilestone-tbody">
+                                    <tr style="display:none;">
+                                        <td>test</td>
+                                        <td>2019</td>
+                                    </tr>
+                                    @foreach (var data in Model.ListMPPProjectPlanDetail)
+                                    {
+                                        <tr>
+                                            <td><span>@data.TaskName</span></td>
+                                            <td><span>@data.StartDateString</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var namebefore;
+
+        $(document).ready(function () {
+
+            GetHoliday();
+            $(".ll").hide();
+
+        });
+
+        var Holiday = [];
+        var HolidayInDate = [];
+
+        function GetHoliday() {
+
+            $.ajax({
+                url: '@Url.Action("GetHariLibur", "Gantt")',
+                type: 'POST',
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var values = JSON.parse(result);
+                    let libur = values.map(a => new Date(a.Holiday));
+                    let liburindate = values.map(a => a.Holiday);
+                    Holiday = libur;
+                    HolidayInDate = liburindate;
+                    GetDataIFExist();
+                }
+            });
+
+        }
+
+        var duration = function (a, b, c) {
+            var res = gantt.calculateDuration(a.getDate(false), b.getDate(false));
+            c.innerHTML = res + ' days';
+        };
+        
+        var calendar_init = function (id, data, date) {
+            var obj = new dhtmlXCalendarObject(id);
+            obj.setHolidays(HolidayInDate);
+            obj.setDateFormat(data.date_format ? data.date_format : '');
+            obj.setDate(date ? date : (new Date()));
+            obj.hideTime();
+
+            if (data.skin)
+                obj.setSkin(data.skin);
+            return obj;
+        };
+
+        function getGanttData() {
+            var z = gantt.serialize();
+            var wbs = [];
+            var datas = []
+            let wbsid = z.data.map(a => a.id);
+
+            for (var i = 0; i < wbsid.length; i++) {
+
+                var object = {
+                    wbs: gantt.getWBSCode(gantt.getTask(wbsid[i]))
+                }
+                wbs.push(object);
+            }
+
+            for (var i = 0; i < z.data.length; i++) {
+                const zz = wbs[i];
+                const z1 = z.data[i];
+
+                const object2 = Object.assign(z1, zz);
+                //var m = dataObject.assign(z.data[i], wbs[i]);
+                datas.push(object2);
+            }
+
+            //var gantt = {
+            //    data: datas,
+            //    links: z.link
+            //}
+            debugger
+
+            var gan = {
+                data: datas,
+                links : z.links
+            };
+            return gan ;
+        }
+
+        function GetDataIFExist() {
+
+            $.ajax({
+                url:  '@Url.Action("GetMPPPlaning", "Proyek", new { ProjectHeaderId = Request["ProjectHeaderID"] })',
+                type: 'POST',
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (result) {
+
+                    var Datas = result.ListMPP.GanttChart;
+                    var links = result.ListMPP.GanttChartLink;
+
+                    if (Object.keys(Datas).length == 0) {
+                        LoadNew();
+                    }
+                    else
+                    {
+                        LoadExistingData(Datas,links);
+                    }
+                    
+                }
+            });
+
+        }
+        
+        function LoadNew() {
+            
+            var duration = function (a, b, c) {
+
+                var res = gantt.calculateDuration(a.getDate(false), b.getDate(false));
+                c.innerHTML = res + ' days';
+
+            };
+            
+            gantt.form_blocks["dhx_calendar"] = {
+
+                render: function (sns) {
+                    return "<div class='dhx_calendar_cont'><input type='text' readonly='true' id='calendar1'/> &#8211; "
+                        + "<input type='text' readonly='true' id='calendar2'/><label id='duration'></label></div>";
+                },
+                set_value: function (node, value, task, data) {
+
+                    var a = node._cal_start = (task.start_date === null) ? calendar_init('calendar1', data, new Date()) : calendar_init('calendar1', data, task.start_date);
+                    var b = node._cal_end = (task.end_date === null) ? calendar_init('calendar2', data, new Date()) : calendar_init('calendar2', data, task.end_date);
+                    var c = node.lastChild;
+                    b.setInsensitiveRange(null, new Date(a.getDate(false) - 86400000));
+
+                    var a_click = a.attachEvent("onClick", function (date) {
+                        b.setInsensitiveRange(null, new Date(date.getTime() - 86400000));
+                    });
+
+                    var b_click = b.attachEvent("onClick", function (date) { });
+
+                    var a_time_click = a.attachEvent("onChange", function (d) {
+                        b.setInsensitiveRange(null, new Date(d.getTime() - 86400000));
+                    });
+
+                    var b_time_click = b.attachEvent("onChange", function (d) { });
+
+                    var id = gantt.attachEvent("onAfterLightbox", function () {
+                        a.detachEvent(a_click);
+                        a.detachEvent(a_time_click);
+                        a.unload();
+                        b.detachEvent(b_click);
+                        b.detachEvent(b_time_click);
+                        b.unload();
+                        a = b = null;
+                        this.detachEvent(id);
+                    });
+
+                    document.getElementById('calendar1').value = a.getDate(true);
+                    document.getElementById('calendar2').value = b.getDate(true);
+
+                },
+                get_value: function (node, task) {
+
+                    task.start_date = node._cal_start.getDate(false);
+                    task.end_date = node._cal_end.getDate(false);
+                    return task;
+
+                },
+                focus: function (node) { }
+
+            };
+
+            gantt.form_blocks["dhx_miles"] = {
+
+                render: function (sns) {
+
+                    return "<div class='dhx_calendar_cont'><input type='text' readonly='true' id='calendar1'/>"
+                        + "</div>";
+
+                },
+                set_value: function (node, value, task, data) {
+
+                    var a = node._cal_start = (task.start_date === null) ? calendar_init('calendar1', data, new Date()) : calendar_init('calendar1', data, task.start_date);
+
+                    var id = gantt.attachEvent("onAfterLightbox", function () {
+
+                        a.detachEvent(a_click);
+                        a.detachEvent(a_time_click);
+                        a.unload();
+                        a = null;
+                        this.detachEvent(id);
+                    });
+                    
+                    document.getElementById('calendar1').value = a.getDate(true);
+                    
+                },
+                get_value: function (node, task) {
+
+                    task.start_date = node._cal_start.getDate(false);
+                    task.end_date = node._cal_start.getDate(false);
+                    return task;
+
+                },
+                focus: function (node) { }
+
+            };
+            
+            gantt.config.layout = {
+
+                css: "gantt_container",
+                cols: [
+                    {
+                        width: 400,
+                        min_width: 300,
+
+                        // adding horizontal scrollbar to the grid via the scrollX attribute
+                        rows: [
+                            { view: "grid", scrollX: "gridScroll", scrollable: true, scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "gridScroll" }
+                        ]
+                    },
+                    { resizer: true, width: 1 },
+                    {
+                        rows: [
+                            { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "scrollHor" }
+                        ]
+                    },
+                    { view: "scrollbar", id: "scrollVer" }
+                ]
+
+            };
+
+            gantt.config.columns = [
+
+                { name: "add", label: "" },
+                { name: "wbs", label: " ", width: 40, template: gantt.getWBSCode, resize: true },
+                { name: "text", label: "Task name", tree: true, width: 400, resize: true },
+                { name: "duration", label: "Duration (Days)", align: "center", width: 100, resize: true },
+                { name: "start_date", label: "Start time", align: "center", width: 100, resize: true },
+                { name: "end_date", label: "End time", align: "center", width: 100, resize: true }
+
+            ];
+
+            gantt.config.layout = {
+
+                css: "gantt_container",
+                cols: [
+                    {
+                        width: 784,
+                        min_width: 300,
+                        rows: [
+                            { view: "grid", scrollX: "gridScroll", scrollable: true, scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "gridScroll" }
+                        ]
+                    },
+                    { resizer: true, width: 1 },
+                    {
+                        rows: [
+                            { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "scrollHor" }
+                        ]
+                    },
+                    { view: "scrollbar", id: "scrollVer" }
+                ]
+
+            };
+
+            gantt.config.lightbox.sections = [
+
+                { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
+                { name: "type", type: "typeselect", map_to: "type", height: 50 },
+                { name: "time", height: 72, map_to: "auto", type: "dhx_calendar", date_format: '%d %M %Y' }
+
+            ];
+
+            gantt.config.lightbox.milestone_sections = [
+
+                { name: "description", height: 70, map_to: "text", type: "textarea" },
+                { name: "type", type: "typeselect", map_to: "type", height: 50 },
+                { name: "time", height: 72, type: "dhx_miles", map_to: "auto", date_format: '%d %M %Y' }
+
+            ];
+
+            gantt.attachEvent("onLightboxSave", function (id, item) {
+
+                var d = new Date();
+                var newDateStart = new Date(item.start_date);
+                newDateStart.setHours(01, 00, 0);
+                var newDateEnd = new Date(item.end_date);
+                newDateEnd.setHours(23, 59, 0);
+                item.start_date = newDateStart;
+                item.end_date = newDateEnd;
+
+                if (item.text == "") {
+                    alert("Nama task belum di isi");
+                }
+                else if (item.type == "milestone" && !item.text.toLowerCase().match(/^milestone.*$/)) {
+                    alert("Nama task bertipe milestone harus mengandung kata 'Milestone' di awal kalimat");
+                }
+                else {
+                    gantt.config.fit_tasks = true;
+                    gantt.render();
+                    return true;
+                }
+
+            });
+
+            gantt.attachEvent("onAfterTaskDelete", function (id, item) {
+
+                DeleteMilestoneIfUpload(namebefore);
+                return true;
+
+            });
+
+            gantt.attachEvent("onAfterTaskAdd", function (id, item) {
+
+                debugger;
+
+                if (item.type == "milestone") {
+                    InsertMilestone(item.text, item.start_date)
+                }
+
+                return true;
+
+            });
+
+            gantt.config.api_date = "%d-%m-%Y";
+
+            gantt.config.work_time = true;
+
+            gantt.config.correct_work_time = true;
+
+            gantt.config.open_tree_initially = true;
+
+            gantt.config.order_branch = true;
+
+            gantt.config.order_branch_free = true;
+
+            gantt.init("gantt-inisiasi");
+
+            gantt.parse(tasks);
+
+            document.getElementById("buttonDownloadGanttChart").style.display = "block";
+
+        };
+
+        function LoadExistingData(data, link) {
+
+            var tasks = {
+
+                data: data,//result,
+                links: link// result.Display.link
+
+            };
+
+            for (var i = 0; i < Holiday.length; i++) {
+
+                gantt.setWorkTime({
+                    date: Holiday[i],
+                    hours: false
+                });
+
+            }
+
+            gantt.form_blocks["dhx_calendar"] = {
+
+                render: function (sns) {
+                    return "<div class='dhx_calendar_cont'><input type='text' readonly='true' id='calendar1'/> &#8211; "
+                        + "<input type='text' readonly='true' id='calendar2'/><label id='duration'></label></div>";
+                },
+                set_value: function (node, value, task, data) {                    
+                    var a = node._cal_start = (task.start_date === null) ? calendar_init('calendar1', data, task.start_date) : calendar_init('calendar1', data, task.start_date);
+                    var b = node._cal_end = (task.end_date === null) ? calendar_init('calendar2', data, task.end_date) : calendar_init('calendar2', data, task.end_date);
+                    var c = node.lastChild;
+                    b.setInsensitiveRange(null, new Date(a.getDate(false) - 86400000));
+
+                    var a_click = a.attachEvent("onClick", function (date) {
+                        b.setInsensitiveRange(null, new Date(date.getTime() - 86400000));
+                    });
+
+                    var b_click = b.attachEvent("onClick", function (date) { });
+
+                    var a_time_click = a.attachEvent("onChange", function (d) {
+                        b.setInsensitiveRange(null, new Date(d.getTime() - 86400000));
+                    });
+
+                    var b_time_click = b.attachEvent("onChange", function (d) { });
+                    
+                    var id = gantt.attachEvent("onAfterLightbox", function () {
+                        a.detachEvent(a_click);
+                        a.detachEvent(a_time_click);
+                        a.unload();
+                        b.detachEvent(b_click);
+                        b.detachEvent(b_time_click);
+                        b.unload();
+                        a = b = null;
+                        this.detachEvent(id);
+                    });
+                    
+                    document.getElementById('calendar1').value = a.getDate(true);
+                    document.getElementById('calendar2').value = b.getDate(true);
+
+                    if (task.percentcomplate == '100') {
+                        document.getElementById('calendar1').disabled = true;
+                        document.getElementById('calendar2').disabled = true;
+                    }
+                    else {
+                        document.getElementById('calendar1').disabled = false;
+                        document.getElementById('calendar2').disabled = false;
+                    }
+                },
+                get_value: function (node, task) {
+
+                    task.start_date = node._cal_start.getDate(false);
+                    task.end_date = node._cal_end.getDate(false);
+                    return task;
+
+                },
+                focus: function (node) { }
+
+            };
+
+            gantt.form_blocks["dhx_miles"] = {
+
+                render: function (sns) {
+
+                    return "<div class='dhx_calendar_cont'><input type='text' readonly='true' id='calendar1'/>"
+                        + "</div>";
+
+                },
+                set_value: function (node, value, task, data) {
+
+                    var a = node._cal_start = (task.start_date === null) ? calendar_init('calendar1', data, new Date()) : calendar_init('calendar1', data, task.start_date);
+
+                    var id = gantt.attachEvent("onAfterLightbox", function () {
+
+                        a.detachEvent(a_click);
+                        a.detachEvent(a_time_click);
+                        a.unload();
+                        a = null;
+                        this.detachEvent(id);
+
+                    });
+                    
+                    document.getElementById('calendar1').value = a.getDate(true);
+                    
+                },
+                get_value: function (node, task) {
+
+                    task.start_date = node._cal_start.getDate(false);
+                    task.end_date = node._cal_start.getDate(false);
+                    return task;
+
+                },
+                focus: function (node) { }
+
+            };
+
+            gantt.config.layout = {
+
+                css: "gantt_container",
+                cols: [
+                    {
+                        width: 400,
+                        min_width: 300,
+
+                        // adding horizontal scrollbar to the grid via the scrollX attribute
+                        rows: [
+                            { view: "grid", scrollX: "gridScroll", scrollable: true, scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "gridScroll" }
+                        ]
+                    },
+                    { resizer: true, width: 1 },
+                    {
+                        rows: [
+                            { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "scrollHor" }
+                        ]
+                    },
+                    { view: "scrollbar", id: "scrollVer" }
+                ]
+
+            };
+
+            gantt.config.columns = [
+
+                { name: "add", label: "" },
+                { name: "wbs", label: " ", width: 40, template: gantt.getWBSCode, resize: true },
+                { name: "text", label: "Task name", tree: true, width: 400, resize: true },
+                {
+                    name: "duration", label: "Duration (Days)", align: "center", width: 100, resize: true,
+                    template: function (dur) { return dur.duration; }
+                },
+                { name: "start_date", label: "Start time", align: "center", width: 100, resize: true },
+                { name: "end_date", label: "End time", align: "center", width: 100, resize: true }
+
+            ];
+
+            gantt.config.layout = {
+
+                css: "gantt_container",
+                cols: [
+                    {
+                        width: 784,
+                        min_width: 300,
+
+                        // adding horizontal scrollbar to the grid via the scrollX attribute
+                        rows: [
+                            { view: "grid", scrollX: "gridScroll", scrollable: true, scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "gridScroll" }
+                        ]
+                    },
+                    { resizer: true, width: 1 },
+                    {
+                        rows: [
+                            { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "scrollHor" }
+                        ]
+                    },
+                    { view: "scrollbar", id: "scrollVer" }
+                ]
+
+            };
+
+            gantt.config.lightbox.sections = [
+
+                { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
+                { name: "type", type: "typeselect", map_to: "type", height: 50 },
+                { name: "time", height: 72, map_to: "auto", type: "dhx_calendar", date_format: '%d %M %Y' }
+
+            ];
+
+            gantt.config.lightbox.milestone_sections = [
+
+                { name: "description", height: 70, map_to: "text", type: "textarea" },
+                { name: "type", type: "typeselect", map_to: "type", height: 50},
+                { name: "time", height: 72, type: "dhx_miles", map_to: "auto", date_format: '%d %M %Y' }
+
+            ];
+
+            gantt.attachEvent("onLightboxSave", function (id, item) {
+
+                var d = new Date();
+                var newDateStart = new Date(item.start_date);
+                newDateStart.setHours(01, 00, 0);
+                var newDateEnd = new Date(item.end_date);
+                newDateEnd.setHours(23, 59, 0);
+                item.start_date = newDateStart;
+                item.end_date = newDateEnd;
+
+                if (item.text == "") {
+                    alert("Nama task belum di isi");
+                }
+                else if (item.type == "milestone" && !item.text.toLowerCase().match(/^milestone.*$/)) {
+                    alert("Nama task bertipe milestone harus mengandung kata 'Milestone' di awal kalimat");
+                }
+                else {
+                    ReplaceName(item.text);
+                    gantt.config.fit_tasks = true;
+                    gantt.render();
+                    return true;
+                }
+
+            });
+
+            gantt.config.work_time = true;
+
+            gantt.config.correct_work_time = true;
+
+            gantt.config.scale_unit = "day";
+
+            gantt.config.date_scale = "%D, %d";
+
+            gantt.config.min_column_width = 60;
+
+            gantt.config.duration_unit = "day";
+
+            gantt.config.scale_height = 20 * 3;
+
+            gantt.config.row_height = 30;
+            
+            var weekScaleTemplate = function (date) {
+
+                var dateToStr = gantt.date.date_to_str("%d %M");
+                var weekNum = gantt.date.date_to_str("(week %W)");
+                var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+                return dateToStr(date) + " - " + dateToStr(endDate) + " " + weekNum(date);
+
+            };
+
+            gantt.config.subscales = [
+
+                { unit: "month", step: 1, date: "%F, %Y" },
+                { unit: "week", step: 1, template: weekScaleTemplate }
+
+            ];
+
+            gantt.templates.task_cell_class = function (task, date) {
+
+                if (!gantt.isWorkTime(date)) return "week_end";
+                return "";
+
+            };
+
+            gantt.attachEvent("onBeforeLightbox", function (id) {
+
+                var task = gantt.getTask(id);
+                namebefore = task.text;
+                return true;
+
+            });
+
+            gantt.attachEvent("onAfterTaskDelete", function (id, item) {
+
+                DeleteMilestone(namebefore)
+                return true;
+
+            });
+
+            gantt.attachEvent("onAfterTaskAdd", function (id, item) {
+
+                if (item.type == "milestone") InsertMilestone(item.text, item.start_date);
+                return true;
+
+            });
+
+            gantt.config.api_date = "%d-%m-%Y";
+
+            gantt.config.open_tree_initially = true;
+
+            gantt.config.order_branch = true;
+
+            gantt.config.order_branch_free = true;
+
+            gantt.config.skip_off_time = true;
+
+            gantt.setWorkTime({ hours: [8, 17] });
+
+            gantt.init("gantt-inisiasi");
+
+            gantt.parse(tasks);
+
+            document.getElementById("buttonDownloadGanttChart").style.display = "block";
+
+        }
+
+        function checkTime(i) {
+
+            return (i < 10) ? "0" + i : i;
+
+        }
+        
+        function LoadUploadData(data, link) {
+
+            var tasks = {
+
+                data: data,//result,
+                links: link// result.Display.link
+
+            };
+
+            for (var i = 0; i < Holiday.length; i++) {
+
+                gantt.setWorkTime({
+
+                    date: Holiday[i],
+                    hours: false
+
+                });
+
+            }
+
+            gantt.form_blocks["dhx_calendar"] = {
+
+                render: function (sns) {
+
+                    return "<div class='dhx_calendar_cont'><input type='text' readonly='true' id='calendar1'/> &#8211; "
+                        + "<input type='text' readonly='true' id='calendar2'/><label id='duration'></label></div>";
+
+                },
+                set_value: function (node, value, task, data) {
+
+                    var a = node._cal_start = (task.start_date === null) ? calendar_init('calendar1', data, task.start_date) : calendar_init('calendar1', data, task.start_date);
+
+                    var b = node._cal_end = (task.end_date === null) ? calendar_init('calendar2', data, task.end_date) : calendar_init('calendar2', data, task.end_date);
+
+                    var c = node.lastChild;
+
+                    b.setInsensitiveRange(null, new Date(a.getDate(false) - 86400000));
+
+                    var a_click = a.attachEvent("onClick", function (date) {
+
+                        b.setInsensitiveRange(null, new Date(date.getTime() - 86400000));
+
+                    });
+
+                    var b_click = b.attachEvent("onClick", function (date) { });
+
+                    var a_time_click = a.attachEvent("onChange", function (d) {
+
+                        b.setInsensitiveRange(null, new Date(d.getTime() - 86400000));
+
+                    });
+
+                    var b_time_click = b.attachEvent("onChange", function (d) { });
+                    
+                    var id = gantt.attachEvent("onAfterLightbox", function () {
+
+                        a.detachEvent(a_click);
+                        a.detachEvent(a_time_click);
+                        a.unload();
+                        b.detachEvent(b_click);
+                        b.detachEvent(b_time_click);
+                        b.unload();
+                        a = b = null;
+                        this.detachEvent(id);
+
+                    });
+                    
+                    document.getElementById('calendar1').value = a.getDate(true);
+
+                    document.getElementById('calendar2').value = b.getDate(true);
+
+                },
+                get_value: function (node, task) {
+
+                    task.start_date = node._cal_start.getDate(false);
+                    task.end_date = node._cal_end.getDate(false);
+                    return task;
+
+                },
+                focus: function (node) { }
+
+            };
+
+            gantt.form_blocks["dhx_miles"] = {
+
+                render: function (sns) {
+
+                    return "<div class='dhx_calendar_cont'><input type='text' readonly='true' id='calendar1'/>"
+                        + "</div>";
+
+                },
+                set_value: function (node, value, task, data) {
+
+                    var a = node._cal_start = (task.start_date === null) ? calendar_init('calendar1', data, new Date()) : calendar_init('calendar1', data, task.start_date);
+
+                    var id = gantt.attachEvent("onAfterLightbox", function () {
+
+                        a.detachEvent(a_click);
+                        a.detachEvent(a_time_click);
+                        a.unload();
+                        a = null;
+                        this.detachEvent(id);
+
+                    });
+                    
+                    document.getElementById('calendar1').value = a.getDate(true);
+                    
+                },
+                get_value: function (node, task) {
+
+                    task.start_date = node._cal_start.getDate(false);
+                    task.end_date = node._cal_start.getDate(false);
+                    return task;
+
+                },
+                focus: function (node) { }
+
+            };
+            
+            gantt.config.layout = {
+
+                css: "gantt_container",
+                cols: [
+                    {
+                        width: 400,
+                        min_width: 300,
+
+                        // adding horizontal scrollbar to the grid via the scrollX attribute
+                        rows: [
+                            { view: "grid", scrollX: "gridScroll", scrollable: true, scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "gridScroll" }
+                        ]
+                    },
+                    { resizer: true, width: 1 },
+                    {
+                        rows: [
+                            { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "scrollHor" }
+                        ]
+                    },
+                    { view: "scrollbar", id: "scrollVer" }
+                ]
+
+            };
+
+            gantt.config.columns = [
+
+                { name: "add", label: "" },
+                { name: "wbs", label: " ", width: 40, template: gantt.getWBSCode, resize: true },
+                { name: "text", label: "Task name", tree: true, width: 400, resize: true },
+                {
+                    name: "duration", label: "Duration (Days)", align: "center", width: 100, resize: true,
+                    template: function (dur) {
+                        return dur.duration
+                            ;
+                    }
+                },
+                { name: "start_date", label: "Start time", align: "center", width: 100, resize: true },
+                { name: "end_date", label: "End time", align: "center", width: 100, resize: true }
+
+            ];
+
+            gantt.config.layout = {
+
+                css: "gantt_container",
+                cols: [
+                    {
+                        width: 784,
+                        min_width: 300,
+
+                        // adding horizontal scrollbar to the grid via the scrollX attribute
+                        rows: [
+                            { view: "grid", scrollX: "gridScroll", scrollable: true, scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "gridScroll" }
+                        ]
+                    },
+                    { resizer: true, width: 1 },
+                    {
+                        rows: [
+                            { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+                            { view: "scrollbar", id: "scrollHor" }
+                        ]
+                    },
+                    { view: "scrollbar", id: "scrollVer" }
+                ]
+
+            };
+
+            gantt.config.lightbox.sections = [
+
+                { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
+                { name: "type", type: "typeselect", map_to: "type", height: 50 },
+                { name: "time", height: 72, map_to: "auto", type: "dhx_calendar", date_format: '%d %M %Y' }
+
+            ];
+
+            gantt.config.lightbox.milestone_sections = [
+
+                { name: "description", height: 70, map_to: "text", type: "textarea" },
+                { name: "type", type: "typeselect", map_to: "type", height: 50 },
+                { name: "time", height: 72, type: "dhx_miles", map_to: "auto", date_format: '%d %M %Y' }
+
+            ];
+
+            gantt.attachEvent("onLightboxSave", function (id, item) {
+                
+                var d = new Date();
+                var newDateStart = new Date(item.start_date);
+                newDateStart.setHours(01, 00, 0);
+                var newDateEnd = new Date(item.end_date);
+                newDateEnd.setHours(23, 59, 0);
+                item.start_date = newDateStart;
+                item.end_date = newDateEnd;
+                gantt.config.fit_tasks = true;
+                gantt.render();
+                return true;
+
+            });
+
+            gantt.config.work_time = true;
+
+            gantt.config.correct_work_time = true;
+
+            gantt.config.scale_unit = "day";
+
+            gantt.config.date_scale = "%D, %d";
+
+            gantt.config.min_column_width = 60;
+
+            gantt.config.duration_unit = "day";
+
+            gantt.config.scale_height = 20 * 3;
+
+            gantt.config.row_height = 30;
+            
+            var weekScaleTemplate = function (date) {
+
+                var dateToStr = gantt.date.date_to_str("%d %M");
+                var weekNum = gantt.date.date_to_str("(week %W)");
+                var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+                return dateToStr(date) + " - " + dateToStr(endDate) + " " + weekNum(date);
+
+            };
+
+            gantt.config.subscales = [
+
+                { unit: "month", step: 1, date: "%F, %Y" },
+                { unit: "week", step: 1, template: weekScaleTemplate }
+
+            ];
+
+            gantt.templates.task_cell_class = function (task, date) {
+
+                if (!gantt.isWorkTime(date)) return "week_end";
+                return "";
+
+            };
+
+            gantt.attachEvent("onBeforeLightbox", function (id) {
+
+                var task = gantt.getTask(id);
+                namebefore = task.text;
+                return true;
+
+            });
+
+            gantt.attachEvent("onAfterTaskDelete", function (id, item) {
+
+                DeleteMilestone(namebefore);
+                return true;
+
+            });
+
+            gantt.attachEvent("onAfterTaskAdd", function (id, item) {
+
+                if (item.type == "milestone") InsertMilestone(item.text, item.start_date);
+                return true;
+
+            });
+
+            gantt.config.api_date = "%d-%m-%Y";
+
+            gantt.config.open_tree_initially = true;
+
+            gantt.config.order_branch = true;
+
+            gantt.config.order_branch_free = true;
+
+            gantt.config.skip_off_time = true;
+
+            gantt.clearAll();
+
+            gantt.setWorkTime({ hours: [8, 17] });
+
+            gantt.init("gantt-inisiasi");
+
+            gantt.parse(tasks);
+
+            document.getElementById("buttonDownloadGanttChart").style.display = "block";
+
+        }
+
+        function checkextension(filename) {
+
+            return filename.split('.').pop();
+
+        }
+
+        function DonwloadFile() {
+
+            gantt.exportToExcel({
+                name: "Gantt Chart Initiation.xlsx"
+            });
+
+        }
+
+        function UploadToSharePoint() {
+
+            var $file = document.getElementById('uploadMPP'), $formData = new FormData();
+
+            if ($file.files.length > 0) {
+
+                for (var i = 0; i < $file.files.length; i++) {
+                    $formData.append('file-' + i, $file.files[i]);
+                }
+
+            }
+
+            var extesnsion = checkextension($file.value);
+
+            if (extesnsion !== "mpp") {
+                alert("File yang di upload bukan file Microsoft Project")
+            } else {
+
+                $.ajax({
+                    url: '@Url.Action("UploadFile", "Upload", new { ProjHead = Request["ProjectHeaderID"] +"|2|1|0"})',
+                    type: 'POST',
+                    data: $formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        var uploadhtml = "";
+                        var oFile = document.getElementById("uploadMPP").files[0];
+                        $("#uploadmpp-tbody").empty();
+                        uploadhtml += "<tr><td><strong>" + oFile.name + "</strong></td><td>MPP</td>";
+                        uploadhtml += "<td class='text-center'><button type='button' class='btn btn-danger btn-xs' onclick='DeleteFile(" + result + ")'><span>Delete</span></button></td><button type='button' class='btn btn-danger btn-xs'><span>Download</span></button></td></tr>";
+                        $("#uploadmpp-tbody").append(uploadhtml);
+                        UploadMPP();
+                    }
+                });
+
+            }
+        }
+
+        function UploadMPP() {
+
+            var $file = document.getElementById('uploadMPP'), $formData = new FormData();
+
+            if ($file.files.length > 0) {
+
+                for (var i = 0; i < $file.files.length; i++) {
+
+                    $formData.append('file-' + i, $file.files[i]);
+
+                }
+
+            }
+
+            $.ajax({
+                url: '@Url.Action("LoadProject", "Proyek")',
+                type: 'POST',
+                data: $formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    $(".ll").show();
+                },
+                complete: function () {
+                    $(".ll").hide();
+                },
+                success: function (result) {
+                    debugger;
+                    var Datas = result.Display.data;
+                    var links = result.Display.link;
+                    var milestone = result.Display.milestone;
+                    
+                    var html = " <table id='milestone-table' class='table'><thead ><tr><th>Milestone</th><th>Selesai</th></thead ><tbody class='milebody'>";
+                    for (var i = 0; i < Object.keys(milestone).length; i++) {
+                        html += "<tr><td>" + milestone[i]['Milestones'] + "</td><td>" + milestone[i]['Selesai'] + "</td><tr>";
+                    }
+                    html += "</tbody></table>";
+                    $("#milestone-table").remove();
+                    $(".miles").append(html);
+                    LoadUploadData(Datas, links);
+                    $("#uploadMPP").val(null);
+                }
+            });
+
+        }
+
+        function DeleteFile(ID) {
+        var data = '@Url.Action("DeleteFile", "Upload", new { ProjectHeaderID = Request["ProjectHeaderID"]})' +'&DocumentID=' + ID;
+        $.ajax({
+            url: data,
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+                if (result.status.includes("S|Success")) {
+                    $("#uploadmpp-tbody").empty();
+                    gantt.clearAll();
+
+                    $("#milestone-table").remove();
+                }
+                else {
+                    alert('File Gagal Dihapus')
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: " + textStatus); alert("Error: " + errorThrown);
+            }
+        });
+        }
+
+        function DownloadFile(ID) {
+            link = 'http://intranet.lps.go.id/ApplicationDocuments/LPS_ProjectManagement/@Model.ProjectModel.ProjectName/' + ID;
+            location.href = link;
+        }
+
+        function ReplaceName(nameafter) {
+            findAndReplaceDOMText(document.getElementById('tblmilestone-tbody'), {
+                preset: 'prose',
+                find: namebefore,
+                replace: nameafter
+            })
+        }
+        
+        function DeleteMilestone(name) {
+            var searchString = name;
+            $("#tblmilestone-tbody tr td:contains('" + searchString + "')").filter(function () {
+                return $(this).text().trim() == searchString;
+            }).parent().remove();
+
+        }
+
+        function InsertMilestone(Nama, Tanggal) {
+
+            var d = new Date(Tanggal);
+
+            var TanggalIndonesia = MilestoneDateFormat(d.getMonth() + 1, d.getFullYear());
+
+            var html;
+
+            html = "<tr><td>" + Nama + "</td><td>" + TanggalIndonesia + "</td><tr>";
+
+            $('#tblmilestone-tbody').append(html);
+
+        }
+
+        function InsertMilestoneIfUpload(Nama, Tanggal) {
+            var d = new Date(Tanggal);
+
+            var TanggalIndonesia = MilestoneDateFormat(d.getMonth() + 1, d.getFullYear());
+
+            var html;
+            html = "<tr><td>" + Nama + "</td><td>" + TanggalIndonesia + "</td><tr>";
+
+            $('.milebody').append(html);
+        }
+
+        function MilestoneDateFormat(monthnum , year) {
+            var monthname;
+            switch (monthnum) {
+                case 01:
+                    monthname = "Januari";
+                    break;
+                case 02:
+                    monthname = "Februari";
+                    break;
+                case 03:
+                    monthname = "Maret";
+                    break;
+                case 04:
+                    monthname = "April";
+                    break;
+                case 05:
+                    monthname = "Mei";
+                    break;
+                case 06:
+                    monthname = "Juni";
+                    break;
+                case 07:
+                    monthname = "Juli";
+                    break;
+                case 08:
+                    monthname = "Agustus";
+                    break;
+                case 09:
+                    monthname = "September";
+                    break;
+                case 10:
+                    monthname = "Oktober";
+                    break;
+                case 11:
+                    monthname = "November";
+                    break;
+                case 12:
+                    monthname = "Desember";
+            }
+
+            return monthname + ' ' + year;
+        }
+
+    </script>
+
+</body>
+
+</html>

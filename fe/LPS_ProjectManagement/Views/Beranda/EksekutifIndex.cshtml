@@ -1,0 +1,1081 @@
+﻿
+@{
+    ViewBag.Title = "EksekutifIndex";
+}
+
+<style>
+.square-green {
+  height: 25px;
+  width: 150px;
+  background-color: green;
+}
+.square-red {
+  height: 25px;
+  width: 150px;
+  background-color: indianred;
+}
+.square-yellow {
+  height: 25px;
+  width: 150px;
+  background-color: yellow;
+}
+.square-blue {
+  height: 25px;
+  width: 150px;
+  background-color: dodgerblue;
+}
+
+.rerun {
+  margin: 0 0 0px;
+  text-align: center;
+}
+.rerun a {
+  cursor: pointer;
+  display: inline-block;
+  background: #1ECD97;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  padding: 10px 20px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+.rerun a:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.i {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.i:hover {background-color: #3e8e41}
+
+.i:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+ p {
+    left: 0;
+    position: relative;
+    top: 0;
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+
+p a {
+  background: rgba(255, 255, 255, 0);
+  border-bottom: 1px solid;
+  color: #fff;
+  line-height: 1.4;
+  padding: .25em;
+  text-decoration: none;
+}
+p a:hover {
+  background: white;
+  color: #E1332D;
+}
+
+.btn-3 {
+  /*box-shadow: 0px 2px 0 #d6251f, 2px 4px 6px #e02a24;*/
+  font-weight: 900;
+  letter-spacing: 1px;
+  transition: all 150ms linear;
+}
+
+.btn-3:hover {
+  /*background: #e02c26;*/
+  border: 0px solid rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 0px rgba(255, 255, 255, 0.2);
+  color: #dba628;
+  text-decoration: none;
+  /*text-shadow: -1px -1px 0 #c2211c;*/
+  transition: all 250ms linear;
+}
+</style>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <div class="content-body padding-top-45 " style=" max-height: 450px;overflow: auto;">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="col-md-12">
+                        <h2>Project Management Dashboard</h2>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h4>Current Month</h4>
+                        <div class="input-group" inputgroup="">
+                            <select class="form-control ">
+                                <option value="Default Select">November</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h4>Current Year</h4>
+                        <div class="input-group" inputgroup="">
+                            <select class="form-control ">
+                                <option value="Default Select">2018</option>
+                                <option value="Option 1">2019</option>
+                                <option value="Option 2">2017</option>
+                                <option value="Option 3">2016</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-md-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h4>Week</h4>
+                        <div class="input-group" inputgroup="">
+                            <select class="form-control ">
+                                <option value="Default Select">(ALL)</option>
+                                <option value="Option 1">Week 1</option>
+                                <option value="Option 2">Week 2</option>
+                                <option value="Option 2">Week 3</option>
+                                <option value="Option 2">Week 4</option>
+                                <option value="Option 2">Week 5</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>*@
+                @*<div class="col-md-2">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h4>Project Priority</h4>
+                            <div class="input-group" inputgroup="">
+                                <select class="form-control ">
+                                    <option value="Default Select">(ALL)</option>
+                                    <option value="Option 1">High</option>
+                                    <option value="Option 2">Medium</option>
+                                    <option value="Option 3">Low</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>*@
+
+                @*<div class="col-md-2 pull-right">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h4>Project Manager</h4>
+                            <div class="input-group" inputgroup="">
+                                <select class="form-control ">
+                                    <option value="Default Select">(ALL)</option>
+                                    <option value="Option 1">Adi</option>
+                                    <option value="Option 2">John</option>
+                                    <option value="Option 3">Gunawan</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>*@
+                @*<div class="col-md-2 pull-right">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h4>Program Manager</h4>
+                            <div class="input-group" inputgroup="">
+                                <select class="form-control ">
+                                    <option value="Default Select">(ALL)</option>
+                                    <option value="Option 1">Adi</option>
+                                    <option value="Option 2">John</option>
+                                    <option value="Option 3">Gunawan</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>*@
+
+                @*<div class="col-md-2 pull-right">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h4>Project Sponsor</h4>
+                            <div class="input-group" inputgroup="">
+                                <select class="form-control ">
+                                    <option value="Default Select">(ALL)</option>
+                                    <option value="Option 1">Adi</option>
+                                    <option value="Option 2">John</option>
+                                    <option value="Option 3">Gunawan</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>*@
+
+
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <div class="content-body">
+            <div class="tab-container primary">
+                <ul class=" nav nav-tabs">
+                    <li active="tab.active" class="pull-left active" id="tab1"><a href="#aaa" data-toggle="tab">TRANSFORMATION EKSEKUTIF</a></li>
+                    <li active="tab.active" class="pull-left" id="tab2"><a href="#bbb" data-toggle="tab">TRANSFORMATION GMTI</a></li>
+                    <li active="tab.active" class="pull-left" id="tab3"><a href="#aaa" data-toggle="tab">NON TRANSFORMATION EKSEKUTIF</a></li>
+                    <li active="tab.active" class="pull-left" id="tab4"><a href="#bbb" data-toggle="tab">NON TRANSFORMATION GMTI</a></li>
+                </ul>
+                <div class="tab-content" id="tabs" style="height:350px">
+                    <div class="tab-pane active" id="Eksekutif">
+                        <div class="col-lg-12 col-md-12 col-sm-9 col-xs-9">
+                            <div class="content-body" style="max-height: 550px;">
+                                <div class="padding-top-5">
+                                    <h4><b>PROGRESS TRANSFORMATION EKSEKUTIF</b></h4>
+                                    <hr />
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Project Code</th>
+                                                        <th>Project Name</th>
+                                                        <th>W1</th>
+                                                        <th>W2</th>
+                                                        <th>W3</th>
+                                                        <th>W4</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>December, 2018</td>
+                                                        <td>123-xxi-008</td>
+                                                        <td>Uji Coba</td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle btn-3" id="detailTrans1"></i></span></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                    </tr>
+
+                                                    @*<tr>
+                                                            <td>DITUNDA</td>
+                                                            <td>8</td>
+                                                        </tr>*@
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="GMTI">
+                        <div class="col-lg-12 col-md-12 col-sm-9 col-xs-9">
+                            <div class="content-body" style="max-height: 550px;">
+                                <div class="padding-top-5">
+                                    <h4><b>PROGRESS TRANSFORMATION GMTI</b></h4>
+                                    <hr />
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Project Code</th>
+                                                        <th>Project Name</th>
+                                                        <th>W1</th>
+                                                        <th>W2</th>
+                                                        <th>W3</th>
+                                                        <th>W4</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>December, 2018</td>
+                                                        <td>123-xxi-008</td>
+                                                        <td>Uji Coba</td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle btn-3"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                    </tr>
+
+                                                    @*<tr>
+                                                            <td>DITUNDA</td>
+                                                            <td>8</td>
+                                                        </tr>*@
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="EksekutifNon">
+                        <div class="col-lg-12 col-md-12 col-sm-9 col-xs-9">
+                            <div class="content-body" style="max-height: 550px;">
+                                <div class="padding-top-5">
+                                    <h4><b>PROGRESS NON-TRANSFORMATION EKSEKUTIF</b></h4>
+                                    <hr />
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Project Code</th>
+                                                        <th>Project Name</th>
+                                                        <th>JAN</th>
+                                                        <th>FEB</th>
+                                                        <th>MAR</th>
+                                                        <th>APR</th>
+                                                        <th>MAY</th>
+                                                        <th>JUN</th>
+                                                        <th>JUL</th>
+                                                        <th>AUG</th>
+                                                        <th>SEPT</th>
+                                                        <th>OKT</th>
+                                                        <th>NOV</th>
+                                                        <th>DEC</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>December, 2018</td>
+                                                        <td>123-xxi-008</td>
+                                                        <td>Uji Coba</td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle btn-3"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                    </tr>
+
+                                                    @*<tr>
+                                                            <td>DITUNDA</td>
+                                                            <td>8</td>
+                                                        </tr>*@
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="GMTINon">
+                        <div class="col-lg-12 col-md-12 col-sm-9 col-xs-9">
+                            <div class="content-body" style="max-height: 550px;">
+                                <div class="padding-top-5">
+                                    <h4><b>PROGRESS NON-TRANSFORMATION GMTI</b></h4>
+                                    <hr />
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Project Code</th>
+                                                        <th>Project Name</th>
+                                                        <th>JAN</th>
+                                                        <th>FEB</th>
+                                                        <th>MAR</th>
+                                                        <th>APR</th>
+                                                        <th>MAY</th>
+                                                        <th>JUN</th>
+                                                        <th>JUL</th>
+                                                        <th>AUG</th>
+                                                        <th>SEPT</th>
+                                                        <th>OKT</th>
+                                                        <th>NOV</th>
+                                                        <th>DEC</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>December, 2018</td>
+                                                        <td>123-xxi-008</td>
+                                                        <td>Uji Coba</td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></i></span></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></i></span></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></i></span></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: indianred;"><i class="fa fa-circle"></span></i></td>
+                                                    </tr>
+
+                                                    @*<tr>
+                                            <td>DITUNDA</td>
+                                            <td>8</td>
+                                        </tr>*@
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"  id="taskDiv"  style="display:none">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">PROJECT TASK</h2>
+           
+        </header>
+        <div class="content-body padding-top-45 " style="max-height: 550px; height:350px">
+            
+            <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Project Task</th>
+                                <th>PIC</th>
+                                <th>Plan</th>
+                                <th>Real</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SI Pengelolaan Proyek - LPS</td>
+                                <td>PM</td>
+                                <td>30%</td>
+                                <td>24%</td>
+                                <td><a href="@Url.Action("Index", "BerandaProject")"><span style="color: indianred;"><i class="fa fa-circle"></i></span></a></td>
+                            </tr>
+                            <tr>
+                                <td>Develop Vision/Scope</td>
+                                <td>SE</td>
+                                <td>54%</td>
+                                <td>52%</td>
+                                <td><a href="@Url.Action("Index", "BerandaProject")"><span style="color: indianred;"><i class="fa fa-circle"></i></span></a></td>
+                            </tr>
+                            <tr>
+                                <td>Vision Scope Document Sign Off</td>
+                                <td>DEV1</td>
+                                <td>41%</td>
+                                <td>33%</td>
+                                <td><a href="@Url.Action("Index", "BerandaProject")"><span style="color: indianred;"><i class="fa fa-circle"></i></span></a></td>
+                            </tr>
+                            <tr>
+                                <td>Develop Functional Specification Design & Mockup</td>
+                                <td>DEV2</td>
+                                <td>96%</td>
+                                <td>107%</td>
+                                <td><a href="@Url.Action("Index", "BerandaProject")"><span style="color: limegreen;"><i class="fa fa-circle"></i></span></a></td>
+                            </tr>
+                            <tr>
+                                <td>Develop Master Data Project</td>
+                                <td>QA-DEV</td>
+                                <td>18%</td>
+                                <td>0%</td>
+                                <td><a href="@Url.Action("Index", "BerandaProject")"><span style="color: indianred;"><i class="fa fa-circle"></i></span></a></td>
+                            </tr>
+                            @*<tr>
+                        <td>DITUNDA</td>
+                        <td>8</td>
+                    </tr>*@
+                        </tbody>
+                    </table>
+            </div>
+            
+
+
+        </div>
+    </section>
+</div>
+
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" id="constraintDiv" style="display:none">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">PROJECT CONSTRAINT</h2>
+           
+        </header>
+        <div class="content-body padding-top-45 " style="max-height: 550px; height:350px">
+            
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Constraint Description</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Proses pengadaan fitting out membutuhkan waktu  yang cukup panjang</td>
+
+                        </tr>
+                        <tr>
+                            <td>Terdapat pekerjaan tambah kurang untuk menyesuaikan dengan kondisi di lapangan</td>
+
+                        </tr>
+                        <tr>
+                            <td>Terjadi gagal lelang untuk project kajian pengelolaan aset, karena project penyusunan SOP juga terkait dengan hasil kajian pengelolaan aset</td>
+
+                        </tr>
+                        @*<tr>
+                    <td>DITUNDA</td>
+                    <td>8</td>
+                </tr>*@
+                    </tbody>
+                </table>
+            </div>
+            
+
+
+        </div>
+    </section>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <div class="content-body">
+            <div class="tab-container primary">
+                <ul class="nav nav-tabs">
+                    <li active="tab.active" class="active" id="tab5"><a href="#aaa" data-toggle="tab">EKSEKUTIF</a></li>
+                    <li active="tab.active" id="tab6"><a href="#bbb" data-toggle="tab">GMTI</a></li>
+                </ul>
+                <div class="tab-content" id="tabs" style="height:350px">
+                    <div class="tab-pane active" id="EksekutifIT">
+                        <div class="col-lg-12 col-md-12 col-sm-9 col-xs-9">
+                            <div class="content-body" style="max-height: 550px;">
+                                <div class="padding-top-5">
+                                    <h4><b>PROGRESS PROJECT IT EKSEKUTIF</b></h4>
+                                    <hr />
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Project Code</th>
+                                                        <th>Project Name</th>
+                                                        <th>W1</th>
+                                                        <th>W2</th>
+                                                        <th>W3</th>
+                                                        <th>W4</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>December, 2018</td>
+                                                        <td>123-xxi-008</td>
+                                                        <td>Uji Coba</td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle btn-3" id="detailIT1"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                    </tr>
+
+                                                    @*<tr>
+                                <td>DITUNDA</td>
+                                <td>8</td>
+                            </tr>*@
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="GMTIIT">
+                        <div class="col-lg-12 col-md-12 col-sm-9 col-xs-9">
+                            <div class="content-body" style="max-height: 550px;">
+                                <div class="padding-top-5">
+                                    <h4><b>PROGRESS PROJECT IT GMTI</b></h4>
+                                    <hr />
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Project Code</th>
+                                                        <th>Project Name</th>
+                                                        <th>W1</th>
+                                                        <th>W2</th>
+                                                        <th>W3</th>
+                                                        <th>W4</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>December, 2018</td>
+                                                        <td>123-xxi-008</td>
+                                                        <td>Uji Coba</td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                        <td><span style="color: springgreen;"><i class="fa fa-circle"></span></i></td>
+                                                    </tr>
+
+                                                    @*<tr>
+                                <td>DITUNDA</td>
+                                <td>8</td>
+                            </tr>*@
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" id="taskDivIT" style="display:none;">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">PROJECT TASK</h2>
+
+        </header>
+        <div class="content-body padding-top-45 " style="max-height: 550px; height:350px">
+
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Project Task</th>
+                            <th>PIC</th>
+                            <th>Plan</th>
+                            <th>Real</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SI Pengelolaan Proyek - LPS</td>
+                            <td>PM</td>
+                            <td>30%</td>
+                            <td>24%</td>
+                            <td><a href="@Url.Action("Index", "BerandaProject")"><span style="color: indianred;"><i class="fa fa-circle"></i></span></a></td>
+                        </tr>
+                        <tr>
+                            <td>Develop Vision/Scope</td>
+                            <td>SE</td>
+                            <td>54%</td>
+                            <td>52%</td>
+                            <td><a href="@Url.Action("Index", "BerandaProject")"><span style="color: indianred;"><i class="fa fa-circle"></i></span></a></td>
+                        </tr>
+                        <tr>
+                            <td>Vision Scope Document Sign Off</td>
+                            <td>DEV1</td>
+                            <td>41%</td>
+                            <td>33%</td>
+                            <td><a href="@Url.Action("Index", "BerandaProject")"><span style="color: indianred;"><i class="fa fa-circle"></i></span></a></td>
+                        </tr>
+                        <tr>
+                            <td>Develop Functional Specification Design & Mockup</td>
+                            <td>DEV2</td>
+                            <td>96%</td>
+                            <td>107%</td>
+                            <td><a href="@Url.Action("Index", "BerandaProject")"><span style="color: limegreen;"><i class="fa fa-circle"></i></span></a></td>
+                        </tr>
+                        <tr>
+                            <td>Develop Master Data Project</td>
+                            <td>QA-DEV</td>
+                            <td>18%</td>
+                            <td>0%</td>
+                            <td><a href="@Url.Action("Index", "BerandaProject")"><span style="color: indianred;"><i class="fa fa-circle"></i></span></a></td>
+                        </tr>
+                        @*<tr>
+                                <td>DITUNDA</td>
+                                <td>8</td>
+                            </tr>*@
+                    </tbody>
+                </table>
+            </div>
+
+
+
+        </div>
+    </section>
+</div>
+
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" id="constraintDivIT" style="display:none;">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">PROJECT CONSTRAINT</h2>
+
+        </header>
+        <div class="content-body padding-top-45 " style="max-height: 550px; height:350px">
+
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Constraint Description</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Proses pengadaan fitting out membutuhkan waktu  yang cukup panjang</td>
+
+                        </tr>
+                        <tr>
+                            <td>Terdapat pekerjaan tambah kurang untuk menyesuaikan dengan kondisi di lapangan</td>
+
+                        </tr>
+                        <tr>
+                            <td>Terjadi gagal lelang untuk project kajian pengelolaan aset, karena project penyusunan SOP juga terkait dengan hasil kajian pengelolaan aset</td>
+
+                        </tr>
+                        @*<tr>
+                                <td>DITUNDA</td>
+                                <td>8</td>
+                            </tr>*@
+                    </tbody>
+                </table>
+            </div>
+
+
+
+        </div>
+    </section>
+</div>
+
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">DETAILS ALL PROJECT</h2>
+
+        </header>
+        <div class="content-body padding-top-45 " style="max-height: 550px; height:350px;">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Status</th>
+                                        <th>Jumlah </th>
+                                        <th>%</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                        <td>December, 2018</td>
+                                        <td><div class="square-red"></div></td>
+                                        <td>2</td>
+                                        <td>5</td>
+                                        <td>
+                                            <div class="rerun"><a id="projectDetails1">See Project</a></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>December, 2018</td>
+                                        <td><div class="square-yellow"></div></td>
+                                        <td>10</td>
+                                        <td>25</td>
+                                        <td>
+                                            <div class="rerun"><a href="">See Project</a></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>December, 2018</td>
+                                        <td><div class="square-green"></div></td>
+                                        <td>5</td>
+                                        <td>15</td>
+                                        <td>
+                                            <div class="rerun"><a href="">See Project</a></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>December, 2018</td>
+                                        <td><div class="square-blue"></div></td>
+                                        <td>5</td>
+                                        <td>15</td>
+                                        <td>
+                                            <div class="rerun"><a href="">See Project</a></div>
+                                        </td>
+                                    </tr>
+
+                                    @*<tr>
+                                <td>DITUNDA</td>
+                                <td>8</td>
+                            </tr>*@
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+</div>
+
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" id="detailsProject" style="display:none;">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">DETAILS</h2>
+
+        </header>
+        <div class="content-body padding-top-45 " style="max-height: 550px; height:350px;">
+            <div class="padding-top-5">
+                <h4><b>DETAIL PROGRESS</b></h4>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Project Code</th>
+                                        <th>Project Name </th>
+                                        <th>PIC </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>123-xxi-008</td>
+                                            <td>Uji Coba</td>
+                                            <td>PM</td>
+                                    </tr>
+                                    <tr>
+                                        <td>123-xxi-008</td>
+                                        <td>Uji Coba</td>
+                                        <td>PM</td>
+                                    </tr>
+                                    <tr>
+                                        <td>123-xxi-008</td>
+                                        <td>Uji Coba</td>
+                                        <td>PM</td>
+                                    </tr>
+                                    <tr>
+                                        <td>123-xxi-008</td>
+                                        <td>Uji Coba</td>
+                                        <td>PM</td>
+                                    </tr>
+
+                                    @*<tr>
+                                <td>DITUNDA</td>
+                                <td>8</td>
+                            </tr>*@
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+</div>
+
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">REMARKS</h2>
+
+        </header>
+        <div class="content-body padding-top-45 " style="max-height: 550px;">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Description </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                        <tr>
+                                        <td><div class="square-red"></div></td>
+                                        <td>Jika pencapaian < 85% dari targetnya</td>
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td><div class="square-yellow"></div></td>
+                                        <td>Jika pencapaian >= 85% dan < 100% dari targetnya</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td><div class="square-green"></div></td>
+                                        <td>Jika pencapaian >= 100% dan < 110% dari targetnya</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td><div class="square-blue"></div></td>
+                                        <td>Jika pencapaian >= 110% dari targetnya</td>
+                                        
+                                    </tr>
+
+                                    @*<tr>
+                                <td>DITUNDA</td>
+                                <td>8</td>
+                            </tr>*@
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+</div>
+
+
+<script>
+    $("#tab1").click(function () {
+        $("#tab2").removeClass("active");
+        $("#tab3").removeClass("active");
+        $("#tab4").removeClass("active");
+        $(this).addClass("active");
+        $("#Eksekutif").addClass("active");
+        $("#GMTI").removeClass("active");
+        $("#GMTINon").removeClass("active");
+        $("#EksekutifNon").removeClass("active");
+    });
+
+    $("#tab2").click(function () {
+        $("#tab1").removeClass("active");
+        $("#tab3").removeClass("active");
+        $("#tab4").removeClass("active");
+        $(this).addClass("active");
+        $("#GMTI").addClass("active");
+        $("#Eksekutif").removeClass("active");
+        $("#GMTINon").removeClass("active");
+        $("#EksekutifNon").removeClass("active");
+    });
+
+    $("#tab3").click(function () {
+        $("#tab1").removeClass("active");
+        $("#tab2").removeClass("active");
+        $("#tab4").removeClass("active");
+        $(this).addClass("active");
+        $("#EksekutifNon").addClass("active");
+        $("#GMTINon").removeClass("active");
+        $("#Eksekutif").removeClass("active");
+        $("#GMTI").removeClass("active");
+    });
+
+    $("#tab4").click(function () {
+        $("#tab1").removeClass("active");
+        $("#tab2").removeClass("active");
+        $("#tab3").removeClass("active");
+        $(this).addClass("active");
+        $("#GMTINon").addClass("active");
+        $("#EksekutifNon").removeClass("active");
+        $("#Eksekutif").removeClass("active");
+        $("#GMTI").removeClass("active");
+    });
+
+    $("#tab5").click(function () {
+        $("#tab6").removeClass("active");
+        $(this).addClass("active");
+        $("#EksekutifIT").addClass("active");
+        $("#GMTIIT").removeClass("active");
+    });
+
+    $("#tab6").click(function () {
+        $("#tab5").removeClass("active");
+        $(this).addClass("active");
+        $("#GMTIIT").addClass("active");
+        $("#EksekutifIT").removeClass("active");
+    });
+
+    $("#detailTrans1").click(function() {
+        var isVisible = $("#taskDiv").is(":visible");
+        if(isVisible === true) {
+            $("#taskDiv").hide();
+            $("#constraintDiv").hide();
+        } else {
+            $("#taskDiv").show();
+            $("#constraintDiv").show();
+        }
+    });
+
+    $("#detailIT1").click(function() {
+        var isVisible = $("#taskDivIT").is(":visible");
+        if(isVisible === true) {
+            $("#taskDivIT").hide();
+            $("#constraintDivIT").hide();
+        } else {
+            $("#taskDivIT").show();
+            $("#constraintDivIT").show();
+        }
+    });
+
+    $("#projectDetails1").click(function() {
+        var isVisible = $("#detailsProject").is(":visible");
+        if(isVisible === true) {
+            $("#detailsProject").hide();
+        } else {
+            $("#detailsProject").show();
+        }
+    });
+</script>
+

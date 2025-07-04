@@ -1,0 +1,47 @@
+D:\Net Promise Kairos\LPS\LPS_API\LPS_DAL\bin\Release\LPS_DAL.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_DAL\bin\Release\LPS_DAL.pdb
+D:\Net Promise Kairos\LPS\LPS_API\LPS_DAL\obj\Release\LPS_DAL.csprojAssemblyReference.cache
+D:\Net Promise Kairos\LPS\LPS_API\LPS_DAL\obj\Release\LPS_DAL.csproj.CoreCompileInputs.cache
+D:\Net Promise Kairos\LPS\LPS_API\LPS_DAL\obj\Release\LPS_DAL.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_DAL\obj\Release\LPS_DAL.pdb
+D:\PROMISE_API\LPS_DAL\bin\Release\LPS_DAL.dll
+D:\PROMISE_API\LPS_DAL\bin\Release\LPS_DAL.pdb
+D:\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.csproj.CoreCompileInputs.cache
+D:\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.dll
+D:\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.pdb
+D:\LPS\PROMISE_API\LPS_DAL\bin\Release\LPS_DAL.dll
+D:\LPS\PROMISE_API\LPS_DAL\bin\Release\LPS_DAL.pdb
+D:\LPS\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.csprojAssemblyReference.cache
+D:\LPS\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.csproj.CoreCompileInputs.cache
+D:\LPS\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.dll
+D:\LPS\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.pdb
+D:\LPS1\PROMISE_API\LPS_DAL\bin\Release\LPS_DAL.dll
+D:\LPS1\PROMISE_API\LPS_DAL\bin\Release\LPS_DAL.pdb
+D:\LPS1\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.csprojAssemblyReference.cache
+D:\LPS1\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.csproj.CoreCompileInputs.cache
+D:\LPS1\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.dll
+D:\LPS1\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.pdb
+D:\LPS1\Backup\PROMISE_API\LPS_DAL\bin\Release\LPS_DAL.dll
+D:\LPS1\Backup\PROMISE_API\LPS_DAL\bin\Release\LPS_DAL.pdb
+D:\LPS1\Backup\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.csprojAssemblyReference.cache
+D:\LPS1\Backup\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.csproj.CoreCompileInputs.cache
+D:\LPS1\Backup\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.dll
+D:\LPS1\Backup\PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.pdb
+C:\LPS1\_PROMISE_API\LPS_DAL\bin\Release\LPS_DAL.dll
+C:\LPS1\_PROMISE_API\LPS_DAL\bin\Release\LPS_DAL.pdb
+C:\LPS1\_PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.csprojAssemblyReference.cache
+C:\LPS1\_PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.dll
+C:\LPS1\_PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.pdb
+C:\LPS1\_PROMISE_API\LPS_DAL\obj\Release\LPS_DAL.csproj.CoreCompileInputs.cache
+C:\Promise\BE\PROMISE API\LPS_DAL\bin\Release\LPS_DAL.dll
+C:\Promise\BE\PROMISE API\LPS_DAL\bin\Release\LPS_DAL.pdb
+C:\Promise\BE\PROMISE API\LPS_DAL\obj\Release\LPS_DAL.csproj.AssemblyReference.cache
+C:\Promise\BE\PROMISE API\LPS_DAL\obj\Release\LPS_DAL.csproj.CoreCompileInputs.cache
+C:\Promise\BE\PROMISE API\LPS_DAL\obj\Release\LPS_DAL.dll
+C:\Promise\BE\PROMISE API\LPS_DAL\obj\Release\LPS_DAL.pdb
+C:\Promise\BePromise\LPS_DAL\bin\Release\LPS_DAL.dll
+C:\Promise\BePromise\LPS_DAL\bin\Release\LPS_DAL.pdb
+C:\Promise\BePromise\LPS_DAL\obj\Release\LPS_DAL.csproj.AssemblyReference.cache
+C:\Promise\BePromise\LPS_DAL\obj\Release\LPS_DAL.csproj.CoreCompileInputs.cache
+C:\Promise\BePromise\LPS_DAL\obj\Release\LPS_DAL.dll
+C:\Promise\BePromise\LPS_DAL\obj\Release\LPS_DAL.pdb

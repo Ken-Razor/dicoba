@@ -1,0 +1,3595 @@
+﻿@model LPS_ProjectManagement.Models.TransaksiDataModels.ProjectHeaderModel
+@{
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    serializer.MaxJsonLength = Int32.MaxValue;
+    var jsonModel = serializer.Serialize(Model);
+}
+@{
+    ViewBag.Title = "Project Initiation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] NeedApproval = Model.NeedApproval.ToString().Split('|');
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
+@using LPS_ProjectManagement.Helper;
+
+<style type="text/css">
+
+    /*
+        loaders
+    */
+
+
+    .spin {
+        -webkit-animation: spin 750ms infinite linear;
+        -moz-animation: spin 750ms infinite linear;
+        animation: spin 750ms infinite linear;
+    }
+
+    @@-webkit-keyframes spin {
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @@-moz-keyframes spin {
+        to {
+            -moz-transform: rotate(360deg);
+        }
+    }
+
+    .rspin {
+        -webkit-animation: rspin 2250ms infinite linear;
+        -moz-animation: rspin 2250ms infinite linear;
+        animation: rspin 2250ms infinite linear;
+    }
+
+    @@-webkit-keyframes rspin {
+        to {
+            -webkit-transform: rotate(-360deg);
+        }
+    }
+
+    @@-moz-keyframes rspin {
+        to {
+            -moz-transform: rotate(-360deg);
+        }
+    }
+    /* let's style that thing */
+    .loader {
+        background-color: #eeeeee;
+        border-radius: 100%;
+        position: relative;
+        height: 75px;
+        width: 75px;
+        overflow: hidden;
+    }
+
+        .loader .c {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -34% 0 0 -34%;
+            width: 68%;
+            height: 68%;
+            background-color: #ffffff;
+            border-radius: 100%;
+            z-index: 3;
+        }
+
+        .loader .d {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+            .loader .d .e {
+                position: absolute;
+                top: 1%;
+                left: 50%;
+                margin: 0 0 0 -7.5px;
+                height: 14px;
+                width: 15px;
+                -webkit-transform: rotate(10deg) skew(20deg);
+                -moz-transform: rotate(10deg) skew(20deg);
+                border-radius: 3px;
+                background: #999;
+            }
+
+        .loader .r {
+            z-index: 2;
+            position: absolute;
+            left: 50%;
+            top: -1px;
+            bottom: -1px;
+            margin-left: -3.75px;
+            background-color: #ffffff;
+            width: 7.5px;
+        }
+
+        .loader .r1 {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+        }
+
+        .loader .r2 {
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+        }
+
+        .loader .r3 {
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+        }
+
+        .loader .r4 {
+            -webkit-transform: rotate(135deg);
+            -moz-transform: rotate(135deg);
+        }
+
+    /***/
+
+
+
+
+
+
+    .chosen-container-multi .chosen-choices .search-choice {
+        background-color: #26C6DA !important;
+        border: 0px solid #cccccc !important;
+        border-top-right-radius: 0px !important;
+        border-top-left-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0) !important;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0) !important;
+        -ms-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0) !important;
+        -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0) !important;
+        -o-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0) !important;
+        color: #000 !important;
+        padding: .7em 2.0em .5em .9em !important;
+        font-size: 75% !important;
+    }
+
+    .container {
+        margin: 150px auto;
+    }
+
+    a.button {
+        position: relative;
+        display: inline-block;
+        font-family: tahoma, arial, helvetica;
+        font-size: 9pt;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #AAAAAA;
+        padding: 5px;
+        text-decoration: none;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+    #my-form {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        z-index: 99;
+        display: none;
+        background-color: white;
+        border: 1px solid gray;
+        padding: 20px 20px 5px 20px;
+        font-family: Tahoma;
+        font-size: 10pt;
+    }
+
+        #my-form input[type="button"] {
+            margin: 10px;
+        }
+</style>
+
+<style>
+    /*
+     CSS for the main interaction
+    */
+    .tabset > input[type="radio"] {
+        position: absolute;
+        left: -200vw;
+    }
+
+    .tabset .tab-panel {
+        display: none;
+    }
+
+    .tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+    .tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+    .tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+    .tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+    .tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+    .tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6),
+    .tabset > input:nth-child(13):checked ~ .tab-panels > .tab-panel:nth-child(7) {
+        display: block;
+    }
+
+    /*
+     Styling
+    */
+
+
+    .tabset > label {
+        position: relative;
+        display: inline-block;
+        padding: 15px 15px 25px;
+        border: 1px solid transparent;
+        border-bottom: 0;
+        cursor: pointer;
+        font-weight: 600;
+        font-family: 'Segoe UI';
+        background: #d3d3d3;
+    }
+
+        .tabset > label::after {
+            content: "";
+            position: absolute;
+            left: 15px;
+            bottom: 10px;
+            width: 22px;
+            height: 4px;
+            background: #8d8d8d;
+        }
+
+        .tabset > label:hover,
+        .tabset > input:focus + label {
+            color: white;
+            background-color: #dba628;
+        }
+
+            .tabset > label:hover::after,
+            .tabset > input:focus + label::after,
+            .tabset > input:checked + label::after {
+                background: white;
+            }
+
+    .tabset > input:checked + label {
+        border-color: #ccc;
+        border-bottom: 1px solid #fff;
+        margin-bottom: -1px;
+    }
+
+    .tab-panel {
+        padding: 30px 0;
+        border-top: 1px solid #ccc;
+    }
+</style>
+
+<style>
+    a.buttonu {
+        appearance: button;
+        text-decoration: none;
+        padding: 10px;
+        font-size: 12px;
+        font-weight: bold;
+        background: #5DDBB5;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+    }
+
+    .modalu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 99999;
+        opacity: 0;
+        transition: opacity 400ms ease-in;
+        pointer-events: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        min-height: 100vh;
+    }
+
+    .content-modalu {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 50%;
+        height: 60vh;
+    }
+
+    .modalu:target {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modalu h1 {
+        font-size: 42px;
+    }
+
+    .content-modalu a {
+        font-weight: bold;
+    }
+
+    .close {
+        align-self: flex-end;
+        text-decoration: none;
+        color: red;
+    }
+</style>
+
+<style>
+    .label-header {
+        font-family: 'Segoe UI';
+        font-weight: bold;
+    }
+
+    .input-header {
+        font-family: 'Segoe UI';
+    }
+</style>
+
+<style>
+    .tab-nav {
+        list-style: none;
+        margin: 0 0 !important;
+        padding: 0;
+        height: 2.5em;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    var obj = @Html.Raw(jsonModel);
+
+    (function ($) {
+        $.fn.extend({
+            donetyping: function (callback, timeout) {
+                timeout = timeout || 1e3; // 1 second default timeout
+                var timeoutReference,
+                    doneTyping = function (el) {
+                        if (!timeoutReference) return;
+                        timeoutReference = null;
+                        callback.call(el);
+                    };
+                return this.each(function (i, el) {
+                    var $el = $(el);
+
+                    $el.is(':input') && $el.on('keyup keypress paste', function (e) {
+                        if (e.type === 'keyup' && e.keyCode !== 8) return;
+
+                        if (timeoutReference) clearTimeout(timeoutReference);
+                        timeoutReference = setTimeout(function () {
+                            doneTyping(el);
+                        }, timeout);
+                    }).on('blur', function () {
+                        doneTyping(el);
+                    });
+                });
+            }
+        });
+    })(jQuery);
+
+    var ProjectDetail = obj.ProjectDetail;
+    var ProjectRisk = obj.ProjectRisk;
+    var ListRoleGroup = obj.ProjectModel.ListRoleGroup;
+    var ProjectStatus = obj.ProjectStatus;
+
+    var form = $('#__AjaxAntiForgeryForm');
+    var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+    var GetDetailKaryawanURl = '@Url.Action("GetDetailEmployeeByPersonNumber", "ManajemenUser")';
+    var urlInsertProjectInitiation = '@Url.Action("InsertProjectInitiation", "Proyek")';
+    var urlApproveProjectInitiation = '@Url.Action("ApproveProjectInitiation", "Proyek")';
+    var urlProjectInitiation = '@Url.Action("ProjectInitiation", "Proyek")';
+    var urlMasterProyekCostByName = '@Url.Action("MasterProyekCostByName", "Master")';
+    var urlMasterProyekCostByID = '@Url.Action("MasterProyekCostByID", "Master")';
+    var urlGetDataEmployeeByName = '@Url.Action("GetDataEmployeeByName", "ManajemenUser")';
+
+</script>
+
+<script>
+
+    // -- Table Approval -- \\
+    $("#tab-menu").on("click", "li.auto", function (event) {
+        if ($(this).hasClass("active") == false) {
+            $("#tab-menu>li").removeClass("active");
+            $("#tab-menu>li.auto").removeClass("active");
+            $("#tab-menu>li>a>span.keyss").removeClass("open");
+            $("#tab-menu>li>a>span.keyss").html('keyboard_arrow_right')
+            $(this).addClass("active");
+            $(this).find("span.keyss").addClass("open");
+            $(this).find("span.keyss").html('keyboard_arrow_down')
+
+        } else {
+            if ($(event.target).hasClass('childs') == false) {
+                $(this).removeClass("active");
+                $(this).children().children().removeClass("open");
+                $(this).find("span.keyss").html('keyboard_arrow_right')
+            }
+        }
+    });
+
+</script>
+
+<input id="hdf" type="hidden" value="@Session["PersonalNumber"].ToString()" />
+
+<div class="col-md-12 col-lg-12 col-xl-12 col-xs-12">
+    <div class="content-body">
+        <ul class="wizard">
+            <li class="current">Step 1 : Initation & Planning</li>
+            <li>Step 2 : Execution</li>
+            <li>Step 3 : Closing</li>
+        </ul>
+        <br />
+        <div class="tab-group">
+
+            <section id="tab1" title="Formulir">
+
+                <div class="row padding-top-15">
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="form-label label-header" for="txtProjName">Nama Project</label>
+                            <span class="desc"></span>
+                            <input disabled="disabled" type="text" class="form-control input-header" id="txtProjName" placeholder="Project Name" value="@Model.ProjectModel.ProjectName">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="form-label label-header" for="txtProjNo">Kode Project</label>
+                            <span class="desc"></span>
+                            <input disabled="disabled" type="text" class="form-control input-header" id="txtProjNo" placeholder="Project Number" value="@Model.ProjectModel.ProjectNo">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="form-label label-header" for="txtBobotDsbl">Bobot</label>
+                            <span class="desc"></span>
+                            <input id="txtBobotDsbl" disabled="disabled" type="text" class="form-control input-header" placeholder="Weight KPI" value="@Model.ProjectModel.Weight">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="form-label label-header" for="txtProjName">Kode SO</label>
+                            <span class="desc"></span>
+                            @foreach (var data in Model.ProjectModel.ListStrategicObjective)
+                            {
+                                if (data.IsActive == true)
+                                {
+                                    <input disabled="disabled" type="text" class="form-control input-header" id="" placeholder="SO Code" value="@data.StrategicObjectiveCode (@data.StrategicObjectiveName)">
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="form-label label-header" for="txtProjNo">Jenis Transformasi</label>
+                            <span class="desc"></span>
+                            @if (Model.ProjectModel.IsTransformasi == true)
+                            {
+                                <input disabled="disabled" type="text" class="form-control input-header" id="" placeholder="Transformation Type" value="Transformasi">
+                            }
+                            else
+                            {
+                                <input disabled="disabled" type="text" class="form-control input-header" id="" placeholder="Transformation Type" value="Non Transformasi">
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="form-label label-header" for="txtBobotDsbl">Unit Kerja</label>
+                            <span class="desc"></span>
+                            @foreach (var data in Model.ProjectModel.ListDepartment)
+                            {
+                                if (data.IsActive == true)
+                                {
+                                    <input id="UnitKerja" disabled="disabled" type="text" class="form-control input-header" placeholder="Department" value="@data.DepartmentName">
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="form-label label-header" for="txtProjNo">Kode Mata Anggaran</label>
+                            <span class="desc"></span>
+                            <input disabled="disabled" type="text" class="form-control input-header" id="" placeholder="Kode Mata Anggaran" value="@Model.KodeMataAnggaran">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row padding-top-25">
+
+                    <div class="tab-body padding-left-0">
+
+                        <section id="tab5" title="Latar Belakang *">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="form-label label-header" for="txtLatarBelakang"></label>
+                                    <span class="desc"></span>
+                                    <div class="controls">
+                                        <div id="txtLatarBelakang"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="tab6" title="Tujuan *">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="form-label label-header" for="txtTujuanProject"></label>
+                                    <span class="desc"></span>
+                                    <div class="controls">
+                                        <div id="txtTujuanProject"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="tab7" title="Ruang Lingkup *">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="form-label label-header" for="txtRuangLingkupProject"></label>
+                                    <span class="desc"></span>
+                                    <div class="controls">
+                                        <div id="txtRuangLingkupProject"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="tab8" title="Anggaran Project *">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="form-label label-header" for="txtAnggaranProject"></label>
+                                    <span class="desc"></span>
+                                    <div class="controls">
+                                        <div id="txtAnggaranProject"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+
+                </div>
+
+                <div class="row padding-top-20">
+
+                    <div class="tab-risk">
+
+                        <section id="tab9" title="Constraint *">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="form-label label-header" for="txtConstraintProject"></label>
+                                    <span class="desc"></span>
+                                    <div class="controls">
+                                        <div id="txtConstraintProject"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="tab10" title="Assumptions *">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="form-label label-header" for="txtAssumptionsProject"></label>
+                                    <span class="desc"></span>
+                                    <div class="controls">
+                                        <div id="txtAssumptionsProject"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="tab11" title="Risk and Dependencies *">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="form-label label-header" for="txtRiskProject"></label>
+                                    <span class="desc"></span>
+                                    <div class="controls">
+                                        <div id="txtRiskProject"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="tab12" title="Approach *">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="form-label label-header" for="ddlApproach"></label>
+                                    <span class="desc"></span>
+                                    <div class="controls">
+
+                                        @if (Model.ProjectStatus.StatusName == "ACTIVE"
+                                            || Model.ProjectStatus.StatusName == "COMPLETED"
+                                            || Model.ProjectStatus.StatusName == "SUBMIT"
+                                            || Model.ProjectStatus.StatusName == "CHANGE REQUEST")
+                                        {
+                                            <select id="ddlApproach" class="form-control ddlApproach" style="width:100%; font-size:18px" disabled="disabled">
+                                                <option value="">Select</option>
+                                                @if (Model.ProjectRisk.Approach == "Internal")
+                                                {
+                                                    <option value="Internal" selected="selected">Internal</option>
+                                                    <option value="Eksternal">Eksternal (Konsultan/Vendor)</option>
+                                                }
+                                                else if (Model.ProjectRisk.Approach == "Eksternal")
+                                                {
+                                                    <option value="Internal">Internal</option>
+                                                    <option value="Eksternal" selected="selected">Eksternal (Konsultan/Vendor)</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="Internal">Internal</option>
+                                                    <option value="Eksternal">Eksternal (Konsultan/Vendor)</option>
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <select id="ddlApproach" class="form-control ddlApproach" style="width:100%; font-size:18px">
+                                                <option value="">Select</option>
+                                                @if (Model.ProjectRisk.Approach == "Internal")
+                                                {
+                                                    <option value="Internal" selected="selected">Internal</option>
+                                                    <option value="Eksternal">Eksternal (Konsultan/Vendor)</option>
+                                                }
+                                                else if (Model.ProjectRisk.Approach == "Eksternal")
+                                                {
+                                                    <option value="Internal">Internal</option>
+                                                    <option value="Eksternal" selected="selected">Eksternal (Konsultan/Vendor)</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="Internal">Internal</option>
+                                                    <option value="Eksternal">Eksternal (Konsultan/Vendor)</option>
+                                                }
+                                            </select>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+
+                </div>
+
+                <div class="row padding-top-0">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button class="btn btn-secondary btn-icon margin-right-15 margin-bottom-15" onclick="location.href='@Url.Action("ProjectInitiation", "Proyek")';">
+                            <i class="fa fa-link"></i> &nbsp; <span>Back To List</span>
+                        </button>
+                        @if (Model.ProjectStatus.StatusName == "BELUM DIMULAI"
+                            @*|| Model.ProjectStatus.StatusName == "CHANGE REQUEST"*@
+                            || Model.ProjectStatus.StatusName == "REVISE")
+                        {
+                            if (Model.RoleInProject.Any(x => x == "EDIT.LIST.INITIATION"))
+                            {
+                                <button type="button" class="btn btn-accent btn-icon margin-right-15 margin-bottom-15" onclick="InsertProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                    <i class="fa fa-save"></i> &nbsp; <span>Save</span>
+                                </button>
+                            }
+                            if (Model.RoleInProject.Any(x => x == "SUBMIT.INITIATION"))
+                            {
+                                <button type="button" class="btn btn-success btn-icon margin-right-15 margin-bottom-15" onclick="SubmitProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                    <i class="fa fa-arrow-right"></i> &nbsp; <span>Submit</span>
+                                </button>
+                            }
+                        }
+                        @if (Model.ProjectStatus.StatusName == "SUBMIT")
+                        {
+                            if (NeedApproval[1] == "1" || NeedApproval[1] == "4")
+                            {
+                                <button type="button" class="btn btn-accent btn-icon margin-right-15 margin-bottom-15" onclick="JustifikasiProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                    <i class="fa fa-save"></i> &nbsp; <span>Justifikasi</span>
+                                </button>
+                            }
+                            if (NeedApproval[0] == Session["PersonalNumber"].ToString() || NeedApproval[0] == "1")
+                            {
+                                <a href="#openModalRevise" class="btn btn-danger btn-icon margin-right-15 margin-bottom-15"><i class="fa fa-times"></i>&nbsp; Revise</a>
+                                <button type="button" class="btn btn-info btn-icon margin-right-15 margin-bottom-15" onclick="ApproveProjectHeader(@Model.IDProjectHeader)">
+                                    <i class="fa fa-check"></i> &nbsp; <span>Approve</span>
+                                </button>
+                            }
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (Word)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (Word)</span>
+                            </button>
+                        }
+                        else if ((Model.ProjectStatus.StatusName == "ACTIVE"
+                            || Model.ProjectStatus.StatusName == "COMPLETED"))
+                        {
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (Word)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (Word)</span>
+                            </button>
+                        }
+
+                        @if (Model.RoleInProject.Any(x => x == "CREATE.MASTER.PROJECT"))
+                        {
+                            <button type="button" class="btn btn-accent btn-icon margin-right-15 margin-bottom-15" onclick="CopyProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                <i class="fa fa-copy"></i> &nbsp; <span>Copy</span>
+                            </button>
+                        }
+                    </div>
+
+                </div>
+
+            </section>
+            <section id="tab2" title="Timeline">
+
+                <div class="row padding-top-45" style="display:none;">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="from-group">
+                            <label class="form-label" for="field-1">Resources </label>
+                            <span class="desc"></span>
+                            <br />
+                            <div class="col-md-2 no-margin no-padding">
+                                <input type="text" class="form-control" id="txtResources" />
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-success" onclick="AddResources()"><i class="fa fa-search"></i>&nbsp;&nbsp;Tambah Resource</button>
+                            </div>
+                            <br />
+                            <div class="controls">
+                                <br />
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th width="50%">Resource Name</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="resources-tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row padding-top-45">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="from-group">
+                            <label class="form-label label-header" for="field-1" style="display:none;">Gantt Chart</label>
+                            <button type="button" class="btn btn-success btn-xs" onclick="savefromezero()" style="display:none;">
+                                <span class="glyphicon glyphicon-upload"></span>Test Save
+                            </button>
+                            <br />
+                            <span class="desc"></span>
+                            <div class="gantcontainer">
+                                <iframe id="gantFrame" src="@Url.Action("GanttInisiasi", "Gantt", new { ProjectHeaderID = Model.IDProjectHeader })" style="width: 100%; border: 0" scrolling="no"></iframe>
+                                <div id="gantt_here" style="width:100%; height:400px; display : none;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row padding-top-45" style="display:none;">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group has-warning">
+                            <label class="form-label label-header" for="field-milestone">Milestone</label>
+                            <span class="desc"></span>
+                            <div class="controls miles">
+                                <table class="table" id="milestone-table">
+                                    <thead>
+                                        <tr>
+                                            <th fulltable-field-name="milestone">Milestone</th>
+                                            <th fulltable-field-name="selesai">Selesai</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblmilestone-tbody">
+                                        @foreach (var data in Model.ListMPPProjectPlanDetail)
+                                        {
+                                            <tr>
+                                                <td><span>@data.TaskName</span></td>
+                                                <td><span>@data.StartDateString</span></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row padding-top-0">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button class="btn btn-secondary btn-icon margin-right-15 margin-bottom-15" onclick="location.href='@Url.Action("ProjectInitiation", "Proyek")';">
+                            <i class="fa fa-link"></i> &nbsp; <span>Back To List</span>
+                        </button>
+                        @if (Model.ProjectStatus.StatusName == "BELUM DIMULAI"
+                            //|| Model.ProjectStatus.StatusName == "CHANGE REQUEST"
+                            || Model.ProjectStatus.StatusName == "REVISE")
+                        {
+                            if (Model.RoleInProject.Any(x => x == "EDIT.LIST.INITIATION"))
+                            {
+                                <button type="button" class="btn btn-accent btn-icon margin-right-15 margin-bottom-15" onclick="InsertProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                    <i class="fa fa-save"></i> &nbsp; <span>Save</span>
+                                </button>
+                            }
+                            if (Model.RoleInProject.Any(x => x == "SUBMIT.INITIATION"))
+                            {
+                                <button type="button" class="btn btn-success btn-icon margin-right-15 margin-bottom-15" onclick="SubmitProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                    <i class="fa fa-arrow-right"></i> &nbsp; <span>Submit</span>
+                                </button>
+                            }
+                        }
+                        @if (Model.ProjectStatus.StatusName == "SUBMIT")
+                        {
+                            if (NeedApproval[1] == "1" || NeedApproval[1] == "4")
+                            {
+                                <button type="button" class="btn btn-accent btn-icon margin-right-15 margin-bottom-15" onclick="JustifikasiProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                    <i class="fa fa-save"></i> &nbsp; <span>Justifikasi</span>
+                                </button>
+                            }
+                            if (NeedApproval[0] == Session["PersonalNumber"].ToString() || NeedApproval[0] == "1")
+                            {
+                                <a href="#openModalRevise" class="btn btn-danger btn-icon margin-right-15 margin-bottom-15"><i class="fa fa-times"></i>&nbsp; Revise</a>
+                                <button type="button" class="btn btn-info btn-icon margin-right-15 margin-bottom-15" onclick="ApproveProjectHeader(@Model.IDProjectHeader)">
+                                    <i class="fa fa-check"></i> &nbsp; <span>Approve</span>
+                                </button>
+                            }
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (Word)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (Word)</span>
+                            </button>
+                        }
+                        else if ((Model.ProjectStatus.StatusName == "ACTIVE"
+                            || Model.ProjectStatus.StatusName == "COMPLETED"))
+                        {
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (Word)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (Word)</span>
+                            </button>
+                        }
+
+                        @if (Model.RoleInProject.Any(x => x == "CREATE.MASTER.PROJECT"))
+                        {
+                            <button type="button" class="btn btn-accent btn-icon margin-right-15 margin-bottom-15" onclick="CopyProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                <i class="fa fa-copy"></i> &nbsp; <span>Copy</span>
+                            </button>
+                        }
+                    </div>
+
+                </div>
+
+            </section>
+            <section id="tab3" title="Stakeholder">
+                @if (Model.ProjectStatus.StatusName == "BELUM DIMULAI"
+                //|| Model.ProjectStatus.StatusName == "CHANGE REQUEST"
+                || Model.ProjectStatus.StatusName == "REVISE")
+                {
+                    <div class="row padding-top-15">
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="form-group">
+                                <label class="form-label label-header" for="tblApproval" style="font-weight:bold;">Daftar Jenjang Aproval</label>
+                                <div><br /></div>
+                                <input type="hidden" id="txtUsername" />
+                                <input type="hidden" id="txtJabatan" />
+                                <input type="text" id="txtNamaDisable" placeholder="Nama User" disabled="disabled" />
+                                <a href="#openmodalu" class="buttonu"><i class="fa fa-search"></i>&nbsp; Tambah Stakeholder</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+                <div class="row padding-top-0 padding-bottom-0">
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div style="display:none" id="divAddRole">
+                                <table id="tblListRole" class="table table-bordered" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Role</th>
+                                            <th>Active</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var data in Model.ProjectModel.ListRoleGroup)
+                                        {
+                                            <tr>
+                                                <td>@data.Description</td>
+                                                <td>
+                                                    <div class="checkbox" style="text-align:center">
+                                                        <label class="icheck icheck-success">
+                                                            <input id="@data.IDRoleGroup" type="checkbox">
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <a class="buttonu" id="btnAddRole" onclick="AddListTableInitAproval()"><i class="fa fa-plus"></i>&nbsp; Tambah</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row padding-top-0">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div class="controls">
+                                <table id="tblApproval" class="display" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center" width="3%">No.</th>
+                                            <th hidden="hidden">IDRoleGroup</th>
+                                            <th hidden="hidden">Username</th>
+                                            <th style="text-align:center">Role</th>
+                                            <th style="text-align:center">Jabatan</th>
+                                            <th style="text-align:center">Nama</th>
+                                            <th hidden="hidden">Unit Kerja</th>
+                                            <th hidden="hidden">Tanggal Aktif</th>
+                                            <th hidden="hidden">Tanggal Berakhir</th>
+                                            <th style="text-align:center">Approval</th>
+                                            <th style="text-align:center">Actions</th>
+                                            <th hidden="hidden">Sequence</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var data in Model.ListProjectInitApprovalRole)
+                                        {
+                                            if (Model.ProjectStatus.StatusName == "BELUM DIMULAI"
+                                                @*|| Model.ProjectStatus.StatusName == "CHANGE REQUEST"*@
+                                                || Model.ProjectStatus.StatusName == "REVISE")
+                                            {
+                                                <tr class="ng-scope">
+                                                    <td style="text-align:center">@data.NoUrut</td>
+                                                    <td hidden="hidden">@data.IDRoleGroup</td>
+                                                    <td hidden="hidden">@data.Username</td>
+                                                    <td style="text-align:center">@data.RoleGroupName</td>
+                                                    <td style="text-align:center">@data.Jabatan</td>
+                                                    <td style="text-align:center">@data.Nama</td>
+                                                    <td hidden="hidden">@data.KodeUnitKerja</td>
+                                                    <td hidden="hidden">
+                                                        <input type="date" class="form-control" id="@data.Username.Replace(".", string.Empty)-txtActiveDate" placeholder="Active Date Approval" value="@data.ActiveDate.ToString("yyyy-MM-dd")">
+                                                    </td>
+                                                    <td hidden="hidden">
+                                                        <input type="date" class="form-control" id="@data.Username.Replace(".", string.Empty)-txtEndDate" placeholder="End Date Approval" value="@data.EndDate.ToString("yyyy-MM-dd")">
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        <div class="checkbox" style="text-align:center">
+                                                            <label class="icheck icheck-success">
+                                                                @if (data.IsEnabled == 1)
+                                                                {
+                                                                    <input id="@data.Username.Replace(".", string.Empty)-@data.IDRoleGroup.ToString()-chbApproval" type="checkbox" value="" checked="checked">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input id="@data.Username.Replace(".", string.Empty)-@data.IDRoleGroup.ToString()-chbApproval" type="checkbox" value="">
+                                                                }
+
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        <button title="Naik" type="button" class="btn btn-success btn-xs margin-bottom-5 margin-right-5" onclick="up(this)">
+                                                            <span class="fa fa-arrow-up"></span>
+                                                        </button>
+                                                        <button title="Turun" type="button" class="btn btn-warning btn-xs margin-bottom-5 margin-right-5" onclick="down(this)">
+                                                            <span class="fa fa-arrow-down"></span>
+                                                        </button>
+                                                        <button title="Hapus" type="button" class="btn btn-danger btn-xs margin-bottom-5 margin-right-5" onclick="DeleteListTableApproval(this)">
+                                                            <span class="fa fa-trash"></span>
+                                                        </button>
+                                                    </td>
+                                                    <td hidden="hidden">@data.NoUrut</td>
+                                                </tr>
+
+                                            }
+                                            else
+                                            {
+                                                <tr class="ng-scope">
+                                                    <td style="text-align:center">@data.NoUrut</td>
+                                                    <td hidden="hidden">@data.IDRoleGroup</td>
+                                                    <td hidden="hidden">@data.Username</td>
+                                                    <td style="text-align:center">@data.RoleGroupName</td>
+                                                    <td style="text-align:center">@data.Jabatan</td>
+                                                    <td style="text-align:center">@data.Nama</td>
+                                                    <td hidden="hidden">@data.KodeUnitKerja</td>
+                                                    <td hidden="hidden">
+                                                        <input type="date" class="form-control" id="@data.Username.Replace(".", string.Empty)-txtActiveDate" placeholder="Active Date Approval" value="@data.ActiveDate.ToString("yyyy-MM-dd")">
+                                                    </td>
+                                                    <td hidden="hidden">
+                                                        <input type="date" class="form-control" id="@data.Username.Replace(".", string.Empty)-txtEndDate" placeholder="End Date Approval" value="@data.EndDate.ToString("yyyy-MM-dd")">
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        <div class="checkbox" style="text-align:center">
+                                                            <label class="icheck icheck-success">
+                                                                @if (data.IsEnabled == 1)
+                                                                {
+                                                                    <input disabled="disabled" id="@data.Username.Replace(".", string.Empty)-@data.IDRoleGroup.ToString()-chbApproval" type="checkbox" value="" checked="checked">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input disabled="disabled" id="@data.Username.Replace(".", string.Empty)-@data.IDRoleGroup.ToString()-chbApproval" type="checkbox" value="">
+                                                                }
+
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @if (data.IsActive == true)
+                                                        {
+                                                            <span class="fa fa-circle" style="color:forestgreen" title="Approved"></span>
+                                                        }
+                                                        else if (data.IsEnabled == 0)
+                                                        {
+                                                            <span class="fa fa-circle" style="color:gray" title="No need approval"></span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="fa fa-circle" style="color:red" title="Waiting for approval"></span>
+                                                        }
+                                                    </td>
+                                                    <td hidden="hidden">@data.NoUrut</td>
+                                                </tr>
+
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row padding-top-0">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button class="btn btn-secondary btn-icon margin-right-15 margin-bottom-15" onclick="location.href='@Url.Action("ProjectInitiation", "Proyek")';">
+                            <i class="fa fa-link"></i> &nbsp; <span>Back To List</span>
+                        </button>
+                        @if (Model.ProjectStatus.StatusName == "BELUM DIMULAI"
+                            //|| Model.ProjectStatus.StatusName == "CHANGE REQUEST"
+                            || Model.ProjectStatus.StatusName == "REVISE")
+                        {
+                            if (Model.RoleInProject.Any(x => x == "EDIT.LIST.INITIATION"))
+                            {
+                                <button type="button" class="btn btn-accent btn-icon margin-right-15 margin-bottom-15" onclick="InsertProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                    <i class="fa fa-save"></i> &nbsp; <span>Save</span>
+                                </button>
+                            }
+                            if (Model.RoleInProject.Any(x => x == "SUBMIT.INITIATION"))
+                            {
+                                <button type="button" class="btn btn-success btn-icon margin-right-15 margin-bottom-15" onclick="SubmitProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                    <i class="fa fa-arrow-right"></i> &nbsp; <span>Submit</span>
+                                </button>
+                            }
+                        }
+                        @if (Model.ProjectStatus.StatusName == "SUBMIT")
+                        {
+                            if (NeedApproval[1] == "1" || NeedApproval[1] == "4")
+                            {
+                                <button type="button" class="btn btn-accent btn-icon margin-right-15 margin-bottom-15" onclick="JustifikasiProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                    <i class="fa fa-save"></i> &nbsp; <span>Justifikasi</span>
+                                </button>
+                            }
+                            if (NeedApproval[0] == Session["PersonalNumber"].ToString() || NeedApproval[0] == "1")
+                            {
+                                <a href="#openModalRevise" class="btn btn-danger btn-icon margin-right-15 margin-bottom-15"><i class="fa fa-times"></i>&nbsp; Revise</a>
+                                <button type="button" class="btn btn-info btn-icon margin-right-15 margin-bottom-15" onclick="ApproveProjectHeader(@Model.IDProjectHeader)">
+                                    <i class="fa fa-check"></i> &nbsp; <span>Approve</span>
+                                </button>
+                            }
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter Word</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan Word</span>
+                            </button>
+                        }
+                        else if ((Model.ProjectStatus.StatusName == "ACTIVE"
+                            || Model.ProjectStatus.StatusName == "COMPLETED"))
+                        {
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (Word)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (Word)</span>
+                            </button>
+                        }
+
+                        @if (Model.RoleInProject.Any(x => x == "CREATE.MASTER.PROJECT"))
+                        {
+                            <button type="button" class="btn btn-accent btn-icon margin-right-15 margin-bottom-15" onclick="CopyProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                <i class="fa fa-copy"></i> &nbsp; <span>Copy</span>
+                            </button>
+                        }
+                    </div>
+
+                </div>
+
+            </section>
+            <section id="tab4" title="Approval Log">
+
+                <div class="row padding-top-15">
+
+                    <div class="col-lgl-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div class="controls">
+                                <table id="idTblLogApproval" class="display" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <td width="3%" style="text-align:center">No.</td>
+                                            <td width="10%" style="text-align:left">Type</td>
+                                            <td width="25%" style="text-align:left">Approval By</td>
+                                            <td width="25%" style="text-align:left">Approval Date</td>
+                                            <td>Note</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var data in Model.ProjectInitRevise)
+                                        {
+                                            <tr>
+                                                <td>@data.NoUrut</td>
+                                                <td>@data.UpdatedDateString</td>
+                                                <td>@data.CreatedBy</td>
+                                                <td>@data.CreatedDate</td>
+                                                <td>@data.Deskripsi</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row padding-top-0">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button class="btn btn-secondary btn-icon margin-right-15 margin-bottom-15" onclick="location.href='@Url.Action("ProjectInitiation", "Proyek")';">
+                            <i class="fa fa-link"></i> &nbsp; <span>Back To List</span>
+                        </button>
+                        @if (Model.ProjectStatus.StatusName == "BELUM DIMULAI"
+                            //|| Model.ProjectStatus.StatusName == "CHANGE REQUEST"
+                            || Model.ProjectStatus.StatusName == "REVISE")
+                        {
+                            if (Model.RoleInProject.Any(x => x == "EDIT.LIST.INITIATION"))
+                            {
+                                <button type="button" class="btn btn-accent btn-icon margin-right-15 margin-bottom-15" onclick="InsertProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                    <i class="fa fa-save"></i> &nbsp; <span>Save</span>
+                                </button>
+                            }
+                            if (Model.RoleInProject.Any(x => x == "SUBMIT.INITIATION"))
+                            {
+                                <button type="button" class="btn btn-success btn-icon margin-right-15 margin-bottom-15" onclick="SubmitProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                    <i class="fa fa-arrow-right"></i> &nbsp; <span>Submit</span>
+                                </button>
+                            }
+                        }
+                        @if (Model.ProjectStatus.StatusName == "SUBMIT")
+                        {
+                            if (NeedApproval[1] == "1" || NeedApproval[1] == "4")
+                            {
+                                <button type="button" class="btn btn-accent btn-icon margin-right-15 margin-bottom-15" onclick="JustifikasiProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                    <i class="fa fa-save"></i> &nbsp; <span>Justifikasi</span>
+                                </button>
+                            }
+                            if (NeedApproval[0] == Session["PersonalNumber"].ToString() || NeedApproval[0] == "1")
+                            {
+                                <a href="#openModalRevise" class="btn btn-danger btn-icon margin-right-15 margin-bottom-15"><i class="fa fa-times"></i>&nbsp; Revise</a>
+                                <button type="button" class="btn btn-info btn-icon margin-right-15 margin-bottom-15" onclick="ApproveProjectHeader(@Model.IDProjectHeader)">
+                                    <i class="fa fa-check"></i> &nbsp; <span>Approve</span>
+                                </button>
+                            }
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (Word)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (Word)</span>
+                            </button>
+                        }
+                        else if ((Model.ProjectStatus.StatusName == "ACTIVE"
+                            || Model.ProjectStatus.StatusName == "COMPLETED"
+                            || Model.ProjectStatus.StatusName == "CHANGE REQUEST"))
+                        {
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintPDF('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (PDF)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Charter')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Charter (Word)</span>
+                            </button>
+                            <button class="btn btn-primary btn-icon margin-right-15 margin-bottom-15" style="font-size:18px" onclick="PrintWord('Planning')" type="button">
+                                <i class="fa fa-print"></i> &nbsp; <span>Print Project Plan (Word)</span>
+                            </button>
+                        }
+
+                        @if (Model.RoleInProject.Any(x => x == "CREATE.MASTER.PROJECT"))
+                        {
+                            <button type="button" class="btn btn-accent btn-icon margin-right-15 margin-bottom-15" onclick="CopyProjectHeader(@Model.IDProjectHeader, @Model.IDProject)">
+                                <i class="fa fa-copy"></i> &nbsp; <span>Copy</span>
+                            </button>
+                        }
+                    </div>
+
+                </div>
+
+            </section>
+            <section id="tab5" title="Attachment">
+
+                <div class="row padding-top-30">
+                    <div class="col-md-12">
+                        <h4><b>Upload Attachment</b></h4>
+                    </div>
+                    <div class="loader rspin ll" style="margin-left : 50px;">
+                        <span class="c"></span>
+                        <span class="d spin"><span class="e"></span></span>
+                        <span class="r r1"></span>
+                        <span class="r r2"></span>
+                        <span class="r r3"></span>
+                        <span class="r r4"></span>
+                    </div>
+                    <div class="col-md-12">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+
+                <div class="row padding-top-10">
+                    <div class="col-md-3">
+                        <input type="file" id="uploadFile" multiple />
+                    </div>
+                    <div class="col-md-9">
+                        <button class="btn btn-success tooltipcustom" type="button" onclick="Upload()">
+                            <i class="fa fa-cloud-upload"></i>
+                            <span class="tooltiptext">Upload</span>
+                        </button>
+                    </div>
+                    <div class="col-md-12">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <tr>
+                                    <th width="50%">Name</th>
+                                    <th width="10%">Tipe File</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="uploadFile-tbody">
+                                @if (Model.GlobalDocument != null)
+                                {
+                                    foreach (var item in Model.GlobalDocument)
+                                    {
+                                        <tr id="@item.ID">
+                                            <td>@item.DocName</td>
+                                            <td>@item.DocType</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Download", "Upload",new { ProjectHeaderID = Request["IDProjectHeader"] ,  name = @item.DocName } )';"><i class="fa fa-cloud-download"></i></button>
+                                                <button type="button" class="btn btn-danger" onclick="if(confirm('Are you sure?')) deletefile(@item.ID);"><i class="fa fa-trash"></i></button>
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+            <section id="tab6" title="SLA">
+                <br>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="form-label" style="font-weight : bold;">Group</label>
+                        <div class="controls">
+                            <div class="col-md-8 padding-left-0">
+                                <select id="ddlGroup" class="form-control ddlGroup" style="width:100%">
+                                    @foreach (var data in Model.ListGroup)
+                                    {
+                                        <option value="@data.Id">@data.Description</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-label" style="font-weight : bold;">Status SLA</label>
+                        <div class="controls">
+                            <div class="col-md-8 padding-left-0">
+                                <select id="ddlStatus" class="form-control ddlStatus" style="width:100%">
+                                    @foreach (var data in Model.ListStatus)
+                                    {
+                                        <option value="@data.IdStatus">@data.Description</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-label" style="font-weight : bold;">Peraturan</label>
+                        <div class="controls">
+                            <div class="col-md-8 padding-left-0">
+                                <input id="txtPeraturan" type="text" class="form-control" placeholder="Peraturan" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        &nbsp;
+                        <button class="btn btn-success" onclick="SLADataSearch()"><i class="fa fa-search"></i> Search</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <table class="table" id="tblSLA">
+                            <thead>
+                                <tr>
+                                <tr>
+                                    <th style="text-align:center" width="3%">No.</th>
+                                    <th style="text-align:left">Group</th>
+                                    <th style="text-align:left">Status SLA</th>
+                                    <th style="text-align:left">Peraturan</th>
+                                    <th style="text-align:left">Jasa Pelayanan</th>
+                                    <th style="text-align:left">Waktu</th>
+                                    <th style="text-align:left">Dihitung Dari</th>
+                                </tr>
+                            </thead>
+                            <tbody id="uploadFile-tbody">
+                                @if (Model.ListSLA != null)
+                                {
+                                    foreach (var item in Model.ListSLA)
+                                    {
+                                        <tr>
+                                            <td style="text-align:center">@item.NoUrut</td>
+                                            <td style="text-align:left">@item.GroupName</td>
+                                            <td style="text-align:left">@item.StatusSLA</td>
+                                            <td style="text-align:left">@item.Peraturan</td>
+                                            <td style="text-align:left">@item.JasaPelayanan</td>
+                                            <td style="text-align:left">@item.Waktu</td>
+                                            <td style="text-align:left">@item.DihitungDari</td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+
+<div id="openmodalu" class="modalu">
+    <div class="content-modalu" style="height:auto">
+        <h1>Tambah User</h1>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label class="form-label" for="field-1" style="font-weight : bold;">Nama User</label>
+                    <div class="controls">
+                        <input type="text" placeholder="Ketik disini" class="form-control ng-pristine ng-untouched ng-invalid" name="txtFullName" id="txtFullName" required="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <table id="tblListUserModal" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%">Nama User</th>
+                            <th style="width: 40%">Posisi</th>
+                            <th style="width: 20%">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ListUserBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <a href="#close" title="Close" class="close" id="btnClose">CLOSE</a>
+    </div>
+</div>
+
+<div id="openModalRevise" class="modalu">
+    <div class="content-modalu" style="height:auto">
+        <h1>Alasan Revisi</h1>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <div class="controls">
+                        <textarea class="form-control" name="txtReviseForm" id="txtReviseForm" placeholder="reason"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                &nbsp;
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-4">&nbsp;</div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+                <a href="#close" title="Close" class="close" id="btnClose">CLOSE</a>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+                <a onclick="show_prompt(@Model.IDProjectHeader)" title="Submit" class="close" id="btnSubmit" style="color:green">SUBMIT</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="openModalProjectCost" class="modalu">
+    <div class="content-modalu" style="height:auto">
+        <h1>Tambah Project Cost</h1>
+        <div class="form-group col-md-6">
+            <label class="form-label" for="field-1" style="font-weight : bold;">Nama Cost</label>
+            <div class="controls">
+                <input type="text" placeholder="Cost Name" class="form-control ng-pristine ng-untouched ng-invalid" name="txtNameCost" id="txtNameCost" required="">
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="form-label" for="field-1" style="font-weight : bold;">Kode Cost</label>
+            <div class="controls">
+                <input readonly="readonly" type="text" placeholder="Cost Name" class="form-control ng-pristine ng-untouched ng-invalid" name="txtKodeCost" id="txtKodeCost" required="">
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="form-label" for="field-1" style="font-weight : bold;">Value</label>
+            <div class="controls">
+                <input type="text" placeholder="Cost Name" class="form-control ng-pristine ng-untouched ng-invalid" name="txtValueCost" id="txtValueCost" required="">
+            </div>
+        </div>
+        <div class="form-group col-md-6" hidden="hidden">
+            <label class="form-label" for="field-1" style="font-weight : bold;">ID Project Cost</label>
+            <div class="controls">
+                <input type="text" placeholder="Cost Name" class="form-control ng-pristine ng-untouched ng-invalid" name="txtIDProjectCost" id="txtIDProjectCost" required="">
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="controls">
+                <input type="button" class="btn btn-success" name="btnAddCost" id="btnAddCost" value="Tambah" onclick="AddListTableCost()">
+            </div>
+        </div>
+        <table id="tblListCost" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Nama Cost</th>
+                    <th>Kode Cost</th>
+                    <th>ID Project Cost</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="ListCost"></tbody>
+        </table>
+
+        <a href="#close" title="Close" class="close" id="btnCloseCostModal">CLOSE</a>
+    </div>
+</div>
+
+<div id="my-form">
+    <table style="width : 100%; border : none;">
+        <tr style="border : none;">
+            <td colspan="3" style="border : none;"><b>Task</b></td>
+
+        </tr>
+        <tr style="border : none;">
+            <td colspan="3" style="border : none;"><input type="text" name="description" value="" style="width : 100%"></td>
+        </tr>
+        <tr style="border : none;">
+            <td colspan="3" style="border : none;"><b>Notes</b></td>
+
+        </tr>
+        <tr style="border : none;">
+            <td colspan="3" style="border : none;"><input type="text" name="notes" value="" style="width : 100%"></td>
+        </tr>
+        <tr style="border : none;">
+            <td colspan="3" style="border : none;"><b>Type</b></td>
+        </tr>
+        <tr style="border : none;">
+            <td colspan="3" style="border : none;">
+                <select id="ddlType" name="type" style="width : 100%">
+                    <option value="task">Task</option>
+                    <option value="milestone">Mileston</option>
+                </select>
+            </td>
+        </tr>
+        <tr style="border : none;">
+            <td colspan="3" style="border : none;"><b>Resources</b></td>
+        </tr>
+        <tr style="border : none;">
+            <td colspan="3" style="border : none;">
+                <select id="ddlResources" name="resource" style="width : 100%" multiple></select>
+            </td>
+        </tr>
+        <tr style="border : none;">
+            <td style="border : none;"><b>Start Date</b></td>
+            <td style="border : none;"></td>
+            <td style="border : none;"><b class="ml">End Date</b></td>
+        </tr>
+        <tr style="border : none;">
+            <td style="border : none;"><input id="txtStartDate" type="text" name="start_date" value="" style="width : 100%"></td>
+            <td style="border : none; text-align : center;"><b class="ml">-</b></td>
+            <td style="border : none;"><input class="ml" id="txtEndDate" type="text" name="end_date" value="" style="width : 100%"></td>
+        </tr>
+
+        <tr style="border : none;">
+            <td style="border : none;"><input class="btn btn-success" type="button" name="save" value="Save"></td>
+            <td style="border : none;"><input class="btn btn-warning" type="button" name="close" value="Close"></td>
+            <td style="border : none;"><input class="btn btn-danger" type="button" name="delete" value="Delete"></td>
+        </tr>
+    </table>
+
+
+
+</div>
+
+<div id="openmodaluUser" class="modalu">
+    <div class="content-modalu" style="height:auto">
+        <h1>Tambah Resource</h1>
+        <div class="form-group col-md-6">
+            <label class="form-label" for="field-1" style="font-weight : bold;">Nama Resource</label>
+            <div class="controls">
+                <input type="text" placeholder="cari" class="form-control ng-pristine ng-untouched ng-invalid" name="txtFullName1" id="txtFullName1" required="">
+            </div>
+        </div>
+        <table id="tblListUser" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th style="width: 40%">Nama User</th>
+                    <th style="width: 40%">Posisi</th>
+                    <th style="width: 20%">Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="ListUserBody"></tbody>
+        </table>
+
+        <a href="#close" title="Close" class="close" id="btnClose">CLOSE</a>
+    </div>
+</div>
+
+<script src="~/Scripts/fileserver.js"></script>
+<script src="~/Scripts/jquery-word-export.js"></script>
+
+<script>
+    var section = document.querySelector('section[title]'), judul = section.getAttribute('title');
+
+    function show_prompt(IDProjectHeader) {
+        var Reason = $('#txtReviseForm').val();
+        ReviseProjectHeader(IDProjectHeader, Reason);
+    }
+
+     function SLADataSearch() {
+        data = {
+            GroupId: $('#ddlGroup').val(),
+            StatusSLA: $('#ddlStatus').val(),
+            Peraturan: $('#txtPeraturan').val()
+        }
+
+        $.ajax({
+            url: '@Url.Action("SLAlDataSearch", "Proyek")',
+            data: data,
+            success: function (result) {
+                debugger;
+
+                if (result.Result === "Success") {
+
+                    $('#tblSLA').DataTable().destroy();
+
+                    $('#tblSLA').DataTable({
+                        "bLengthChange": false,
+                        "autoWidth": false,
+                        searching: true,
+                        "scrollX": true,
+                        info: false,
+                        data: result.Data,
+                        "columns": [
+                            {
+                                "data": "NoUrut",
+                                "className": "text-right"
+                            },
+                            {
+                                "data": "GroupName",
+                                "className": "text-left"
+                            },
+                            {
+                                "data": "StatusSLA",
+                                "className": "text-left"
+                            },
+                            {
+                                "data": "Peraturan",
+                                "className": "text-left"
+                            },
+                            {
+                                "data": "JasaPelayanan",
+                                "className": "text-left"
+                            },
+                            {
+                                "data": "Waktu",
+                                "className": "text-left"
+                            },
+                            {
+                                "data": "DihitungDari",
+                                "className": "text-left"
+                            }                           
+                        ]
+                    });
+
+                } else {
+                    alert(result.Message);
+                }
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                debugger;
+                    alert(xhr.status);
+                    alert(thrownError);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $(".ll").hide();
+        // IFRAME
+        iFrameResize({ log: true }, '#gantFrame');
+
+        // -- Tab -- \\
+        $('.tab-group').tabify();
+
+        $('.tab-body').tabify();
+
+        $('.tab-risk').tabify();
+
+        // -- HTML Editor -- \\
+        $('#txtAnggaranProject').summernote({
+            tabsize: 2,
+            height: 135,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['view', ['undo', 'redo']]
+            ],
+            placeholder: 'Mohon di isi.',
+            fontNames: ['Book Antiqua']
+        });
+
+        var Anggaran;
+        if (ProjectDetail.BudgetDescription === null) {
+            var UnitKerja = $('#UnitKerja').val();
+            Anggaran = "Anggaran untuk pelaksaan pekerjaan ini sebesar @Model.TotalAnggaran yang berasal dari anggaran " + UnitKerja + " Tahun @DateTime.Now.Year.ToString()";
+        } else {
+            Anggaran = ProjectDetail.BudgetDescription;
+        }
+
+        $('#txtAnggaranProject').summernote(
+            'code',
+            Anggaran
+        );
+
+        $('#txtRuangLingkupProject').summernote({
+            tabsize: 2,
+            height: 135,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['view', ['undo', 'redo']]
+            ],
+            placeholder: 'Mohon di isi.',
+            fontNames: ['Book Antiqua']
+        });
+        //$('#txtRuangLingkupProject').summernote('fontSize', 12);
+        $('#txtRuangLingkupProject').summernote(
+            'code',
+            ProjectDetail.ScopeOfWork
+        );
+
+        $('#txtTujuanProject').summernote({
+            tabsize: 2,
+            height: 135,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['view', ['undo', 'redo']]
+            ],
+            placeholder: 'Mohon di isi.',
+            fontNames: ['Book Antiqua']
+        });
+        $('#txtTujuanProject').summernote(
+            'code',
+            ProjectDetail.Objective
+        );
+
+        $('#txtLatarBelakang').summernote({
+            tabsize: 2,
+            height: 135,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['view', ['undo', 'redo']]
+            ],
+            placeholder: 'Mohon di isi.',
+            fontNames: ['Book Antiqua']
+        });
+        $('#txtLatarBelakang').summernote(
+            'code',
+            ProjectDetail.Background
+        );
+
+        $('#txtConstraintProject').summernote({
+            tabsize: 2,
+            height: 135,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['view', ['undo', 'redo']]
+            ],
+            placeholder: 'Mohon di isi.',
+            fontNames: ['Book Antiqua']
+        });
+        $('#txtConstraintProject').summernote(
+            'code',
+            ProjectRisk.Constraints
+        );
+
+        $('#txtAssumptionsProject').summernote({
+            tabsize: 2,
+            height: 135,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['view', ['undo', 'redo']]
+            ],
+            placeholder: 'Mohon di isi.',
+            fontNames: ['Book Antiqua']
+        });
+        $('#txtAssumptionsProject').summernote(
+            'code',
+            ProjectRisk.Assumptions
+        );
+
+        $('#txtRiskProject').summernote({
+            tabsize: 2,
+            height: 135,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['view', ['undo', 'redo']]
+            ],
+            placeholder: 'Mohon di isi.',
+            fontNames: ['Book Antiqua']
+        });
+        $('#txtRiskProject').summernote(
+            'code',
+            ProjectRisk.Risk
+        );
+
+        if (ProjectStatus.StatusName === 'COMPLETED'
+            || ProjectStatus.StatusName === 'ACTIVE'
+            || ProjectStatus.StatusName === 'SUBMIT'
+            || ProjectStatus.StatusName === "CHANGE REQUEST") {
+            var NeedApproval = obj.NeedApproval.split("|");
+            if (NeedApproval[1] === '1' || NeedApproval[1] === '4') {
+
+            }
+            else {
+                $('#txtAnggaranProject').summernote('disable');
+                $('#txtRuangLingkupProject').summernote('disable');
+                $('#txtTujuanProject').summernote('disable');
+                $('#txtLatarBelakang').summernote('disable');
+                $('#txtConstraintProject').summernote('disable');
+                $('#txtAssumptionsProject').summernote('disable');
+                $('#txtRiskProject').summernote('disable');
+            }
+        }
+
+        //DataTable
+        //$('#tblKPI').DataTable({
+        //    "bLengthChange": false,
+        //    searching: false,
+        //    info: false,
+        //    "scrollX": true
+        //});
+
+        $('#idTblLogApproval').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+
+        //$('#tblRKAT').DataTable({
+        //    "bLengthChange": false,
+        //    searching: false,
+        //    info: false,
+        //    "scrollX": true
+        //});
+
+        $('#tblApproval').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+
+        //$('#tblProjectCost').DataTable({
+        //    "bLengthChange": false,
+        //    searching: false,
+        //    info: false,
+        //    "scrollX": true
+        //});
+
+        $('#tblListUser').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false
+        });
+
+
+        // Dropdownlist
+        $("#ddlResources").select2({
+            tags: true
+        });
+
+        $('#ddlType').on('change', function () {
+            if ($('#ddlType').val() == "milestone") {
+                $(".ml").css("visibility", "hidden");
+            } else {
+                $(".ml").css("visibility", "visible");
+            }
+        });
+
+        //$('.ddlSO').select2({
+        //    placeholder: 'Pilih SO',
+        //    selectOnClose: true
+        //});
+
+        //$('.ddlProjectCost').select2({
+        //    placeholder: 'Pilih Cost',
+        //    selectOnClose: true
+        //});
+
+        //$('.ddlEndMonth').select2({
+        //    placeholder: 'Pilih Bulan Berakhir',
+        //    selectOnClose: true
+        //});
+
+        //$('.ddlStartMonth').select2({
+        //    placeholder: 'Pilih Bulan Mulai',
+        //    selectOnClose: true
+        //});
+
+        //$('.ddlStartYear').select2({
+        //    placeholder: 'Pilih Tahun Berkahir',
+        //    selectOnClose: true
+        //});
+
+        //$('.ddlEndYear').select2({
+        //    placeholder: 'Pilih Tahun Mulai',
+        //    selectOnClose: true
+        //});
+
+        $('.ddlDepartment').select2({
+            placeholder: 'Pilih Unit Kerja',
+            selectOnClose: true
+        });
+
+        $('.ddlIsTransformasi').select2({
+            placeholder: 'Pilih Transformasi',
+            selectOnClose: true
+        });
+
+        $('.ddlApproach').select2({
+            placeholder: 'Pilih Approach',
+            selectOnClose: true
+        });
+
+
+        $("#txtStartDate").flatpickr({
+            altInput: true,
+            enableTime: true,
+            altFormat: "j F Y H:i",
+            dateFormat: "d-m-Y H:i"
+        });
+
+        $("#txtEndDate").flatpickr({
+            altInput: true,
+            enableTime: true,
+            altFormat: "j F Y H:i",
+            dateFormat: "d-m-Y H:i"
+        });
+
+    });
+
+    $('#txtFullName').donetyping(function () {
+        var GetEmployeeData = {
+            ID: $('#txtFullName').val()
+        }
+        $.ajax({
+            url: urlGetDataEmployeeByName,
+            type: 'POST',
+            data: {
+                __RequestVerificationToken: token,
+                GetEmployeeData: GetEmployeeData
+            },
+            success: function (result) {
+                $('#tblListUserModal').DataTable().clear();
+                $('#tblListUserModal').DataTable().destroy();
+
+                var obj = result._search;
+                var html = "";
+                for (var prop in obj) {
+                    if (obj.hasOwnProperty(prop)) {
+                        html += "<tr>" +
+                            "<td>" + obj[prop]["nama"] + "</td>" +
+                            "<td>" + obj[prop]["posisi"] + "</td>" +
+                            "<td>" +
+                            "<button type='button' class='btn btn-info btn-corner' id='btnTambah' onclick='SetFieldUser(" + obj[prop]["personalnumber"] + ")'> <i class='fa fa-plus'></i>&nbsp;&nbsp; Pilih</button>" +
+                            "</a>" +
+                            "</td>" +
+                            "</tr>";
+                    }
+                }
+                $("#ListUserBody").append(html);
+                $('#tblListUserModal').DataTable({
+                    "bLengthChange": false,
+                    searching: false,
+                    info: false,
+                    "pageLength": 4
+                });
+            }
+        });
+    });
+
+
+    function up(element) {
+
+        if ($('#tblApproval tr').length = 0) {
+            $('#tblApproval').DataTable().clear();
+        }
+
+        $('#tblApproval').DataTable().destroy();
+
+        var tr = $(element).closest('tr');
+        var prevtr = $(element).closest('tr').prev('tr');
+
+        var it = element.parentNode.parentNode.rowIndex;
+        var prev = it - 1;
+        var table = document.getElementById("tblApproval");
+        var first = 1;
+
+        if (it != first) {
+            table.rows[it].cells[0].innerHTML = prev;
+            table.rows[prev].cells[0].innerHTML = it;
+            tr.remove();
+            tr.insertBefore(prevtr);
+        }
+
+        $('#tblApproval').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+
+    }
+
+    function down(element) {
+
+        if ($('#tblApproval tr').length = 0) {
+            $('#tblApproval').DataTable().clear();
+        }
+
+        $('#tblApproval').DataTable().destroy();
+
+        var tr = $(element).closest('tr');
+        var nexttr = $(element).closest('tr').next('tr');
+
+        var it = element.parentNode.parentNode.rowIndex;
+        var next = it + 1;
+        var table = document.getElementById("tblApproval");
+        var last = table.rows.length - 1;
+
+        if (it != last) {
+            table.rows[it].cells[0].innerHTML = next;
+            table.rows[next].cells[0].innerHTML = it;
+            tr.remove();
+            tr.insertAfter(nexttr);
+        }
+
+        $('#tblApproval').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+
+    }
+
+
+
+    function JustifikasiProjectHeader(IDProjectHeader, IDProject) {
+
+        var ProjectDetail = {
+            Background: $('#txtLatarBelakang').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            Objective: $('#txtTujuanProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            ScopeOfWork: $('#txtRuangLingkupProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            BudgetDescription: $('#txtAnggaranProject').summernote('code').replace(/</g, "{").replace(/>/g, "}")
+        };
+
+        var ProjectRisk = {
+            Constraints: $('#txtConstraintProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            Assumptions: $('#txtAssumptionsProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            Risk: $('#txtRiskProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            Approach: $('#ddlApproach').val()//$('#txtApproachProject').summernote('code').replace(/</g, "{").replace(/>/g, "}")
+        };
+
+        var tableApproval = $('#tblApproval').DataTable();
+        var dataApproval = tableApproval.rows().data();
+        var ListProjectInitApprovalRole = [];
+        var ListProjectRoleGroup = [];
+
+        for (i = 0; i < dataApproval.length; i++) {
+            var rowsApproval = dataApproval[i];
+            var IsEnabled = 0;
+            if ($('#' + rowsApproval[2].replace(/\./g, "") + '-' + String(rowsApproval[1]) + '-chbApproval').is(":checked")) {
+                var IsEnabled = 1;
+            }
+
+            ListProjectInitApprovalRole.push({
+                Sequence: rowsApproval[0],
+                IDRoleGroup: rowsApproval[1],
+                Username: rowsApproval[2],
+                ActiveDate: $('#' + rowsApproval[2].replace(/\./g, "") + '-txtActiveDate').val(),
+                EndDate: $('#' + rowsApproval[2].replace(/\./g, "") + '-txtEndDate').val(),
+                IsEnabled: IsEnabled
+            });
+            debugger;
+            var str = rowsApproval[1];
+            var array = str.split("|");
+
+            for (j = 0; j < array.length; j++) {
+                ListProjectRoleGroup.push({
+                    IDProjectRoleGroup: array[j],
+                    Username: rowsApproval[2]
+                });
+            }
+
+        }
+
+        //var StartYear = $('#ddlStartYear').val();
+        //var EndYear = $('#ddlEndYear').val();
+        //var StartMonth = $('#ddlStartMonth').val();
+        //var EndMonth = $('#ddlEndMonth').val();
+
+        var ProjectHeader = {
+            IDProjectHeader: IDProjectHeader,
+            IDProject: IDProject,
+            Sequence: 0,
+            IDProjectStatus: 1,
+            StartYear: $('#ddlStartYear').val(),
+            StartMonth: $('#ddlStartMonth').val(),
+            EndYear: $('#ddlEndYear').val(),
+            EndMonth: $('#ddlEndMonth').val(),
+            //NoKontrak: $('#txtNoContract').val(),
+            //ContractStartDate: $('#txtContractStartDate').val(),
+            //ContractEndDate: $('#txtContractEndDate').val(),
+            //ContractIDR: $('#txtContractIDR').val(),
+            //ContractUSD: $('#txtContractUSD').val(),
+            //WeightKPI: $('#txtProjWeight').val(),
+            CreatedBy: $('#hdf').val(),
+            TypeTransaction: "Justifikasi",
+            ProjectDetail: ProjectDetail,
+            ProjectRisk: ProjectRisk,
+            //ListProjectConstraint: $("#tblConstraint").FullTable("getData"),
+            //ListProjectHeaderCost: ListProjectHeaderCost,
+            ListProjectInitApprovalRole: ListProjectInitApprovalRole,
+            ListProjectRoleGroup: ListProjectRoleGroup
+        };
+
+        $.ajax({
+            type: "POST",
+            url: urlInsertProjectInitiation,
+            data: ProjectHeader,
+            success: function (result) {
+                if (result.Result === "Success") {
+                    debugger;
+                    savefromezero();
+
+                    alert(result.Message);
+                }
+                else {
+                    alert(result.Message);
+                }
+            }
+        });
+
+        //var d1 = new Date('1/' + StartMonth + '/' + StartYear).getTime();
+        //var d2 = new Date('1/' + EndMonth + '/' + EndYear).getTime();
+
+        //if (d2 >= d1) {
+
+        //}
+        //else {
+        //    alert("Bulan dan tahun selesai harus setelah atau sama dengan bulan dan tahun mulai");
+        //}
+
+    }
+
+    function InsertProjectHeader(IDProjectHeader, IDProject) {
+
+        var ProjectDetail = {
+            Background: $('#txtLatarBelakang').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            Objective: $('#txtTujuanProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            ScopeOfWork: $('#txtRuangLingkupProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            BudgetDescription: $('#txtAnggaranProject').summernote('code').replace(/</g, "{").replace(/>/g, "}")
+        };
+
+        var ProjectRisk = {
+            Constraints: $('#txtConstraintProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            Assumptions: $('#txtAssumptionsProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            Risk: $('#txtRiskProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            Approach: $('#ddlApproach').val()//$('#txtApproachProject').summernote('code').replace(/</g, "{").replace(/>/g, "}")
+        };
+
+        var tableApproval = $('#tblApproval').DataTable();
+        var dataApproval = tableApproval.rows().data();
+        var ListProjectInitApprovalRole = [];
+        var ListProjectRoleGroup = [];
+
+        for (i = 0; i < dataApproval.length; i++) {
+            var rowsApproval = dataApproval[i];
+            debugger;
+            var IsEnabled = 0;
+            var test = rowsApproval[2].replace(/\./g, "");
+            if ($('#' + rowsApproval[2].replace(/\./g, "") + '-' + String(rowsApproval[1]) + '-chbApproval').is(":checked")) {
+                var IsEnabled = 1;
+            }
+
+            ListProjectInitApprovalRole.push({
+                Sequence: rowsApproval[0],
+                IDRoleGroup: rowsApproval[1],
+                Username: rowsApproval[2],
+                ActiveDate: $('#' + rowsApproval[2].replace(/\./g, "") + '-txtActiveDate').val(),
+                EndDate: $('#' + rowsApproval[2].replace(/\./g, "") + '-txtEndDate').val(),
+                IsEnabled: IsEnabled
+            });
+            debugger;
+            var str = rowsApproval[1];
+            var array = str.split("|");
+
+            for (j = 0; j < array.length; j++) {
+                ListProjectRoleGroup.push({
+                    IDProjectRoleGroup: array[j],
+                    Username: rowsApproval[2]
+                });
+            }
+
+        }
+
+        //var StartYear = $('#ddlStartYear').val();
+        //var EndYear = $('#ddlEndYear').val();
+        //var StartMonth = $('#ddlStartMonth').val();
+        //var EndMonth = $('#ddlEndMonth').val();
+
+        var ProjectHeader = {
+            IDProjectHeader: IDProjectHeader,
+            IDProject: IDProject,
+            Sequence: 0,
+            IDProjectStatus: 1,
+            //StartYear: $('#ddlStartYear').val(),
+            //StartMonth: $('#ddlStartMonth').val(),
+            //EndYear: $('#ddlEndYear').val(),
+            //EndMonth: $('#ddlEndMonth').val(),
+            //NoKontrak: $('#txtNoContract').val(),
+            //ContractStartDate: $('#txtContractStartDate').val(),
+            //ContractEndDate: $('#txtContractEndDate').val(),
+            //ContractIDR: $('#txtContractIDR').val(),
+            //ContractUSD: $('#txtContractUSD').val(),
+            //WeightKPI: $('#txtProjWeight').val(),
+            CreatedBy: $('#hdf').val(),
+            TypeTransaction: "Save",
+            ProjectDetail: ProjectDetail,
+            ProjectRisk: ProjectRisk,
+            //ListProjectConstraint: $("#tblConstraint").FullTable("getData"),
+            //ListProjectHeaderCost: ListProjectHeaderCost,
+            ListProjectInitApprovalRole: ListProjectInitApprovalRole,
+            ListProjectRoleGroup: ListProjectRoleGroup
+        };
+
+        //var d1 = new Date('1/' + StartMonth + '/' + StartYear).getTime();
+        //var d2 = new Date('1/' + EndMonth + '/' + EndYear).getTime();
+
+        var r = confirm("Project akan di simpan ?");
+
+        if (r == true) {
+
+            $.ajax({
+                type: "POST",
+                url: urlInsertProjectInitiation,
+                data: ProjectHeader,
+                success: function (result) {
+                    if (result.Result === "Success") {
+                        debugger;
+                        savefromezero();
+
+                        alert(result.Message);
+
+                        window.location.href = urlProjectInitiation;
+                    }
+                    else {
+                        alert(result.Message);
+                    }
+                }
+            });
+
+            //if (d2 >= d1) {
+
+            //}
+            //else {
+            //    alert("Bulan dan tahun selesai harus setelah atau sama dengan bulan dan tahun mulai");
+            //}
+        }
+    }
+
+    function SubmitProjectHeader(IDProjectHeader, IDProject) {
+
+        var ProjectDetail = {
+            Background: $('#txtLatarBelakang').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            Objective: $('#txtTujuanProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            ScopeOfWork: $('#txtRuangLingkupProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            BudgetDescription: $('#txtAnggaranProject').summernote('code').replace(/</g, "{").replace(/>/g, "}")
+        };
+
+        var ProjectRisk = {
+            Constraints: $('#txtConstraintProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            Assumptions: $('#txtAssumptionsProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            Risk: $('#txtRiskProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            Approach: $('#ddlApproach').val()//$('#txtApproachProject').summernote('code').replace(/</g, "{").replace(/>/g, "}")
+        };
+
+        //var myTabCost = $('#tblProjectCost').DataTable();
+        //var dataCost = myTabCost.rows().data();
+        //var ListProjectHeaderCost = [];
+
+        //for (i = 0; i < dataCost.length; i++) {
+        //    var rowsCost = dataCost[i];
+        //    ListProjectHeaderCost.push({ IDProjectCost: rowsCost[2], Value: rowsCost[3] });
+        //}
+
+        var tableApproval = $('#tblApproval').DataTable();
+        var dataApproval = tableApproval.rows().data();
+        var ListProjectInitApprovalRole = [];
+        var ListProjectRoleGroup = [];
+
+        var RoleProjectAdmin = 0;
+        var RoleProjectManager = 0;
+        var RoleProgramManager = 0;
+        var RoleHeadOfPMO = 0;
+        var IsEnabled = 0;
+        var IsApprove = 0;
+
+        for (i = 0; i < dataApproval.length; i++) {
+
+            var rowsApproval = dataApproval[i];
+            IsEnabled = 0;
+
+            if ($('#' + rowsApproval[2].replace(/\./g, "") + '-' + String(rowsApproval[1]) + '-chbApproval').is(":checked")) {
+                IsEnabled = 1;
+                IsApprove = 1;
+            }
+            if (rowsApproval[1] === "2") {
+                RoleProjectAdmin = 1;
+            }
+            if (rowsApproval[1] === "3") {
+                RoleProjectManager = 1;
+            }
+            if (rowsApproval[1] === "5") {
+                RoleProgramManager = 1
+            }
+            if (rowsApproval[1] === "6") {
+                RoleHeadOfPMO = 1
+            }
+
+            ListProjectInitApprovalRole.push({
+                Sequence: rowsApproval[0],
+                IDRoleGroup: rowsApproval[1],
+                Username: rowsApproval[2],
+                ActiveDate: $('#' + rowsApproval[2].replace(/\./g, "") + '-txtActiveDate').val(),
+                EndDate: $('#' + rowsApproval[2].replace(/\./g, "") + '-txtEndDate').val(),
+                IsEnabled: IsEnabled
+            });
+
+            var str = rowsApproval[1];
+            var array = str.split("|");
+
+            for (j = 0; j < array.length; j++) {
+                ListProjectRoleGroup.push({
+                    IDProjectRoleGroup: array[j],
+                    Username: rowsApproval[2]
+                });
+            }
+
+        }
+
+        //var StartYear = $('#ddlStartYear').val();
+        //var EndYear = $('#ddlEndYear').val();
+        //var StartMonth = $('#ddlStartMonth').val();
+        //var EndMonth = $('#ddlEndMonth').val();
+
+        var ProjectHeader = {
+            IDProjectHeader: IDProjectHeader,
+            IDProject: IDProject,
+            Sequence: 1,
+            IDProjectStatus: 2,
+            //StartYear: $('#ddlStartYear').val(),
+            //StartMonth: $('#ddlStartMonth').val(),
+            //EndYear: $('#ddlEndYear').val(),
+            //EndMonth: $('#ddlEndMonth').val(),
+            //NoKontrak: $('#txtNoContract').val(),
+            //ContractStartDate: $('#txtContractStartDate').val(),
+            //ContractEndDate: $('#txtContractEndDate').val(),
+            //ContractIDR: $('#txtContractIDR').val(),
+            //ContractUSD: $('#txtContractUSD').val(),
+            //WeightKPI: $('#txtProjWeight').val(),
+            CreatedBy: $('#hdf').val(),
+            TypeTransaction: "Submit",
+            ProjectDetail: ProjectDetail,
+            ProjectRisk: ProjectRisk,
+            //ListProjectConstraint: $("#tblConstraint").FullTable("getData"),
+            //ListProjectHeaderCost: ListProjectHeaderCost,
+            ListProjectInitApprovalRole: ListProjectInitApprovalRole,
+            ListProjectRoleGroup: ListProjectRoleGroup
+        };
+
+        var r = confirm("Anda yakin ingin mensubmit project ini ?");
+
+        if (r == true) {
+
+            if (dataApproval.length > 0) {
+
+                if (RoleProjectAdmin == 0) alert("Tentukan Project Admin terlebih dahulu")
+                else if (RoleProjectManager == 0) alert("Tentukan Project Manager terlebih dahulu")
+                else if (RoleProgramManager == 0) alert("Tentukan Program Manager terlebih dahulu")
+                else if (RoleHeadOfPMO == 0) alert("Tentukan Head Of PMO terlebih dahulu")
+                else if (IsApprove == 0) alert("Ceklist approval terlebih dahulu")
+                else {
+                    var json = document.getElementById('gantFrame').contentWindow.getGanttData();
+
+                    if (json.data.length > 0) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: urlInsertProjectInitiation,
+                            data: ProjectHeader,
+                            success: function (result) {
+                                if (result.Result === "Success") {
+                                    savefromezero();
+                                    alert(result.Message);
+                                    //GetDataIFExistSubmit();
+                                    window.location.href = urlProjectInitiation;
+                                }
+                                else {
+                                    alert(result.Message);
+                                }
+                            }
+                        });
+
+                    }
+                    else {
+                        alert("File MPP belum di upload");
+                    }
+                }
+
+            }
+            else {
+
+                alert("Masukan daftar approval terlebih dahulu");
+
+            }
+
+            //var d1 = new Date('1/' + StartMonth + '/' + StartYear).getTime();
+            //var d2 = new Date('1/' + EndMonth + '/' + EndYear).getTime();
+
+            //if (d2 >= d1) {
+
+            //}
+            //else {
+            //    alert("Bulan dan tahun selesai harus setelah bulan dan tahun mulai");
+            //}
+
+        }
+    }
+
+    function ApproveProjectHeader(IDProjectHeader) {
+
+        var ProjectHeader = {
+            IDProjectHeader: IDProjectHeader,
+            ApprovedBy: '',
+            CreatedBy: $('#hdf').val(),
+            TypeTransaction: 'Approve'
+        };
+
+        var r = confirm("Anda yakin ingin Approve project ini ?");
+        if (r == true) {
+            $.ajax({
+                type: "POST",
+                url: urlApproveProjectInitiation,
+                data: ProjectHeader,
+                success: function (result) {
+                    if (result.Result === "Success") {
+                        alert(result.Message);
+                        //GetDataIFExistSubmit();
+                        window.location.href = urlProjectInitiation;
+                    }
+                    else {
+                        alert(result.Message);
+                    }
+                }
+            });
+        }
+    }
+
+    function ReviseProjectHeader(IDProjectHeader, Deskripsi) {
+
+        var ProjectHeader = {
+            IDProjectHeader: IDProjectHeader,
+            ApprovedBy: Deskripsi,
+            CreatedBy: $('#hdf').val(),
+            TypeTransaction: 'Revise'
+        };
+
+        $.ajax({
+            type: "POST",
+            url: urlApproveProjectInitiation,
+            data: ProjectHeader,
+            success: function (result) {
+                if (result.Result === "Success") {
+                    alert(result.Message);
+                    //GetDataIFExistSubmit();
+                    window.location.href = urlProjectInitiation;
+                }
+                else {
+                    alert(result.Message);
+                }
+            }
+        });
+
+    }
+
+    function CopyProjectHeader(IDProjectHeader, IDProject) {
+
+        var r = confirm("Project ini akan di copy ?");
+
+        if (r == true) {
+            var ProjectDetail = {
+                Background: $('#txtLatarBelakang').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+                Objective: $('#txtTujuanProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+                ScopeOfWork: $('#txtRuangLingkupProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+                BudgetDescription: $('#txtAnggaranProject').summernote('code').replace(/</g, "{").replace(/>/g, "}")
+            };
+
+            var ProjectRisk = {
+                Constraints: $('#txtConstraintProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+                Assumptions: $('#txtAssumptionsProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+                Risk: $('#txtRiskProject').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+                Approach: $('#ddlApproach').val()//$('#txtApproachProject').summernote('code').replace(/</g, "{").replace(/>/g, "}")
+            };
+
+            var ProjectHeader = {
+                IDProjectHeader: IDProjectHeader,
+                IDProject: IDProject,
+                Sequence: 0,
+                IDProjectStatus: 1,
+                //StartYear: $('#ddlStartYear').val(),
+                //StartMonth: $('#ddlStartMonth').val(),
+                //EndYear: $('#ddlEndYear').val(),
+                //EndMonth: $('#ddlEndMonth').val(),
+                //NoKontrak: $('#txtNoContract').val(),
+                //ContractStartDate: $('#txtContractStartDate').val(),
+                //ContractEndDate: $('#txtContractEndDate').val(),
+                //ContractIDR: $('#txtContractIDR').val(),
+                //ContractUSD: $('#txtContractUSD').val(),
+                //WeightKPI: $('#txtProjWeight').val(),
+                CreatedBy: $('#hdf').val(),
+                TypeTransaction: "Copy",
+                ProjectDetail: ProjectDetail,
+                ProjectRisk: ProjectRisk
+                //ListProjectConstraint: $("#tblConstraint").FullTable("getData"),
+                //ListProjectHeaderCost: ListProjectHeaderCost,
+                //ListProjectInitApprovalRole: ListProjectInitApprovalRole,
+                //ListProjectRoleGroup: ListProjectRoleGroup
+            };
+
+            $.ajax({
+                type: "POST",
+                url: urlInsertProjectInitiation,
+                data: ProjectHeader,
+                success: function (result) {
+                    if (result.Result === "Success") {
+                        debugger;
+                        alert(result.Message);
+                        //InsertMPP();
+                        window.location.href = urlProjectInitiation;
+                    }
+                    else {
+                        debugger;
+                        alert(result.Message);
+                    }
+                }
+            });
+        }
+
+    }
+
+
+
+    function AddListTableCost() {
+
+        var ddlProjectCost = document.getElementById("ddlProjectCost");
+        var IDProjectCost = ddlProjectCost.options[ddlProjectCost.selectedIndex].value;
+
+        var ProjectCost = {
+            IDProjectCost: IDProjectCost
+        }
+
+        $.ajax({
+            url: urlMasterProyekCostByID,
+            type: 'POST',
+            data: ProjectCost,
+            success: function (result) {
+                if ($('#tblProjectCost tr').length = 0) {
+                    $('#tblProjectCost').DataTable().clear();
+                }
+                $('#tblProjectCost').DataTable().destroy();
+
+                $('#tblProjectCost tbody').append('<tr><td>' + result.ProjectCost.ProjectCostName + '</td><td>' + result.ProjectCost.ProjectCostCode + '</td><td style = "display:none">' + result.ProjectCost.IDProjectCost + '</td><td>' + $('#txtValueProjectCost').val() + '</td><td><a onclick="DeleteListTableCost(this)" class="btn btn-danger tooltipcustom margin-top-5 margin-bottom-5"><i class= "fa fa-trash" ></i><span class="tooltiptext"> Hapus</span></a></td></tr>');
+
+                $('#tblProjectCost').DataTable({
+                    "bLengthChange": false,
+                    searching: false,
+                    info: false,
+                    "scrollX": true
+                });
+
+                $('#txtValueProjectCost').val("");
+            }
+        });
+    }
+
+    function AddListTableInitAproval() {
+
+        var tblApproval = $('#tblApproval').DataTable();
+        var dataTblApproval = tblApproval.rows().data();
+        var cekUsername = '';
+        var cekRole = '';
+        var RoleAvailable = 0;
+
+        debugger;
+
+        if ($('#tblApproval tr').length = 0) {
+            $('#tblApproval').DataTable().clear();
+        }
+
+        $('#tblApproval').DataTable().destroy();
+
+        document.getElementById("divAddRole").style.display = "none";
+
+        var objLRG = ListRoleGroup;
+        var Nama = $("#txtNamaDisable").val();
+        var Username = $("#txtUsername").val();
+        var Jabatan = $("#txtJabatan").val();
+
+        for (x = 0; x < objLRG.length; x++) {
+            var idcb = '#' + objLRG[x].IDRoleGroup;
+            if ($(idcb).is(":checked")) {
+
+                RoleAvailable = 0;
+
+                for (y = 0; y < dataTblApproval.length; y++) {
+
+                    cekUsername = dataTblApproval[y][2];
+                    cekRole = dataTblApproval[y][1];
+
+                    if (cekRole == objLRG[x].IDRoleGroup && cekUsername == Username) {
+                        alert(Nama + ' dengan role ' + objLRG[x].Description + ' sudah tersedia');
+                        RoleAvailable = 1;
+                    }
+                }
+
+                if (RoleAvailable == 0) {
+                    var table = document.getElementById("tblApproval");
+                    var last = table.rows.length;
+                    debugger;
+                    $('#tblApproval tbody').append(
+                        '<tr class="ng-scope"><td style="text-align:center">' + last +
+                        '</td><td hidden="hidden">' + objLRG[x].IDRoleGroup +
+                        '</td><td hidden="hidden">' + Username +
+                        '</td><td style="text-align:center">' + objLRG[x].Description +
+                        '</td><td style="text-align:center">' + Jabatan +
+                        '</td><td style="text-align:center">' + Nama +
+                        '</td><td hidden="hidden">-</td>' +
+                        '<td hidden="hidden"><input type="date" class="form-control" id="' + Username.replace(/\./g, "") +
+                        '-txtActiveDate" placeholder="Active Date Approval"></td><td hidden="hidden"><input type="date" class="form-control" id="' + Username.replace(/\./g, "") + '-' + objLRG[x].IDRoleGroup +
+                        '-txtEndDate" placeholder="End Date Approval"></td><td style="text-align:center"><div class="checkbox" style="text-align:center"><label class="icheck icheck-success"><input id="' + Username.replace(/\./g, "") + '-' + objLRG[x].IDRoleGroup +
+                        '-chbApproval" type="checkbox" value="" checked=""><i></i></label></div></td>' +
+                        '<td style="text-align:center"><button title="Naik" type="button" class="btn btn-success btn-xs margin-bottom-5 margin-right-5" onclick="up(this)"><span class="fa fa-arrow-up"></span></button><button title="Turun" type="button" class="btn btn-warning btn-xs margin-bottom-5 margin-right-5" onclick="down(this)"><span class="fa fa-arrow-down"></span></button><button title="Hapus" type="button" class="btn btn-danger btn-xs margin-bottom-5 margin-right-5" onclick="DeleteListTableApproval(this)"><span class="fa fa-trash"></span></button></td>' +
+                        '<td hidden="hidden">' + last + '</td></tr>');
+
+                    $(idcb).prop("checked", false);
+                }
+
+            }
+        }
+
+        $('#tblApproval').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+
+        $("#txtNamaDisable").val("");
+        $('#txtFullName').val("");
+
+    }
+
+
+
+    function DeleteListTableCost(element) {
+
+        var r = confirm("Anda yakin ingin menghapus Cost ini ?");
+
+        if (r == true) {
+
+            if ($('#tblProjectCost tr').length = 0) {
+                $('#tblProjectCost').DataTable().clear();
+            }
+
+            $('#tblProjectCost').DataTable().destroy();
+
+            document.getElementById("tblProjectCost").deleteRow(element.parentNode.parentNode.rowIndex);
+
+            $('#tblProjectCost').DataTable({
+                "bLengthChange": false,
+                searching: false,
+                info: false,
+                "scrollX": true
+            });
+
+        }
+
+    }
+
+    function DeleteListTableApproval(element) {
+
+        if ($('#tblApproval tr').length = 0) {
+            $('#tblApproval').DataTable().clear();
+        }
+
+        $('#tblApproval').DataTable().destroy();
+
+        var r = confirm("Anda yakin ingin menghapus User ini ?");
+
+        if (r == true) {
+
+            var it = element.parentNode.parentNode.rowIndex;
+
+            document.getElementById("tblApproval").deleteRow(it);
+
+            var table = document.getElementById("tblApproval");
+            var last = table.rows.length - 1;
+
+            for (var x = it; x <= last; x++) {
+                table.rows[x].cells[0].innerHTML = x;
+            }
+
+        }
+
+        $('#tblApproval').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+
+    }
+
+
+
+    function BindFieldCost(IDProjectCost) {
+
+        var ProjectCost = {
+            IDProjectCost: IDProjectCost
+        }
+
+        $.ajax({
+            url: urlMasterProyekCostByID,
+            type: 'POST',
+            data: ProjectCost,
+            success: function (result) {
+                document.getElementById("txtNameCost").value = result.ProjectCost.ProjectCostName;
+                document.getElementById("txtKodeCost").value = result.ProjectCost.ProjectCostCode;
+                document.getElementById("txtIDProjectCost").value = result.ProjectCost.IDProjectCost;
+            }
+        });
+
+    }
+
+    function approvalInit() {
+
+        if ($('#tblApproval tr').length = 0) {
+            $('#tblApproval').DataTable().clear();
+        }
+
+        $('#tblApproval').DataTable().destroy();
+
+        $('#tblApproval').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+
+    }
+
+    function tabFormulir() {
+
+        if ($('#tblKPI tr').length = 0) {
+            $('#tblKPI').DataTable().clear();
+        }
+
+        $('#tblKPI').DataTable().destroy();
+
+        $('#tblKPI').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+
+
+
+        if ($('#tblRKAT tr').length = 0) {
+            $('#tblRKAT').DataTable().clear();
+        }
+
+        $('#tblRKAT').DataTable().destroy();
+
+        $('#tblRKAT').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+    }
+
+    function GetToday() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+
+        today = mm + '/' + dd + '/' + yyyy;
+
+        return today;
+    }
+
+    function ValidMonth() {
+        var StartYear = $('#ddlStartYear').val();
+        var EndYear = $('#ddlEndYear').val();
+        var StartMonth = $('#ddlStartMonth').val();
+        var EndMonth = $('#ddlEndMonth').val();
+
+        var d1 = new Date('1/' + StartMonth + '/' + StartYear).getTime();
+        var d2 = new Date('1/' + EndMonth + '/' + EndYear).getTime();
+
+        if (d2 < d1) {
+            alert("Bulan dan tahun selesai harus setelah bulan dan tahun mulai");
+            $('#ddlEndMonth').val(StartMonth).change();
+        }
+    }
+
+    function ValidYear() {
+        var StartYear = $('#ddlStartYear').val();
+        var EndYear = $('#ddlEndYear').val();
+        var StartMonth = $('#ddlStartMonth').val();
+        var EndMonth = $('#ddlEndMonth').val();
+
+        var d1 = new Date('1/' + StartMonth + '/' + StartYear).getTime();
+        var d2 = new Date('1/' + EndMonth + '/' + EndYear).getTime();
+
+        if (d2 < d1) {
+            alert("Bulan dan tahun selesai harus setelah bulan dan tahun mulai");
+            $('#ddlEndYear').val(StartYear).change();
+        }
+    }
+
+    //function test() {
+    //    //var r = confirm("test");
+    //    //if (r == true) {
+
+    //    //}
+    //    alert("test1234");
+    //}
+
+    //$('#tab1').click(function(){
+    //    alert("test1234");
+    //});
+
+    $('#tab1').change(function (evt) {
+        alert("test1234");
+    });
+</script>
+
+<script src="~/Scripts/Views/Proyek/ProjectInitiationCreate.js"></script>
+
+<script>
+
+    var taskId = null;
+
+    $('#uploadMPP').change(function (evt) {
+        UploadMPP();
+    });
+
+    function UploadMPP() {
+        debugger;
+        var $file = document.getElementById('uploadMPP'),
+            $formData = new FormData();
+
+        if ($file.files.length > 0) {
+            for (var i = 0; i < $file.files.length; i++) {
+                $formData.append('file-' + i, $file.files[i]);
+            }
+        }
+
+        var uploadhtml = "";
+        var oFile = document.getElementById("uploadMPP").files[0];
+
+        $("#uploadmpp-tbody").empty();
+        uploadhtml += "<tr><td><strong>" + oFile.name + "</strong></td><td>MPP</td><td>" + oFile.size + "</td>";
+        uploadhtml += "<td class='text-center'><span><i class='glyphicon glyphicon-ok'></i></span></td>";
+        uploadhtml += "<td class='text-center'><button type='button' class='btn btn-success btn-xs' onclick='InsertMPP()'><span class='glyphicon glyphicon-upload'></span></button><button type='button' class='btn btn-danger btn-xs'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+        $("#uploadmpp-tbody").append(uploadhtml);
+
+        $.ajax({
+            url:  '@Url.Action("LoadProject", "Proyek")',
+            type: 'POST',
+            data: $formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (result) {
+
+
+                var Datas = result.Display.data;
+                var links = result.Display.link;
+                var milestone = result.Display.milestone;
+                var html = " <table id='milestone-table' class='table'><thead ><tr><th>Milestone</th><th>Selesai</th></thead ><tbody class='milebody'>";
+                for (var i = 0; i < Object.keys(milestone).length; i++) {
+                    html += "<tr><td>" + milestone[i]['Milestones'] + "</td><td>" + milestone[i]['Selesai'] +"</td><tr>";
+                }
+                html += "</tbody></table>";
+                $("#milestone-table").remove();
+                $(".miles").append(html);
+
+                gantt.config.scale_unit = "month";
+                gantt.config.date_scale = "%F %Y";
+
+                gantt.config.scale_height = 50;
+
+                gantt.config.subscales = [
+                    { unit: "day", step: 1, date: "%j" }
+                ];
+
+                var tasks = {
+                    data: Datas,//result,
+                    links: links// result.Display.link
+                };
+                gantt.config.columns = [
+                    { name: "no", label: "No", align: "center", width: "30" },
+                    { name: "predecessor", label: "Predecessor", align: "center", width: "*" },
+                    { name: "text", label: "Task name", tree: true, width: "*", resize: true  },
+                    { name: "durasi", label: "Duration ( Days )", align: "center", width: "*" },
+                    { name: "start_date", label: "Start time", align: "center", width: "*" },
+                    { name: "end_date", label: "End time", align: "center", width: "*" },
+                    { name: "resources", label: "Resouce Name", align: "center", width: "*", resize: true },
+                    { name: "notes", label: "Notes", align: "center", width: "*", resize: true },
+                    { name: "percentcomplate", label: "Complated (%)", align: "center", width: "*", resize: true },
+                    { name: "add", label: "", width: 44 }
+                ];
+
+                gantt.config.layout = {
+                    css: "gantt_container",
+                    cols: [
+                        {
+                            width: 400,
+                            min_width: 300,
+
+                            // adding horizontal scrollbar to the grid via the scrollX attribute
+                            rows: [
+                                { view: "grid", scrollX: "gridScroll", scrollable: true, scrollY: "scrollVer" },
+                                { view: "scrollbar", id: "gridScroll" }
+                            ]
+                        },
+                        { resizer: true, width: 1 },
+                        {
+                            rows: [
+                                { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+                                { view: "scrollbar", id: "scrollHor" }
+                            ]
+                        },
+                        { view: "scrollbar", id: "scrollVer" }
+                    ]
+                };
+                gantt.config.work_time = true;
+                //gantt.config.readonly = true;
+                gantt.config.grid_resize = true;
+                gantt.clearAll();
+                gantt.config.open_tree_initially = true;
+                gantt.init("gantt_here");
+                gantt.parse(tasks);
+            }
+        });
+
+    }
+
+    function InsertMPP() {
+
+        var $file = document.getElementById('uploadMPP'),
+            $formData = new FormData();
+
+        if ($file.files.length > 0) {
+            for (var i = 0; i < $file.files.length; i++) {
+                $formData.append('file-' + i, $file.files[i]);
+            }
+        }
+
+        $.ajax({
+            url:'@Url.Action("InsertMPP", "Proyek", new { ProjectHeaderId = Model.IDProjectHeader })',
+            type: 'POST',
+            data: $formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (result) {
+               // alert(result);
+            }
+        });
+    }
+
+    function GetDataIFExist() {
+         $.ajax({
+            url:  '@Url.Action("GetMPPPlaning", "Proyek", new { ProjectHeaderId = Model.IDProjectHeader })',
+            type: 'POST',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (result) {
+
+                var Datas = result.ListMPP.GanttChart;
+                var links = result.ListMPP.GanttChartLink;
+
+                if (Object.keys(Datas).length == 0) {
+
+
+                    gantt.config.scale_unit = "month";
+                    gantt.config.date_scale = "%F %Y";
+
+                    gantt.config.scale_height = 50;
+
+                    gantt.config.subscales = [
+                        { unit: "day", step: 1, date: "%j" }
+                    ];
+
+                    gantt.config.columns = [
+                        { name: "text", label: "Task name", tree: true, width: "*", resize: true },
+                        { name: "duration", label: "Duration ( Days )", align: "center", width: "*" },
+                        { name: "start_date", label: "Start time", align: "center", width: "*", resize: true },
+                        { name: "end_date", label: "End time", align: "center", width: "*", resize: true },
+                        {
+                            name: "resource_id", label: "Resouce Name", width: "*", resize: true , align: "center", template: function (item) {
+                                return byId(item.resource_id)
+                            }
+                        },
+                        { name: "notes", label: "Notes", align: "center", width: "*", resize: true },
+                        //{ name: "percentcomplate", label: "Complated (%)", align: "center", width: "*", resize: true }
+                       { name: "add", label: "", width: 44 }
+                    ];
+                    gantt.config.order_branch = true;
+                    gantt.config.work_time = true;
+                   // gantt.config.readonly = true;
+                    gantt.config.lightbox.autosize = "xy";
+                    gantt.init("gantt_here");
+                    }
+                else {
+
+                    var tasks = {
+                        data: Datas,//result,
+                        links: links// result.Display.link
+                    };
+                    gantt.config.columns = [
+                        { name: "no", label: "No", align: "center", width: "30" },
+                        { name: "predecessor", label: "Predecessor", align: "center", width: "*" },
+                        { name: "text", label: "Task name", tree: true, width: "*", resize: true },
+                        { name: "durasi", label: "Duration ( Days )", align: "center", width: "*" },
+                        { name: "start_date", label: "Start time", align: "center", width: "*" },
+                        { name: "end_date", label: "End time", align: "center", width: "*" },
+                        { name: "resources", label: "Resouce Name", align: "center", width: "*", resize: true },
+                        { name: "notes", label: "Notes", align: "center", width: "*", resize: true },
+                        { name: "percentcomplate", label: "Complated (%)", align: "center", width: "*", resize: true },
+                        { name: "add", label: "", width: 44 }
+                    ];
+
+                    gantt.config.layout = {
+                        css: "gantt_container",
+                        cols: [
+                            {
+                                width: 400,
+                                min_width: 300,
+
+                                // adding horizontal scrollbar to the grid via the scrollX attribute
+                                rows: [
+                                    { view: "grid", scrollX: "gridScroll", scrollable: true, scrollY: "scrollVer" },
+                                    { view: "scrollbar", id: "gridScroll" }
+                                ]
+                            },
+                            { resizer: true, width: 1 },
+                            {
+                                rows: [
+                                    { view: "timeline", scrollX: "scrollHor", scrollY: "scrollVer" },
+                                    { view: "scrollbar", id: "scrollHor" }
+                                ]
+                            },
+                            { view: "scrollbar", id: "scrollVer" }
+                        ]
+                    };
+
+                    gantt.config.work_time = true;
+                    //gantt.config.readonly = true;
+                    gantt.config.grid_resize = true;
+                    gantt.init("gantt_here");
+                    gantt.parse(tasks);
+                }
+            }
+        });
+    }
+
+    var list = [];
+    function byId(id) {
+
+        if (id == null || id == undefined) {
+            return "";
+        }
+        else {
+            var label = "";
+            for (var i = 0; i < id.length; i++) {
+                for (var z = 0; z < list.length; z++) {
+                if (list[z].key == id[i])
+                    label += list[z].label + "; ";
+                }
+            }
+
+            if (label != "") {
+                return label
+            }
+            else {
+                return "";
+            }
+        }
+    }
+
+    function savefromezero() {
+       // var json = gantt.serialize();
+        var json = document.getElementById('gantFrame').contentWindow.getGanttData();
+
+        var type = "blank";
+
+        //var $file = document.getElementById('uploadMPP'),
+        //    $formData = new FormData();
+
+        //if ($file.files.length > 0) {
+        //    type = "file";
+        //}
+        //else {
+        //    type = "blank";
+        //}
+        $.ajax({
+                url: '@Url.Action("InsertMPPNew", "Proyek")',
+                type: 'POST',
+                data: {
+                    manualData: json.data,
+                    manualLink: json.links,
+                    ProjectHEaderID: '@Model.IDProjectHeader',
+                    manualResource: list,
+                    type: type
+
+                },
+                success: function (result) {
+                   debugger
+                }
+         });
+    }
+
+
+    function getResources() {
+        var data;
+        $.ajax({
+            url: '@Url.Action("GetReseources", "Proyek", new { ProjectHeaderID = Model.IDProjectHeader })',
+            type: 'POST',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                list = result;
+                for (var i = 0; i < result.length; i++) {
+                    var resobj = {
+                        key: result[i]["key"] ,
+                        label: result[i]["label"]
+                    }
+                    var newState = new Option(resobj.label, resobj.key, false, false);
+                    // Append it to the select
+                    var html = "<tr><td>" + resobj.label + "</td><td><button class='btn btn-danger' type='button' onclick='DeleteResources(this," + resobj.key + ")'>Hapus</button></td></tr>";
+                    $("#resources-tbody").append(html);
+
+                    $("#ddlResources").append(newState).trigger('change');
+                }
+
+            }
+        });
+        return data;
+    }
+
+    (function () {
+        var taskId = null;
+
+        gantt.showLightbox = function (id) {
+            taskId = id;
+            var task = gantt.getTask(id);
+
+            var form = getForm();
+            var inputTask = form.querySelector("[name='description']");
+            inputTask.focus();
+            inputTask.value = task.text;
+
+            var inputNotes = form.querySelector("[name='notes']");
+            if (task.notes == undefined) {
+                inputNotes.value = "";
+            } else {
+                inputNotes.value = task.notes;
+            }
+            var inputStart = form.querySelector("[name='start_date']");
+            inputStart.value = task.start_date;
+
+            var inputEnd = form.querySelector("[name='end_date']");
+            inputEnd.value = task.end_date;
+
+            var inputType = form.querySelector("[name='type']");
+            inputType.selected = task.type;
+
+            $("#ddlResources").val(task.resources);
+
+            form.style.display = "block";
+
+            form.querySelector("[name='save']").onclick = saveMPP;
+            form.querySelector("[name='close']").onclick = cancelMPP;
+            form.querySelector("[name='delete']").onclick = removeMPP;
+        };
+
+        gantt.hideLightbox = function () {
+            getForm().style.display = "";
+            taskId = null;
+        }
+
+
+        function getForm() {
+            return document.getElementById("my-form");
+        };
+
+        function saveMPP() {
+            var task = gantt.getTask(taskId);
+
+            task.text = getForm().querySelector("[name='description']").value;
+            task.notes = getForm().querySelector("[name='notes']").value;
+            var start = getForm().querySelector("[name='start_date']").value;
+            var end = getForm().querySelector("[name='end_date']").value;
+            var type = getForm().querySelector("[name='type']").value;
+            task.start_date = start;
+            task.end_date = end;
+            task.type = type;
+            if (type == "milestone") {
+                var html = "<tr><td>" + getForm().querySelector("[name='description']").value + "</td><td>" + start + "</td></tr>"
+
+                $(".milebody").append(html);
+            }
+            var resouces = $("#ddlResources").val();
+            task.resource_id = resouces;
+            if (task.$new) {
+                gantt.addTask(task, task.parent);
+            } else {
+                gantt.updateTask(task.id);
+            }
+            gantt.config.fit_tasks = true;
+            gantt.render();
+
+            gantt.hideLightbox();
+        }
+
+        function cancelMPP() {
+            var task = gantt.getTask(taskId);
+
+            if (gantt.isTaskExists(task.id) && task.$new)
+                gantt.deleteTask(task.id);
+            gantt.hideLightbox();
+        }
+
+        function removeMPP() {
+            gantt.deleteTask(taskId);
+            gantt.hideLightbox();
+        }
+
+    })();
+
+    function convertDate(inputFormat) {
+        function pad(s) { return (s < 10) ? '0' + s : s; }
+        var d = new Date(inputFormat);
+        return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/');
+    }
+
+
+    var form = $('#__AjaxAntiForgeryForm');
+    var token = $('input[name="__RequestVerificationToken"]', form).val();
+     $('#txtFullName1').donetyping(function () {
+
+            var GetEmployeeData = {
+                ID : $('#txtFullName1').val()
+            }
+           $.ajax({
+                url: '@Url.Action("GetDataEmployeeByName", "ManajemenUser")',
+                type: 'POST',
+                data: {
+                   __RequestVerificationToken: token,
+                    GetEmployeeData: GetEmployeeData
+                },
+               success: function (result) {
+                   $('#tblListUser').DataTable().clear();
+                   $('#tblListUser').DataTable().destroy();
+
+                   var obj = result._search;
+                   var html = "";
+                   for (var prop in obj) {
+                       if (obj.hasOwnProperty(prop)) {
+                            html += "<tr>" +
+                               "<td>" + obj[prop]["nama"] + "</td>" +
+                               "<td>" + obj[prop]["posisi"] + "</td>" +
+                               "<td>" +
+                               '<button type="button" class="btn btn-info btn-corner" id="btnTambah'+obj[prop]["personalnumber"]+'" onclick="GetListKarayawan(' + obj[prop]["personalnumber"] + ',\'' + String(obj[prop]["nama"]) +'\')"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Pilih</button>' +
+                               "</a>" +
+                               "</td>" +
+                               "</tr>";
+                       }
+                   }
+                   $("#ListUserBody").append(html);
+                   $('#tblListUser').DataTable({
+                       "bLengthChange": false,
+                       searching: false,
+                       info: false,
+                       "pageLength": 4
+                   });
+
+                }
+            });
+    });
+    var resarr
+    //function GetListKarayawan(persnum, name) {
+
+    //    var resobj = {
+    //        key: persnum,
+    //        label: name
+    //    };
+    //    list.push(resobj);
+    //    var newState = new Option(resobj.label, resobj.key, false, false);
+    //    // Append it to the select
+    //    var html = "<tr><td>" + resobj.label + "</td><td><button class='btn btn-danger'>Hapus</button></td></tr>";
+    //    $("#resources-tbody").append(html);
+
+    //    $("#ddlResources").append(newState).trigger('change');
+    //    $('#btnClose')[0].click();
+    //}
+
+    function GetDataIFExistSubmit() {
+         $.ajax({
+            url:  '@Url.Action("GetMPPPlaning", "Proyek", new { ProjectHeaderId = Model.IDProjectHeader })',
+            type: 'POST',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (result) {
+
+                var Datas = result.ListMPP.GanttChart;
+                var links = result.ListMPP.GanttChartLink;
+
+                if (Object.keys(Datas).length == 0) {
+                    InsertMPP();
+                    }
+                else {
+
+
+                }
+            }
+        });
+    }
+
+    function AddResources() {
+        var nama = $('#txtResources').val();
+        if (nama == "") {
+            alert("Nama Resource Belum di masukan");
+        } else {
+
+            var rand = getRndInteger(100000000, 20000000);
+
+
+            var resobj = {
+                key: rand,
+                label: nama
+            };
+
+            list.push(resobj);
+
+            var newState = new Option(resobj.label, resobj.key, false, false);
+            // Append it to the select
+            var html = "<tr><td>" + resobj.label + "</td><td><button class='btn btn-danger' type='button' onclick='DeleteResources(this," + rand +")'>Hapus</button></td></tr>";
+            $("#resources-tbody").append(html);
+
+            $("#ddlResources").append(newState).trigger('change');
+
+        }
+    }
+    function getRndInteger(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min;
+
+    }
+
+    function DeleteResources(dom, id) {
+        var index = list.map(x => {
+            return x.key;
+        }).indexOf(id);
+
+        list.splice(index, 1);
+        $(dom).closest('tr').remove();
+        //var row = dom.parentNode.parentNode;
+        //dom.parentNode.removeChild(row);
+        var listarr = [];
+        if (list.length > 0) {
+
+        for (var i = 0; i < list.length; i++) {
+            var zeta =
+            {
+                id: list[i]["key"] ,
+                text: list[i]["label"]
+            }
+
+            listarr.push(zeta);
+            }
+        }
+        $("#ddlResources").html('').select2({ data: [{ id: '', text: '' }] });
+
+        $("#ddlResources").html('').select2({
+            data: listarr
+         });
+    }
+
+    function PrintPDF(tipe) {
+        var url = "";
+        if (tipe == "Planning") {
+            url = '@Url.Action("PrintPlanning", "Exporting", new { ProjectHeaderId = Model.IDProjectHeader })';
+        } else if (tipe == "Charter") {
+            url = '@Url.Action("PrintCharter", "Exporting", new { ProjectHeaderId = Model.IDProjectHeader })';
+        }
+        location.href = url;
+    }
+
+    function PrintWord(tipe) {
+        var url = "";
+        debugger;
+        if (tipe == "Planning") {
+            url = '@Url.Action("ProjectPlan", "MsWord", new { PHID = Model.IDProjectHeader })';
+        } else if (tipe == "Charter") {
+            url = '@Url.Action("Index", "MsWord", new { PHID = Model.IDProjectHeader })';
+        }
+        window.open(url);
+    }
+
+    function Upload() {
+        var $file = document.getElementById('uploadFile'),
+            $formData = new FormData();
+        $formData.append('tipe', "1|1|0");
+        if ($file.files.length > 0) {
+            for (var i = 0; i < $file.files.length; i++) {
+                $formData.append('file-' + i, $file.files[i]);            
+            }
+        }
+
+          $.ajax({
+              url: '@Url.Action("UploadFileandGetId2", "Upload", new { ProjHead = Request["IDProjectHeader"] })',
+              beforeSend: function () {
+                  $(".ll").show();
+              },
+              complete: function () {
+                  $(".ll").hide();
+
+              },
+            type: 'POST',
+                 data: $formData,
+                 dataType: 'json',
+                 contentType: false,
+                 processData: false,
+              success: function (result) {
+                         var uploadhtml = "";
+                         var oFile = document.getElementById("uploadFile").files[0];
+                         debugger
+                         uploadhtml += "<tr id='" + result + "'><td>Initiation_" + oFile.name + "</td><td>File Pendukung</td>";
+                         uploadhtml += '<td> <button type="button" class="btn btn-danger" onclick="if(confirm(\'Are you sure ?\')) deletefile(' + result + ');"><i class="fa fa-trash"></i></button>';
+                         uploadhtml += '</tr>';
+                         $("#uploadFile-tbody").append(uploadhtml);
+              },
+              error: function () {
+                  alert("Error Upload Data");
+              }
+            });
+    }
+
+
+    function deletefile(ID) {
+        var data = '@Url.Action("DeleteFile", "Upload", new { ProjectHeaderID = Request["IDProjectHeader"]})' +'&DocumentID=' + ID;
+        $.ajax({
+            url: data,
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+                if (result.status.includes("S|Success")) {
+                    var row = '#uploadFile-tbody tr#' + ID;
+                    $(row).remove();
+                }
+                else {
+                    alert('File Gagal Dihapus')
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: " + textStatus); alert("Error: " + errorThrown);
+            }
+        });
+        }
+</script>

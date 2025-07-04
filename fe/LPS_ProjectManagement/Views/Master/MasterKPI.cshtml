@@ -1,0 +1,105 @@
+﻿@model List<LPS_ProjectManagement.Models.MasterDataModels.KPIOrganizationModel>
+
+@{
+    ViewBag.Title = "Master Data KPI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Daftar KPI</h2>
+        </header>
+        <div class="content-body padding-top-45">
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table id="tblListUser" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center" width="3%">No.</th>
+                                <th style="text-align:left" width="15%">Kode KPI</th>
+                                <th style="text-align:left">Nama KPI</th>
+                                <th style="text-align:left" width="15%">Tahun</th>
+                                <th style="text-align:center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var data in Model)
+                            {
+                            <tr>
+                                <td style="text-align:center">@data.NoUrut</td>
+                                <td style="text-align:left">@data.KPICode</td>
+                                <td style="text-align:left">@data.KPIName</td>
+                                <td style="text-align:left">@data.Year</td>
+                                <td style="text-align:center">
+                                    <a href="@Url.Action("DetailKPI","Master", new {IDKPIOrganization= data.IDKPIOrganization})" class="btn btn-info tooltipcustom margin-top-5 margin-bottom-5">
+                                        <i class="fa fa-edit"></i>
+                                        <span class="tooltiptext">Detil</span>
+                                    </a>
+                                    @*@if (data.IsActive == true)
+            {
+            <a onclick="deleteData(1, @data.IDKPIOrganization)" class="btn btn-success tooltipcustom margin-top-5 margin-bottom-5">
+            <i class="fa fa-check"></i>
+            <span class="tooltiptext">Active</span>
+            </a>
+            }
+            else
+            {
+            <a onclick="deleteData(0, @data.IDKPIOrganization)" class="btn btn-danger tooltipcustom margin-top-5 margin-bottom-5">
+            <i class="fa fa-close"></i>
+            <span class="tooltiptext">Not Active</span>
+            </a>
+            }*@
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    
+    $(document).ready(function () {
+        $('#tblListUser').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            info: false
+        });
+    });
+    
+    function deleteData(type, id) {
+        var r; debugger;
+        if (type == 1) {
+            r = confirm("Anda yakin ingin menonaktifkan KPI ini ?");
+        }
+        else {
+            r = confirm("Anda yakin ingin mengaktifkan KPI ini ?");
+        }
+
+        if (r == true) {
+            var KPIOrganization = {
+                IDKPIOrganization: id
+            };
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("DeleteKPI", "Master")',
+                data: KPIOrganization,
+                success: function (result) {
+                    alert(result.Message);
+                    window.location.href = '@Url.Action("MasterKPI", "Master")';
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
+        }
+    }
+
+</script>

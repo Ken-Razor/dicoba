@@ -1,0 +1,264 @@
+﻿@model List<LPS_ProjectManagement.Models.MasterDataModels.DirektoratModel>
+
+@{
+    ViewBag.Title = "Laporan Detail Anggaran";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using LPS_ProjectManagement.Helper;
+
+<style>
+
+    td {
+        white-space: nowrap;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <section class="box">
+            <div class="content-body padding-15" style=" max-height: none; overflow: auto;">
+                <div class="row padding-15">
+
+                    <div class="col-md-2 padding-top-30">
+                        <h4>Direktorat</h4>
+                        <select id="ddlDirektorat" class="form-control ddlDirektorat" style="width:100%;" onchange="OnOnchangeDdlDirektorat()">
+                            <option value=0>All</option>
+                            @foreach (var data in Model)
+                            {
+                                <option value="@data.IDDirektorat">(@data.DirektoratCode) @data.DirektoratName</option>
+                            }
+                            <option value=""></option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 padding-top-30">
+                        <h4>Unit Kerja</h4>
+                        <select id="ddlUnitkerja" class="form-control ddlUnitkerja" style="width:100%" ;>
+                            <option value="0">All</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 padding-top-30">
+                        <h4>Year</h4>
+                        <select id="ddlYear" class="form-control ddlYear" style="width:100%;">
+                            @for (int year = Convert.ToInt32(DateTime.Now.Year.ToString()) - 10; year <= Convert.ToInt32(DateTime.Now.Year.ToString()); year++)
+                            {
+                                if (Convert.ToInt32(DateTime.Now.Year.ToString()) == year)
+                                {
+                                    <option value=@year selected="selected">@year</option>
+                                }
+                                else
+                                {
+                                    <option value=@year>@year</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 padding-top-30">
+                        <h4>Kode Anggaran</h4>
+                        <div class="controls">
+                            <input type="text" class="form-control" id="txtKodeAnggaran" placeholder="Anggaran Code" value="">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 padding-top-30" style="text-align:center">
+                        &nbsp;
+                        <button class="btn btn-success" onclick="DetailAnggaran()"><i class="fa fa-search"></i> Search</button>
+                        &nbsp;
+                        <button class="btn btn-success" onclick="DownloadDetailAnggaran()"><i class="fa fa-download"></i> Download</button>
+                    </div>
+
+                </div>
+
+                <div class="row padding-15 padding-right-15">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <table id="tblListAnggaran" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center; white-space:nowrap">No.</th>
+                                    <th style="text-align:center; white-space:nowrap">Direktorat</th>
+                                    <th style="text-align:center; white-space:nowrap">Group</th>
+                                    <th style="text-align:center; white-space:nowrap">Kode Anggaran</th>
+                                    <th style="text-align:center; white-space:nowrap">Tahun</th>
+                                    <th style="text-align:center; white-space:nowrap" width="30%">Deskripsi Anggaran</th>
+                                    <th style="text-align:center; white-space:nowrap">No. Account</th>
+                                    <th style="text-align:center; white-space:nowrap" width="30%">Deskripsi Account</th>
+                                    <th style="text-align:center; white-space:nowrap">Anggaran</th>
+                                    <th style="text-align:center; white-space:nowrap">Pergeseran</th>
+                                    <th style="text-align:center; white-space:nowrap">Hangus</th>
+                                    <th style="text-align:center; white-space:nowrap">Realisasi</th>
+                                    <th style="text-align:center; white-space:nowrap">Komitmen</th>
+                                    <th style="text-align:center; white-space:nowrap">Sisa Anggaran</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#tblListAnggaran').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            "scrollX": true,
+            info: false
+        });
+
+        $('.ddlDirektorat').select2({
+            placeholder: 'Pilih Tahun',
+            selectOnClose: true
+        });
+
+        $('.ddlUnitkerja').select2({
+            placeholder: 'Pilih Tahun',
+            selectOnClose: true
+        });
+
+        $('.ddlYear').select2({
+            placeholder: 'Pilih Tahun',
+            selectOnClose: true
+        });
+        
+    });
+
+    function OnOnchangeDdlDirektorat() {
+        var data = {
+            IDDirektorat: $('#ddlDirektorat').val()
+        }
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("LaporanDetailAnggaranHeader", "Laporan")',
+            data: data,
+            traditional: true,
+            success: function (result) {
+                var select = document.getElementById("ddlUnitkerja");
+                debugger;
+                // Optional: Clear all existing options first:
+                select.innerHTML = "";
+
+                select.innerHTML += "<option value=0>All</option>";
+
+                // Populate list with options:
+                if (result.Data.length > 0) {
+                    for (var i = 0; i < result.Data.length; i++) {
+                        select.innerHTML += "<option value=\"" + result.Data[i].IDDepartment + "\">" + result.Data[i].DepartmentCode + "</option>";
+                    }
+                }
+                
+            }
+        });
+    }
+
+    function DetailAnggaran() {
+        var data = {
+            IDDirektorat: $('#ddlDirektorat').val(),
+            IDDepartment: $('#ddlUnitkerja').val(),
+            YEAR: $('#ddlYear').val(),
+            IDSAP: $('#txtKodeAnggaran').val()
+        }
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("SearchDetailAnggaranHeader", "Laporan")',
+            data: data,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                debugger;
+                $('#tblListAnggaran').DataTable().destroy();
+                
+                $('#tblListAnggaran').DataTable({
+                    "bLengthChange": false,
+                    "autoWidth": false,
+                    searching: true,
+                    "scrollX": true,
+                    info: false,
+                    data: result.Data,
+                    //"rowGroup": true,
+                    columns: [
+                        {
+                            "data": "NoUrut",
+                            "className": "text-left"
+                        },
+                        {
+                            "data": "DirektoratName",
+                            "className": "text-left"
+                        },
+                        {
+                            "data": "DepartmentName",
+                            "className": "text-left"
+                        },
+                        {
+                            "data": "IDSAP",
+                            "className": "text-center"
+                        },
+                        {
+                            "data": "YEAR",
+                            "className": "text-center"
+                        },
+                        {
+                            "data": "EVDESCRIPTION",
+                            "className": "text-left"
+                        },
+                        {
+                            "data": "ACCT_CODE",
+                            "className": "text-left"
+                        },
+                        {
+                            "data": "EVDESCRIPTION_Detail",
+                            "className": "text-left"
+                        },
+                        {
+                            "data": "Anggaran",
+                            "className": "text-right"
+                        },
+                        {
+                            "data": "Pergeseran",
+                            "className": "text-right"
+                        },
+                        {
+                            "data": "Hangus",
+                            "className": "text-right"
+                        },
+                        {
+                            "data": "Realisasi",
+                            "className": "text-right"
+                        },
+                        {
+                            "data": "Komitmen",
+                            "className": "text-right"
+                        },
+                        {
+                            "data": "Sisa",
+                            "className": "text-right"
+                        }
+                    ]
+                    
+                    //,rowsGroup: [1,2,3,4,5]
+                });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                debugger;
+                    alert(xhr.status);
+                    alert(thrownError);
+            }
+        });
+
+    }
+    
+    function DownloadDetailAnggaran() {
+        window.open('@Url.Action("ExportExcelDetailAnggaran", "Laporan")' + '?Year=' + $('#ddlYear').val() + '&Direktorat=' + $('#ddlDirektorat').val() + '&UnitKerja=' + $('#ddlUnitkerja').val() + '&IDSAP=' + $('#txtKodeAnggaran').val());
+    }
+    
+</script>

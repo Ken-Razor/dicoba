@@ -1,0 +1,149 @@
+﻿@model LPS_ProjectManagement.Models.MasterDataModels.StrategicObjectiveModel
+
+@{
+    ViewBag.Title = "Detil SO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<input id="hdf" type="hidden" value="@Session["Nama"].ToString()" />
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Detil SO</h2>
+        </header>
+        <div class="content-body padding-top-45">
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="form-label" for="txtSOName" style="font-weight:bold">Nama SO</label>
+                        <span class="desc"></span>
+                        <input disabled="disabled" type="text" class="form-control" id="txtSOName" placeholder="SO Name" value="@Model.StrategicObjectiveName">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="form-label" for="txtSOCode" style="font-weight:bold">Kode SO</label>
+                        <span class="desc"></span>
+                        <input disabled="disabled" type="text" class="form-control" id="txtSOCode" placeholder="SO Code" value="@Model.StrategicObjectiveCode">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="form-label" for="txtSOCode" style="font-weight:bold">Tahun</label>
+                        <span class="desc"></span>
+                        <input disabled="disabled" type="text" class="form-control" id="txtSOCode" placeholder="Year" value="@Model.Year">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="form-label" for="field-9" style="font-weight:bold">Deskripsi</label>
+                        <span class="desc"></span>
+                        <textarea id="txtAreaDescription" disabled="disabled" class="form-control" style="height:200px; border:solid" placeholder="Description">@Model.Description</textarea>
+                        @*<div id="txtDescSO"></div>*@
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    @*@if (Model.IDStrategicObjective == 0)
+                {
+                <button class="btn btn-success" onclick="insert()"> Tambah SO</button>
+                }
+                else
+                {
+                <button class="btn btn-success" onclick="update(@Model.IDStrategicObjective)"> Update SO</button>
+                }*@
+                    <button class="btn btn-default" onclick="location.href='@Url.Action("MasterSO","Master")';">Kembali ke daftar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+
+    var obj = @Html.Raw(Json.Encode(Model));
+    var Description = obj.Description;
+
+    //$('#txtDescSO').summernote({
+    //    tabsize: 2,
+    //    height: 300,
+    //    toolbar: [
+    //        ['style', ['style']],
+    //        ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+    //        ['fontname', ['fontname']],
+    //        ['fontsize', ['fontsize']],
+    //        ['color', ['color']],
+    //        ['para', ['ol', 'ul', 'paragraph', 'height']],
+    //        ['view', ['undo', 'redo']]
+    //    ]
+    //});
+
+    //$('#txtDescSO').summernote(
+    //    'code',
+    //    Description
+    //);
+
+    function insert() {
+        debugger;
+        var StrategicObjective = {
+            StrategicObjectiveCode: $('#txtSOCode').val(),
+            StrategicObjectiveName: $('#txtSOName').val(),
+            Description: $('#txtDescSO').summernote('code'),
+            CreatedBy: $('#hdf').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("InsertMasterSO", "Master")',
+            data: StrategicObjective,
+            success: function (result) {
+                alert(result.Message);
+                window.location.href = '@Url.Action("MasterSO", "Master")';
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+
+    function update(id) {
+        var StrategicObjective = {
+            IDStrategicObjective: id,
+            StrategicObjectiveCode: $('#txtSOCode').val(),
+            StrategicObjectiveName: $('#txtSOName').val(),
+            Description: $('#txtDescSO').summernote('code'),
+            CreatedBy: $('#hdf').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UpdateMasterSO", "Master")',
+            data: StrategicObjective,
+            success: function (result) {
+                alert(result.Message);
+                window.location.href = '@Url.Action("MasterSO", "Master")';
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+
+</script>

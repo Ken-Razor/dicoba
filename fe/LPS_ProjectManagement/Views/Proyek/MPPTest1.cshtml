@@ -1,0 +1,125 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MPPTest1</title>
+    <!--Bootstrap-->
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/bootstrapmp.min.css" rel="stylesheet" />
+    <!--Main Custom CSS-->
+    <link href="~/Content/app.css" rel="stylesheet" />
+
+    <!--Plugin-->
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/material-icons.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/pace.css" rel="stylesheet" />
+    <link href="~/Content/mdl.css" rel="stylesheet" />
+    <link href="~/Content/fulltable/jquery.fulltable.css" rel="stylesheet" />
+    @*<link href="~/Content/highchart/css/highcharts.css" rel="stylesheet" />*@
+    <link href="~/Content/dhtmlxgantt.css" rel="stylesheet" />
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/summernote-lite.css" rel="stylesheet" />
+
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/pace.min.js"></script>
+    <script src="~/Scripts/mdl-min.js"></script>
+    <script src="~/Content/fulltable/jquery.fulltable.js"></script>
+    <script src="~/Content/highchart/highcharts.js"></script>
+    <script src="~/Scripts/select2.min.js"></script>
+    <script src="~/Scripts/summernote-lite.js"></script>
+
+    <script src="~/Scripts/dhmtlx/dhtmlx.js"></script>
+    <script src="~/Scripts/dhmtlx/dhtmlxcommon.js"></script>
+    <script src="~/Scripts/dhmtlx/dhtmlxgantt.js"></script>
+    <script src="~/Scripts/dhmtlx/dhtmlxscheduler.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
+    <link rel='shortcut icon' type='image/x-icon' href='~/Assets/Images/favico.ico' />
+
+</head>
+<body>
+    <div>
+        <h2>Index</h2>
+        <div class="demo-main-content">
+            <div id="gantt_here" style="width:100%; height:1000px;background: #fff;"></div>
+        </div>
+        <script type="text/javascript">
+
+            var today = new Date();
+
+
+            gantt.config.start_date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            gantt.config.end_date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            gantt.config.scale_unit = "month";
+            gantt.config.date_scale = "%F %Y";
+
+            gantt.config.scale_height = 50;
+
+            gantt.config.subscales = [
+                { unit: "day", step: 1, date: "%j" }
+            ];
+
+            gantt.attachEvent("onLightboxSave", function (id, task, is_new) {
+                var taskStart = task.start_date;
+                var taskEnd = task.end_date;
+                var scaleStart = gantt.config.start_date;
+                var scaleEnd = gantt.config.end_date;
+
+                // if the task is out of the range
+                if (scaleStart > taskEnd || scaleEnd < taskStart) {
+                    // update timescale range
+                    gantt.config.end_date = new Date(Math.max(taskEnd.valueOf(), scaleEnd.valueOf()));
+                    gantt.config.start_date = new Date(Math.min(taskStart.valueOf(), scaleStart.valueOf()));
+                    gantt.render();
+                }
+                return true;
+            });
+
+            //gantt.config.lightbox.sections = [
+            //    { name: "description", height: 30, map_to: "text", type: "textarea", focus: true },
+            //    { name: "type", height: 30, type: "typeselect", map_to: "type" },
+            //    { name: "notes", height: 30, map_to: "text", type: "textarea", focus: true, label:"Notes" },
+            //    { name: "time", height: 400, type: "time", map_to: "auto" }
+            //];
+
+            gantt.config.lightbox.sections = [
+                { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
+                { name: "type", height: 30, type: "typeselect", map_to: "type" },
+                { name: "notes", height: 70, map_to: "notes", type: "textarea", focus: true },
+                { name: "time", height: 72, map_to: "auto", type: "time" },
+            ];
+
+            gantt.templates.rightside_text = function (start, end, task) {
+                if (task.type == gantt.config.types.milestone) {
+                    return task.text;
+                }
+                return "";
+            };
+
+            gantt.config.columns = [
+                { name: "text", label: "Task name", width: "*", tree: true },
+                { name: "start_date", label: "Start time", align: "center" },
+                { name: "end_date", label: "End time", align: "center" },
+                { name: "progress", label: "Progress", align: "center" },
+                { name: "duration", label: "Duration", align: "center" },
+                { name: "notes", label: "Notes", align: "center" },
+                { name: "add", label: "", width: 44 }
+            ];
+            gantt.config.order_branch = true;
+            gantt.config.lightbox.autosize = "xy";
+            gantt.init("gantt_here");
+
+        </script>
+    </div>
+</body>
+</html>

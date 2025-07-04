@@ -1,0 +1,688 @@
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\LPS_API.dll.config
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\LPS_API.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\LPS_API.pdb
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\csc.exe
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\csc.exe.config
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\csc.rsp
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\csi.exe
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\csi.rsp
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\System.AppContext.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\System.Collections.Immutable.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\System.IO.FileSystem.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\System.Reflection.Metadata.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\vbc.exe
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\vbc.exe.config
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\vbc.rsp
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\VBCSCompiler.exe
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\roslyn\VBCSCompiler.exe.config
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\LPS_BLL.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.Office.Client.Education.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.Office.Client.Policy.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.Office.Client.TranslationServices.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.Office.DocumentManagement.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.Office.Policy.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.Office.Server.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.Office.Server.Search.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.Office.Server.UserProfiles.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Newtonsoft.Json.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\LPS_DAL.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.SharePoint.Client.Runtime.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.SharePoint.Client.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.mshtml.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.SharePoint.Client.Search.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.SharePoint.Client.UserProfiles.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\LPS_BLL.pdb
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\Newtonsoft.Json.xml
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\System.Web.Http.WebHost.xml
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\bin\LPS_DAL.pdb
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\obj\Debug\LPS_API.csprojAssemblyReference.cache
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\obj\Debug\LPS_API.csproj.CoreCompileInputs.cache
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\obj\Debug\LPS_API.csproj.CopyComplete
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\obj\Debug\LPS_API.dll
+D:\Net Promise Kairos\LPS\LPS_API\LPS_API\obj\Debug\LPS_API.pdb
+D:\Net Promise LPS API\LPS_API\obj\Debug\LPS_API.csprojAssemblyReference.cache
+D:\Net Promise LPS API\LPS_API\obj\Debug\LPS_API.csproj.CoreCompileInputs.cache
+D:\Net Promise LPS API\LPS_API\bin\LPS_API.dll.config
+D:\Net Promise LPS API\LPS_API\bin\LPS_API.dll
+D:\Net Promise LPS API\LPS_API\bin\LPS_API.pdb
+D:\Net Promise LPS API\LPS_API\bin\roslyn\csc.exe
+D:\Net Promise LPS API\LPS_API\bin\roslyn\csc.exe.config
+D:\Net Promise LPS API\LPS_API\bin\roslyn\csc.rsp
+D:\Net Promise LPS API\LPS_API\bin\roslyn\csi.exe
+D:\Net Promise LPS API\LPS_API\bin\roslyn\csi.rsp
+D:\Net Promise LPS API\LPS_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Net Promise LPS API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Net Promise LPS API\LPS_API\bin\roslyn\System.AppContext.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\System.Collections.Immutable.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\System.IO.FileSystem.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\System.Reflection.Metadata.dll
+D:\Net Promise LPS API\LPS_API\bin\roslyn\vbc.exe
+D:\Net Promise LPS API\LPS_API\bin\roslyn\vbc.exe.config
+D:\Net Promise LPS API\LPS_API\bin\roslyn\vbc.rsp
+D:\Net Promise LPS API\LPS_API\bin\roslyn\VBCSCompiler.exe
+D:\Net Promise LPS API\LPS_API\bin\roslyn\VBCSCompiler.exe.config
+D:\Net Promise LPS API\LPS_API\bin\LPS_BLL.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.Office.Client.Education.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.Office.Client.Policy.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.Office.Client.TranslationServices.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.Office.DocumentManagement.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.Office.Policy.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.Office.Server.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.Office.Server.Search.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.Office.Server.UserProfiles.dll
+D:\Net Promise LPS API\LPS_API\bin\Newtonsoft.Json.dll
+D:\Net Promise LPS API\LPS_API\bin\System.Net.Http.Formatting.dll
+D:\Net Promise LPS API\LPS_API\bin\System.Web.Cors.dll
+D:\Net Promise LPS API\LPS_API\bin\System.Web.Http.Cors.dll
+D:\Net Promise LPS API\LPS_API\bin\System.Web.Http.dll
+D:\Net Promise LPS API\LPS_API\bin\System.Web.Http.WebHost.dll
+D:\Net Promise LPS API\LPS_API\bin\LPS_DAL.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.SharePoint.Client.Runtime.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.SharePoint.Client.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.mshtml.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.SharePoint.Client.Search.dll
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.SharePoint.Client.UserProfiles.dll
+D:\Net Promise LPS API\LPS_API\bin\LPS_BLL.pdb
+D:\Net Promise LPS API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Net Promise LPS API\LPS_API\bin\Newtonsoft.Json.xml
+D:\Net Promise LPS API\LPS_API\bin\System.Net.Http.Formatting.xml
+D:\Net Promise LPS API\LPS_API\bin\System.Web.Http.xml
+D:\Net Promise LPS API\LPS_API\bin\System.Web.Http.Cors.xml
+D:\Net Promise LPS API\LPS_API\bin\System.Web.Http.WebHost.xml
+D:\Net Promise LPS API\LPS_API\bin\LPS_DAL.pdb
+D:\Net Promise LPS API\LPS_API\obj\Debug\LPS_API.csproj.CopyComplete
+D:\Net Promise LPS API\LPS_API\obj\Debug\LPS_API.dll
+D:\Net Promise LPS API\LPS_API\obj\Debug\LPS_API.pdb
+D:\LPS1\PROMISE_API\LPS_API\bin\LPS_API.dll.config
+D:\LPS1\PROMISE_API\LPS_API\bin\LPS_API.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\LPS_API.pdb
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\csc.exe
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\csc.exe.config
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\csc.rsp
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\csi.exe
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\csi.rsp
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\System.AppContext.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\System.Collections.Immutable.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\System.IO.FileSystem.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\System.Reflection.Metadata.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\vbc.exe
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\vbc.exe.config
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\vbc.rsp
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\VBCSCompiler.exe
+D:\LPS1\PROMISE_API\LPS_API\bin\roslyn\VBCSCompiler.exe.config
+D:\LPS1\PROMISE_API\LPS_API\bin\LPS_BLL.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.Office.DocumentManagement.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.Office.Policy.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.Office.Server.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.Office.Server.Search.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.Office.Server.UserProfiles.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\Newtonsoft.Json.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\System.Net.Http.Formatting.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Cors.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Http.Cors.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Http.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Http.WebHost.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\LPS_DAL.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.mshtml.dll
+D:\LPS1\PROMISE_API\LPS_API\bin\LPS_BLL.pdb
+D:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\LPS1\PROMISE_API\LPS_API\bin\Newtonsoft.Json.xml
+D:\LPS1\PROMISE_API\LPS_API\bin\System.Net.Http.Formatting.xml
+D:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Http.xml
+D:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Http.Cors.xml
+D:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Http.WebHost.xml
+D:\LPS1\PROMISE_API\LPS_API\bin\LPS_DAL.pdb
+D:\LPS1\PROMISE_API\LPS_API\obj\Debug\LPS_API.csprojAssemblyReference.cache
+D:\LPS1\PROMISE_API\LPS_API\obj\Debug\LPS_API.csproj.CopyComplete
+D:\LPS1\PROMISE_API\LPS_API\obj\Debug\LPS_API.dll
+D:\LPS1\PROMISE_API\LPS_API\obj\Debug\LPS_API.pdb
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\LPS_API.dll.config
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\LPS_API.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\LPS_API.pdb
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\csc.exe
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\csc.exe.config
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\csc.rsp
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\csi.exe
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\csi.rsp
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\System.AppContext.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\System.Collections.Immutable.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\System.IO.FileSystem.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\System.Reflection.Metadata.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\vbc.exe
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\vbc.exe.config
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\vbc.rsp
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\VBCSCompiler.exe
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\roslyn\VBCSCompiler.exe.config
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\LPS_BLL.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\Microsoft.Office.DocumentManagement.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\Microsoft.Office.Policy.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\Microsoft.Office.Server.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\Microsoft.Office.Server.Search.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\Microsoft.Office.Server.UserProfiles.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\Newtonsoft.Json.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\System.Net.Http.Formatting.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\System.Web.Cors.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\System.Web.Http.Cors.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\System.Web.Http.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\System.Web.Http.WebHost.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\LPS_DAL.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\Microsoft.mshtml.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\LPS_BLL.pdb
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\Newtonsoft.Json.xml
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\System.Net.Http.Formatting.xml
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\System.Web.Http.xml
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\System.Web.Http.Cors.xml
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\System.Web.Http.WebHost.xml
+D:\LPS1\Backup\PROMISE_API\LPS_API\bin\LPS_DAL.pdb
+D:\LPS1\Backup\PROMISE_API\LPS_API\obj\Debug\LPS_API.csprojAssemblyReference.cache
+D:\LPS1\Backup\PROMISE_API\LPS_API\obj\Debug\LPS_API.csproj.CoreCompileInputs.cache
+D:\LPS1\Backup\PROMISE_API\LPS_API\obj\Debug\LPS_API.csproj.CopyComplete
+D:\LPS1\Backup\PROMISE_API\LPS_API\obj\Debug\LPS_API.dll
+D:\LPS1\Backup\PROMISE_API\LPS_API\obj\Debug\LPS_API.pdb
+D:\LPS\PROMISE_API\LPS_API\bin\LPS_API.dll.config
+D:\LPS\PROMISE_API\LPS_API\bin\LPS_API.dll
+D:\LPS\PROMISE_API\LPS_API\bin\LPS_API.pdb
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\csc.exe
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\csc.exe.config
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\csc.rsp
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\csi.exe
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\csi.rsp
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\System.AppContext.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\System.Collections.Immutable.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\System.IO.FileSystem.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\System.Reflection.Metadata.dll
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\vbc.exe
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\vbc.exe.config
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\vbc.rsp
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\VBCSCompiler.exe
+D:\LPS\PROMISE_API\LPS_API\bin\roslyn\VBCSCompiler.exe.config
+D:\LPS\PROMISE_API\LPS_API\bin\LPS_BLL.dll
+D:\LPS\PROMISE_API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\LPS\PROMISE_API\LPS_API\bin\Microsoft.Office.DocumentManagement.dll
+D:\LPS\PROMISE_API\LPS_API\bin\Microsoft.Office.Policy.dll
+D:\LPS\PROMISE_API\LPS_API\bin\Microsoft.Office.Server.dll
+D:\LPS\PROMISE_API\LPS_API\bin\Microsoft.Office.Server.Search.dll
+D:\LPS\PROMISE_API\LPS_API\bin\Microsoft.Office.Server.UserProfiles.dll
+D:\LPS\PROMISE_API\LPS_API\bin\Newtonsoft.Json.dll
+D:\LPS\PROMISE_API\LPS_API\bin\System.Net.Http.Formatting.dll
+D:\LPS\PROMISE_API\LPS_API\bin\System.Web.Cors.dll
+D:\LPS\PROMISE_API\LPS_API\bin\System.Web.Http.Cors.dll
+D:\LPS\PROMISE_API\LPS_API\bin\System.Web.Http.dll
+D:\LPS\PROMISE_API\LPS_API\bin\System.Web.Http.WebHost.dll
+D:\LPS\PROMISE_API\LPS_API\bin\LPS_DAL.dll
+D:\LPS\PROMISE_API\LPS_API\bin\Microsoft.mshtml.dll
+D:\LPS\PROMISE_API\LPS_API\bin\LPS_BLL.pdb
+D:\LPS\PROMISE_API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\LPS\PROMISE_API\LPS_API\bin\Newtonsoft.Json.xml
+D:\LPS\PROMISE_API\LPS_API\bin\System.Net.Http.Formatting.xml
+D:\LPS\PROMISE_API\LPS_API\bin\System.Web.Http.xml
+D:\LPS\PROMISE_API\LPS_API\bin\System.Web.Http.Cors.xml
+D:\LPS\PROMISE_API\LPS_API\bin\System.Web.Http.WebHost.xml
+D:\LPS\PROMISE_API\LPS_API\bin\LPS_DAL.pdb
+D:\LPS\PROMISE_API\LPS_API\obj\Debug\LPS_API.csprojAssemblyReference.cache
+D:\LPS\PROMISE_API\LPS_API\obj\Debug\LPS_API.csproj.CoreCompileInputs.cache
+D:\LPS\PROMISE_API\LPS_API\obj\Debug\LPS_API.csproj.CopyComplete
+D:\LPS\PROMISE_API\LPS_API\obj\Debug\LPS_API.dll
+D:\LPS\PROMISE_API\LPS_API\obj\Debug\LPS_API.pdb
+C:\LPS1\PROMISE_API\LPS_API\bin\LPS_API.dll.config
+C:\LPS1\PROMISE_API\LPS_API\bin\LPS_API.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\LPS_API.pdb
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\csc.exe
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\csc.exe.config
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\csc.rsp
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\csi.exe
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\csi.rsp
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\System.AppContext.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\System.Collections.Immutable.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\System.IO.FileSystem.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\System.Reflection.Metadata.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\vbc.exe
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\vbc.exe.config
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\vbc.rsp
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\VBCSCompiler.exe
+C:\LPS1\PROMISE_API\LPS_API\bin\roslyn\VBCSCompiler.exe.config
+C:\LPS1\PROMISE_API\LPS_API\bin\LPS_BLL.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.Office.DocumentManagement.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.Office.Policy.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.Office.Server.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.Office.Server.Search.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.Office.Server.UserProfiles.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\Newtonsoft.Json.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\System.Net.Http.Formatting.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Cors.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Http.Cors.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Http.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Http.WebHost.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\LPS_DAL.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.mshtml.dll
+C:\LPS1\PROMISE_API\LPS_API\bin\LPS_BLL.pdb
+C:\LPS1\PROMISE_API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\LPS1\PROMISE_API\LPS_API\bin\Newtonsoft.Json.xml
+C:\LPS1\PROMISE_API\LPS_API\bin\System.Net.Http.Formatting.xml
+C:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Http.xml
+C:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Http.Cors.xml
+C:\LPS1\PROMISE_API\LPS_API\bin\System.Web.Http.WebHost.xml
+C:\LPS1\PROMISE_API\LPS_API\bin\LPS_DAL.pdb
+C:\LPS1\PROMISE_API\LPS_API\obj\Debug\LPS_API.csprojAssemblyReference.cache
+C:\LPS1\PROMISE_API\LPS_API\obj\Debug\LPS_API.csproj.CopyComplete
+C:\LPS1\PROMISE_API\LPS_API\obj\Debug\LPS_API.dll
+C:\LPS1\PROMISE_API\LPS_API\obj\Debug\LPS_API.pdb
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\LPS_API.dll.config
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\LPS_API.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\LPS_API.pdb
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\csc.exe
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\csc.exe.config
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\csc.rsp
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\csi.exe
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\csi.rsp
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\System.AppContext.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\System.Collections.Immutable.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\System.IO.FileSystem.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\System.Reflection.Metadata.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\vbc.exe
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\vbc.exe.config
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\vbc.rsp
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\VBCSCompiler.exe
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\roslyn\VBCSCompiler.exe.config
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\LPS_BLL.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\Microsoft.Office.DocumentManagement.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\Microsoft.Office.Policy.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\Microsoft.Office.Server.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\Microsoft.Office.Server.Search.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\Microsoft.Office.Server.UserProfiles.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\Newtonsoft.Json.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\System.Net.Http.Formatting.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\System.Web.Cors.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\System.Web.Http.Cors.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\System.Web.Http.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\System.Web.Http.WebHost.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\LPS_DAL.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\Microsoft.mshtml.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\LPS_BLL.pdb
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\Newtonsoft.Json.xml
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\System.Net.Http.Formatting.xml
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\System.Web.Http.xml
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\System.Web.Http.Cors.xml
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\System.Web.Http.WebHost.xml
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\bin\LPS_DAL.pdb
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\obj\Debug\LPS_API.csprojAssemblyReference.cache
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\obj\Debug\LPS_API.csproj.CoreCompileInputs.cache
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\obj\Debug\LPS_API.csproj.CopyComplete
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\obj\Debug\LPS_API.dll
+D:\Users\hannan.harahap\source\repos\LPS-Promise-API\LPS_API\obj\Debug\LPS_API.pdb
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\LPS_API.dll.config
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\LPS_API.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\LPS_API.pdb
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\csc.exe
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\csc.exe.config
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\csc.rsp
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\csi.exe
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\csi.rsp
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\System.AppContext.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\vbc.exe
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\vbc.exe.config
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\vbc.rsp
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\VBCSCompiler.exe
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\LPS_BLL.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\Microsoft.Office.DocumentManagement.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\Microsoft.Office.Policy.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\Microsoft.Office.Server.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\Microsoft.Office.Server.Search.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\Microsoft.Office.Server.UserProfiles.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\Newtonsoft.Json.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\System.Net.Http.Formatting.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\System.Web.Cors.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\System.Web.Http.Cors.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\System.Web.Http.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\System.Web.Http.WebHost.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\LPS_DAL.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\Microsoft.mshtml.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\LPS_BLL.pdb
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\Newtonsoft.Json.xml
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\System.Net.Http.Formatting.xml
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\System.Web.Http.xml
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\System.Web.Http.Cors.xml
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\System.Web.Http.WebHost.xml
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\bin\LPS_DAL.pdb
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\obj\Debug\LPS_API.csproj.AssemblyReference.cache
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\obj\Debug\LPS_API.csproj.CoreCompileInputs.cache
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\obj\Debug\LPS_API.csproj.CopyComplete
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\obj\Debug\LPS_API.dll
+C:\Users\hannan.harahap\source\repos\PROMISE API\LPS_API\obj\Debug\LPS_API.pdb
+C:\Promise\BE\PROMISE API\LPS_API\bin\LPS_API.dll.config
+C:\Promise\BE\PROMISE API\LPS_API\bin\LPS_API.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\LPS_API.pdb
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\csc.exe
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\csc.exe.config
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\csc.rsp
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\csi.exe
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\csi.rsp
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\System.AppContext.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\System.Collections.Immutable.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\System.IO.FileSystem.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\System.Reflection.Metadata.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\vbc.exe
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\vbc.exe.config
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\vbc.rsp
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\VBCSCompiler.exe
+C:\Promise\BE\PROMISE API\LPS_API\bin\roslyn\VBCSCompiler.exe.config
+C:\Promise\BE\PROMISE API\LPS_API\bin\LPS_BLL.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\Microsoft.Office.DocumentManagement.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\Microsoft.Office.Policy.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\Microsoft.Office.Server.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\Microsoft.Office.Server.Search.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\Microsoft.Office.Server.UserProfiles.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\Newtonsoft.Json.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\System.Net.Http.Formatting.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\System.Web.Cors.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\System.Web.Http.Cors.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\System.Web.Http.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\System.Web.Http.WebHost.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\LPS_DAL.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\Microsoft.mshtml.dll
+C:\Promise\BE\PROMISE API\LPS_API\bin\LPS_BLL.pdb
+C:\Promise\BE\PROMISE API\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Promise\BE\PROMISE API\LPS_API\bin\Newtonsoft.Json.xml
+C:\Promise\BE\PROMISE API\LPS_API\bin\System.Net.Http.Formatting.xml
+C:\Promise\BE\PROMISE API\LPS_API\bin\System.Web.Http.xml
+C:\Promise\BE\PROMISE API\LPS_API\bin\System.Web.Http.Cors.xml
+C:\Promise\BE\PROMISE API\LPS_API\bin\System.Web.Http.WebHost.xml
+C:\Promise\BE\PROMISE API\LPS_API\bin\LPS_DAL.pdb
+C:\Promise\BE\PROMISE API\LPS_API\obj\Debug\LPS_API.csproj.AssemblyReference.cache
+C:\Promise\BE\PROMISE API\LPS_API\obj\Debug\LPS_API.csproj.CoreCompileInputs.cache
+C:\Promise\BE\PROMISE API\LPS_API\obj\Debug\LPS_API.csproj.CopyComplete
+C:\Promise\BE\PROMISE API\LPS_API\obj\Debug\LPS_API.dll
+C:\Promise\BE\PROMISE API\LPS_API\obj\Debug\LPS_API.pdb
+C:\Promise\PromiseBE\LPS_API\bin\LPS_API.dll.config
+C:\Promise\PromiseBE\LPS_API\bin\LPS_API.dll
+C:\Promise\PromiseBE\LPS_API\bin\LPS_API.pdb
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\csc.exe
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\csc.exe.config
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\csc.rsp
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\csi.exe
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\csi.rsp
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\System.AppContext.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\System.Collections.Immutable.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\System.IO.FileSystem.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\System.Reflection.Metadata.dll
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\vbc.exe
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\vbc.exe.config
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\vbc.rsp
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\VBCSCompiler.exe
+C:\Promise\PromiseBE\LPS_API\bin\roslyn\VBCSCompiler.exe.config
+C:\Promise\PromiseBE\LPS_API\bin\LPS_BLL.dll
+C:\Promise\PromiseBE\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Promise\PromiseBE\LPS_API\bin\Microsoft.Office.DocumentManagement.dll
+C:\Promise\PromiseBE\LPS_API\bin\Microsoft.Office.Policy.dll
+C:\Promise\PromiseBE\LPS_API\bin\Microsoft.Office.Server.dll
+C:\Promise\PromiseBE\LPS_API\bin\Microsoft.Office.Server.Search.dll
+C:\Promise\PromiseBE\LPS_API\bin\Microsoft.Office.Server.UserProfiles.dll
+C:\Promise\PromiseBE\LPS_API\bin\Newtonsoft.Json.dll
+C:\Promise\PromiseBE\LPS_API\bin\System.Net.Http.Formatting.dll
+C:\Promise\PromiseBE\LPS_API\bin\System.Web.Cors.dll
+C:\Promise\PromiseBE\LPS_API\bin\System.Web.Http.Cors.dll
+C:\Promise\PromiseBE\LPS_API\bin\System.Web.Http.dll
+C:\Promise\PromiseBE\LPS_API\bin\System.Web.Http.WebHost.dll
+C:\Promise\PromiseBE\LPS_API\bin\LPS_DAL.dll
+C:\Promise\PromiseBE\LPS_API\bin\Microsoft.mshtml.dll
+C:\Promise\PromiseBE\LPS_API\bin\LPS_BLL.pdb
+C:\Promise\PromiseBE\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Promise\PromiseBE\LPS_API\bin\Newtonsoft.Json.xml
+C:\Promise\PromiseBE\LPS_API\bin\System.Net.Http.Formatting.xml
+C:\Promise\PromiseBE\LPS_API\bin\System.Web.Http.xml
+C:\Promise\PromiseBE\LPS_API\bin\System.Web.Http.Cors.xml
+C:\Promise\PromiseBE\LPS_API\bin\System.Web.Http.WebHost.xml
+C:\Promise\PromiseBE\LPS_API\bin\LPS_DAL.pdb
+C:\Promise\PromiseBE\LPS_API\obj\Debug\LPS_API.csproj.AssemblyReference.cache
+C:\Promise\PromiseBE\LPS_API\obj\Debug\LPS_API.csproj.CoreCompileInputs.cache
+C:\Promise\PromiseBE\LPS_API\obj\Debug\LPS_API.csproj.CopyComplete
+C:\Promise\PromiseBE\LPS_API\obj\Debug\LPS_API.dll
+C:\Promise\PromiseBE\LPS_API\obj\Debug\LPS_API.pdb
+C:\Promise\BePromise\LPS_API\bin\LPS_API.dll.config
+C:\Promise\BePromise\LPS_API\bin\LPS_API.dll
+C:\Promise\BePromise\LPS_API\bin\LPS_API.pdb
+C:\Promise\BePromise\LPS_API\bin\roslyn\csc.exe
+C:\Promise\BePromise\LPS_API\bin\roslyn\csc.exe.config
+C:\Promise\BePromise\LPS_API\bin\roslyn\csc.rsp
+C:\Promise\BePromise\LPS_API\bin\roslyn\csi.exe
+C:\Promise\BePromise\LPS_API\bin\roslyn\csi.rsp
+C:\Promise\BePromise\LPS_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Promise\BePromise\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Promise\BePromise\LPS_API\bin\roslyn\System.AppContext.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\System.Collections.Immutable.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\System.IO.FileSystem.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\System.Reflection.Metadata.dll
+C:\Promise\BePromise\LPS_API\bin\roslyn\vbc.exe
+C:\Promise\BePromise\LPS_API\bin\roslyn\vbc.exe.config
+C:\Promise\BePromise\LPS_API\bin\roslyn\vbc.rsp
+C:\Promise\BePromise\LPS_API\bin\roslyn\VBCSCompiler.exe
+C:\Promise\BePromise\LPS_API\bin\roslyn\VBCSCompiler.exe.config
+C:\Promise\BePromise\LPS_API\bin\LPS_BLL.dll
+C:\Promise\BePromise\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Promise\BePromise\LPS_API\bin\Microsoft.Office.DocumentManagement.dll
+C:\Promise\BePromise\LPS_API\bin\Microsoft.Office.Policy.dll
+C:\Promise\BePromise\LPS_API\bin\Microsoft.Office.Server.dll
+C:\Promise\BePromise\LPS_API\bin\Microsoft.Office.Server.Search.dll
+C:\Promise\BePromise\LPS_API\bin\Microsoft.Office.Server.UserProfiles.dll
+C:\Promise\BePromise\LPS_API\bin\Newtonsoft.Json.dll
+C:\Promise\BePromise\LPS_API\bin\System.Net.Http.Formatting.dll
+C:\Promise\BePromise\LPS_API\bin\System.Web.Cors.dll
+C:\Promise\BePromise\LPS_API\bin\System.Web.Http.Cors.dll
+C:\Promise\BePromise\LPS_API\bin\System.Web.Http.dll
+C:\Promise\BePromise\LPS_API\bin\System.Web.Http.WebHost.dll
+C:\Promise\BePromise\LPS_API\bin\LPS_DAL.dll
+C:\Promise\BePromise\LPS_API\bin\Microsoft.mshtml.dll
+C:\Promise\BePromise\LPS_API\bin\LPS_BLL.pdb
+C:\Promise\BePromise\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Promise\BePromise\LPS_API\bin\Newtonsoft.Json.xml
+C:\Promise\BePromise\LPS_API\bin\System.Net.Http.Formatting.xml
+C:\Promise\BePromise\LPS_API\bin\System.Web.Http.xml
+C:\Promise\BePromise\LPS_API\bin\System.Web.Http.Cors.xml
+C:\Promise\BePromise\LPS_API\bin\System.Web.Http.WebHost.xml
+C:\Promise\BePromise\LPS_API\bin\LPS_DAL.pdb
+C:\Promise\BePromise\LPS_API\obj\Debug\LPS_API.csproj.AssemblyReference.cache
+C:\Promise\BePromise\LPS_API\obj\Debug\LPS_API.csproj.CoreCompileInputs.cache
+C:\Promise\BePromise\LPS_API\obj\Debug\LPS_API.dll
+C:\Promise\BePromise\LPS_API\obj\Debug\LPS_API.pdb
+C:\Promise\BePromise\LPS_API\obj\Debug\LPS_API.csproj.CopyComplete
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\LPS_API.dll.config
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\LPS_API.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\LPS_API.pdb
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\csc.exe
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\csc.exe.config
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\csc.rsp
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\csi.exe
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\csi.rsp
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\System.AppContext.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\vbc.exe
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\vbc.exe.config
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\vbc.rsp
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\VBCSCompiler.exe
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\LPS_BLL.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\Microsoft.Office.DocumentManagement.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\Microsoft.Office.Policy.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\Microsoft.Office.Server.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\Microsoft.Office.Server.Search.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\Microsoft.Office.Server.UserProfiles.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\Newtonsoft.Json.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\System.Net.Http.Formatting.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\System.Web.Cors.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\System.Web.Http.Cors.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\System.Web.Http.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\System.Web.Http.WebHost.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\LPS_DAL.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\Microsoft.mshtml.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\LPS_BLL.pdb
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\Newtonsoft.Json.xml
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\System.Net.Http.Formatting.xml
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\System.Web.Http.xml
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\System.Web.Http.Cors.xml
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\System.Web.Http.WebHost.xml
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\bin\LPS_DAL.pdb
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\obj\Debug\LPS_API.csproj.AssemblyReference.cache
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\obj\Debug\LPS_API.csproj.CoreCompileInputs.cache
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\obj\Debug\LPS_API.dll
+C:\Users\ken.agatha\Documents\Dev\promise-be\LPS_API\obj\Debug\LPS_API.pdb
+C:\Users\ken.agatha\Documents\dev\promise-be\LPS_API\obj\Debug\LPS_API.csproj.Up2Date

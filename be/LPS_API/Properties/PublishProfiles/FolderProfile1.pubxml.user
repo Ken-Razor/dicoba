@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Promise\PublishBe</_PublishTargetUrl>
+    <History>True|2023-07-28T08:48:31.9072103Z;True|2023-04-11T13:24:04.0477760+07:00;True|2023-04-11T13:23:55.7557570+07:00;True|2023-04-11T11:49:50.7402876+07:00;True|2023-04-11T11:35:46.7667249+07:00;True|2023-04-11T10:42:12.0065343+07:00;True|2023-04-11T09:19:47.2035849+07:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="Assets/Images/IconReport/Bulet-Abu.png">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="Assets/Images/IconReport/Bulet-Biru.png">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="Assets/Images/IconReport/Bulet-hitam.png">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="Assets/Images/IconReport/Bulet-Ijo.png">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="Assets/Images/IconReport/Bulet-Kuning.png">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="Assets/Images/IconReport/Bulet-Merah.png">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="Assets/Images/IconReport/Panah-atas.png">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="Assets/Images/IconReport/Panah-bawah.png">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="Assets/Images/IconReport/Panah-kanan.png">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="bin/LPS_API.dll">
+      <publishTime>07/28/2023 15:48:30</publishTime>
+    </File>
+    <File Include="bin/LPS_API.pdb">
+      <publishTime>07/28/2023 15:48:30</publishTime>
+    </File>
+    <File Include="bin/LPS_BLL.dll">
+      <publishTime>07/28/2023 15:48:29</publishTime>
+    </File>
+    <File Include="bin/LPS_BLL.pdb">
+      <publishTime>07/28/2023 15:48:29</publishTime>
+    </File>
+    <File Include="bin/LPS_DAL.dll">
+      <publishTime>03/17/2023 14:17:14</publishTime>
+    </File>
+    <File Include="bin/LPS_DAL.pdb">
+      <publishTime>03/17/2023 14:17:14</publishTime>
+    </File>
+    <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.mshtml.dll">
+      <publishTime>06/13/2023 13:39:56</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Office.Client.Education.dll">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Office.Client.Policy.dll">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Office.Client.TranslationServices.dll">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Office.DocumentManagement.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Office.Policy.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Office.Server.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Office.Server.Search.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Office.Server.UserProfiles.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe.config">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.rsp">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/csi.exe">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/csi.rsp">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.Scripting.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.Scripting.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CSharp.Core.targets">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.DiaSymReader.Native.amd64.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.DiaSymReader.Native.x86.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.VisualBasic.Core.targets">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.AppContext.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Collections.Immutable.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Diagnostics.StackTrace.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.IO.FileSystem.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.IO.FileSystem.Primitives.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Reflection.Metadata.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe.config">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.rsp">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe.config">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/System.Web.Cors.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.Cors.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>02/15/2023 11:46:34</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>02/15/2023 11:46:33</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>04/11/2023 09:19:46</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

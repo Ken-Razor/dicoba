@@ -1,0 +1,279 @@
+﻿@model LPS_ProjectManagement.Models.MasterDataModels.MasterSLAModel
+@using LPS_ProjectManagement.Models
+
+@{
+    ViewBag.Title = "Detil SLA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    RoleProject[] RoleAplikasi = (RoleProject[])Session["Roles"];
+}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <input id="hdf" type="hidden" value="@Session["PersonalNumber"].ToString()" />
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Detil SLA</h2>
+        </header>
+        <div class="content-body padding-top-45">
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">Group</label>
+                            <label style="color:red">*</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    <select id="ddlGroup" class="form-control ddlGroup" style="width:100%">
+                                        @foreach (var data in Model.ListGroup)
+                                        {
+                                            if (Model.GroupId == data.Id)
+                                            {
+                                                <option value="@data.Id" selected="selected">@data.Description</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@data.Id">@data.Description</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">Status SLA</label>
+                            <label style="color:red">*</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    <select id="ddlStatus" class="form-control ddlStatus" style="width:100%">
+                                        @foreach (var data in Model.ListStatus)
+                                        {
+                                            if (Model.StatusSLA == data.IdStatus)
+                                            {
+                                                <option value="@data.IdStatus" selected="selected">@data.Description</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@data.IdStatus">@data.Description</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">Peraturan</label>
+                            <label style="color:red">*</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    <input id="txtPeraturan" type="text" class="form-control" placeholder="Peraturan" value="@Model.Peraturan" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="form-label" style="font-weight : bold;">Jasa Pelayanan</label>
+                            <label style="color:red">*</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    <input id="txtDescription" type="text" class="form-control" placeholder="Jasa Pelayanan" value="@Model.JasaPelayanan" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">Waktu</label>
+                            <label style="color:red">*</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    <input id="txtWaktu" type="text" class="form-control" placeholder="Waktu" value="@Model.Waktu" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">Dihitung Dari</label>
+                            <label style="color:red">*</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    <input id="txtDihitungDari" type="text" class="form-control" placeholder="Dihitung Dari" value="@Model.DihitungDari" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div class="row">
+                @if (Model.Id == 0)
+                {
+                    <button class="btn btn-success" onclick="insert()"> Tambah SLA</button>
+                }
+                else
+                {
+                    <button class="btn btn-success" onclick="update(@Model.Id)"> Update SLA</button>
+                }
+                <button class="btn btn-default" onclick="location.href='@Url.Action("MasterSLA","Master")';"> Back To List</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('.ddlStatus').select2({
+            placeholder: 'Pilih Status',
+            selectOnClose: true
+        });
+        $('.ddlGroup').select2({
+            placeholder: 'Pilih Group',
+            selectOnClose: true
+        });
+    });
+
+
+
+    function insert() {
+        var Program = {
+            GroupId: $('#ddlGroup').val(),
+            StatusSLA: $('#ddlStatus').val(),
+            Peraturan: $('#txtPeraturan').val(),
+            JasaPelayanan: $('#txtDescription').val(),
+            Waktu: $('#txtWaktu').val(),
+            DihitungDari: $('#txtDihitungDari').val(),
+            Uuser: $('#hdf').val()
+        };
+        if (Program.GroupId == "" | Program.GroupId == null | Program.GroupId == 0)
+        {
+            alert("Silahkan Pilih Group!");
+            return;
+        }
+        if (Program.StatusSLA == "" | Program.StatusSLA == null | Program.StatusSLA == 0) {
+            alert("Silahkan Pilih Status SLA!");
+            return;
+        }
+        if (Program.Peraturan == "" | Program.Peraturan == null) {
+            alert("Silahkan isi Peraturan!");
+            return;
+        }
+        if (Program.JasaPelayanan == "" | Program.JasaPelayanan == null) {
+            alert("Silahkan isi Jasa Pelayanan!");
+            return;
+        }
+        if (Program.Waktu == "" | Program.Waktu == null) {
+            alert("Silahkan isi Jasa Waktu!");
+            return;
+        }
+        if (Program.DihitungDari == "" | Program.DihitungDari == null) {
+            alert("Silahkan isi Jasa Dihitung Dari!");
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("InsertSLA", "Master")',
+            data: Program,
+            success: function (result) {
+                if (result.Result == "Success") {
+                    alert(result.Message);
+                    window.location.href = '@Url.Action("MasterSLA", "Master")';
+                }
+                else {
+                    alert(result.Message);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+
+    function update(id) {
+        debugger;
+        var Program = {
+            Id: id,
+            GroupId: $('#ddlGroup').val(),
+            StatusSLA: $('#ddlStatus').val(),
+            Peraturan: $('#txtPeraturan').val(),
+            JasaPelayanan: $('#txtDescription').val(),
+            Waktu: $('#txtWaktu').val(),
+            DihitungDari: $('#txtDihitungDari').val(),
+            Uuser: $('#hdf').val()
+        };
+        if (Program.GroupId == "" | Program.GroupId == null | Program.GroupId == 0) {
+            alert("Silahkan Pilih Group!");
+            return;
+        }
+        if (Program.StatusSLA == "" | Program.StatusSLA == null | Program.StatusSLA == 0) {
+            alert("Silahkan Pilih Status SLA!");
+            return;
+        }
+        if (Program.Peraturan == "" | Program.Peraturan == null) {
+            alert("Silahkan isi Peraturan!");
+            return;
+        }
+        if (Program.JasaPelayanan == "" | Program.JasaPelayanan == null) {
+            alert("Silahkan isi Jasa Pelayanan!");
+            return;
+        }
+        if (Program.Waktu == "" | Program.Waktu == null) {
+            alert("Silahkan isi Jasa Waktu!");
+            return;
+        }
+        if (Program.DihitungDari == "" | Program.DihitungDari == null) {
+            alert("Silahkan isi Jasa Dihitung Dari!");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UpdateSLA", "Master")',
+            data: Program,
+            success: function (result) {
+                alert(result.Message);
+                window.location.href = '@Url.Action("MasterSLA", "Master")';
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+</script>

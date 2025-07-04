@@ -1,0 +1,243 @@
+﻿@model LPS_ProjectManagement.Models.DashboardModels.DashboardProject.DashboardProjectHeaderModel
+@{
+    ViewBag.Title = "Dashboard Penggunaan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+</style>
+
+@using LPS_ProjectManagement.Helper;
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <section class="box">
+                <div class="content-body padding-top-15" style=" max-height: 450px;overflow: auto;">
+                    <div class="row padding-5" style="margin:-15px">
+
+                        <div class="col-md-2 padding-top-30">
+                            <h4>Year</h4>
+                            <select id="ddlYear" class="form-control ddlYear" style="width:100%;" onchange="OnOnchangeDdlYear(@DateTime.Now.Year, @DateTime.Now.Month)">
+                                @for (int year = Convert.ToInt32(DateTime.Now.Year.ToString()) - 10; year <= Convert.ToInt32(DateTime.Now.Year.ToString()); year++)
+                                {
+                                    if (Convert.ToInt32(DateTime.Now.Year.ToString()) == year)
+                                    {
+                                        <option value=@year selected="selected">@year</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@year>@year</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-2 padding-top-30">
+                            <h4>Start Month</h4>
+                            <select id="ddlStartMont" class="form-control ddlMonth" style="width:100%">
+                                @{ var ListMonth = GlobalHelper.ListDropDowMonth(); }
+
+                                @for (int i = 0; i < 12; i++)
+                                {
+                                    if (ListMonth[i].Month == Model.Month)
+                                    {
+                                        <option value="@ListMonth[i].Month" selected="selected">@ListMonth[i].Description</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@ListMonth[i].Month">@ListMonth[i].Description</option>
+                                    }
+                                    if (ListMonth[i].Month == DateTime.Now.Month)
+                                    {
+                                        i = 12;
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-2 padding-top-30">
+                            <h4>End Month</h4>
+                            <select id="ddlEndMont" class="form-control ddlMonth" style="width:100%" onchange="OnOnchangeDdlMonth()">
+
+
+                                @for (int i = 0; i < 12; i++)
+                                {
+                                    if (ListMonth[i].Month == Model.Month)
+                                    {
+                                        <option value="@ListMonth[i].Month" selected="selected">@ListMonth[i].Description</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@ListMonth[i].Month">@ListMonth[i].Description</option>
+                                    }
+                                    if (ListMonth[i].Month == DateTime.Now.Month)
+                                    {
+                                        i = 12;
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-2 padding-top-30">
+                            <h4>Is Transformasi</h4>
+                            <select id="ddlIsTranformasi" class="form-control ddlMonth" style="width:100%">
+                                <option value="1" selected="selected">Transformasi</option>
+                                <option value="0">Non Transformasi</option>
+                            </select>
+                        </div>
+
+
+
+                        <div class="col-md-3 padding-top-30" style="text-align:center">
+                            <h4>&nbsp;</h4>
+                            <button class="btn btn-success" onclick="generateChart()"><i class="fa fa-search"></i> Generate Dashboard</button>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Dashboard Penggunaan</h2>
+        </header>
+        <div class="content-body padding-top-45">
+            <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+       
+        generateChart();
+       
+    });
+
+    function generateChart() {
+        var data = {
+            Year: $('#ddlYear').val(),
+            StartMonth: $('#ddlStartMont').val(),
+            EndMonth: $('#ddlEndMont').val(),
+            IsTranformasi: $('#ddlIsTranformasi').val()
+        }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetDashboardProjectPenggunaan", "Beranda")',
+            data: data,
+            traditional: true,
+            success: function (result) {
+                debugger;
+
+                var departement = [];
+                var persenCompleted = [];
+                var persenNorealisation = [];
+                var persenWaitApproval = [];
+                for (var i = 0; i <= result.length-1; i++) {
+                    departement.push(result[i].DepartementCode);
+                    persenCompleted.push(result[i].PersenCompleted);
+                    persenNorealisation.push(result[i].PersenNorealisation);
+                    persenWaitApproval.push(result[i].PersenWaitApproval);
+                }
+                    setChart(departement, persenCompleted, persenNorealisation, persenWaitApproval, $('#ddlIsTranformasi').val()==0 ? "Non Transformasi" : "Transformasi");
+
+            }
+        });
+    }
+
+    function setChart(departement, persenCompleted, persenNorealisation, persenWaitApproval, isTranformasi) {
+        debugger;
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            credits: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            title: {
+                text: isTranformasi
+            },
+            //subtitle: {
+            //    text: 'Source: WorldClimate.com'
+            //},
+            xAxis: {
+                categories: departement,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                max: 100,
+                title: {
+                    text: 'Persentage'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: '(%) Approved',
+                color: "#3CB371",
+                data: persenCompleted
+
+            }, {
+                name: '(%) Waiting For Approval',
+                color: "#FFFF00",
+                data: persenWaitApproval
+
+            }, {
+
+                name: '(%) No Realisation On This Week',
+                color: "#FF0000",
+                data: persenNorealisation
+
+            }]
+        });
+    }
+
+    function OnOnchangeDdlYear(CurrentYear, CurrentMonth) {
+
+        var ListMonth = @Html.Raw(Json.Encode(GlobalHelper.ListDropDowMonth()));
+
+        var Year = $('#ddlYear').val();
+        var select = document.getElementById("ddlMonth");
+
+        select.innerHTML = "";
+
+        if (Year == CurrentYear) {
+            for (var i = 0; i < 12; i++) {
+                if (ListMonth[i].Month == CurrentMonth) {
+                    select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+                    i = 12;
+                }
+                else {
+                    select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+                }
+            }
+        } else {
+            for (var i = 0; i < 12; i++) {
+                select.innerHTML += "<option value=\"" + ListMonth[i].Month + "\">" + ListMonth[i].Description + "</option>";
+            }
+        }
+
+    }
+
+
+
+
+</script>

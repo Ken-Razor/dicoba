@@ -1,0 +1,400 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{76FEF7D7-9376-455C-B746-A61C66043E69}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LPS_API</RootNamespace>
+    <AssemblyName>LPS_API</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Client.Education, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharePoint.Client.Office.Tools.15.0.4907.1000\lib\net40-full\Microsoft.Office.Client.Education.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Client.Policy, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharePoint.Client.Office.Tools.15.0.4907.1000\lib\net40-full\Microsoft.Office.Client.Policy.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Client.TranslationServices, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharePoint.Client.Office.Tools.15.0.4907.1000\lib\net40-full\Microsoft.Office.Client.TranslationServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.DocumentManagement, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\reference\Microsoft.Office.DocumentManagement.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Policy, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\reference\Microsoft.Office.Policy.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Server, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\reference\Microsoft.Office.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Server.Search, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\reference\Microsoft.Office.Server.Search.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Server.UserProfiles, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\reference\Microsoft.Office.Server.UserProfiles.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.SharePoint.Tools, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharePoint.Client.Office.Tools.15.0.4907.1000\lib\net40-full\Microsoft.Office.SharePoint.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\LPS_API\LPS_API\bin\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\LPS_API\LPS_API\bin\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\LPS_API\LPS_API\bin\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Images\IconReport\Bulet-Abu.png" />
+    <Content Include="Assets\Images\IconReport\Bulet-Biru.png" />
+    <Content Include="Assets\Images\IconReport\Bulet-hitam.png" />
+    <Content Include="Assets\Images\IconReport\Bulet-Ijo.png" />
+    <Content Include="Assets\Images\IconReport\Bulet-Kuning.png" />
+    <Content Include="Assets\Images\IconReport\Bulet-Merah.png" />
+    <Content Include="Assets\Images\IconReport\Panah-atas.png" />
+    <Content Include="Assets\Images\IconReport\Panah-bawah.png" />
+    <Content Include="Assets\Images\IconReport\Panah-kanan.png" />
+    <Content Include="Global.asax" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\CapaianProyekController.cs" />
+    <Compile Include="Controllers\DashboardControllers\Dashboard2Controller.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardEksekutifController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardProjectController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardProjectDepartmentController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardProjectDetailsController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardProjectHeaderController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardProjectListSOController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardProjectMilestoneController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardProjectOverAllController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardProjectProgressController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardProjectTimeSeriesController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardProjectTypeSOController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardSOController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardSOStackedBarController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardStatusController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardSummaryController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardSummaryHeaderController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardTotalAllStatusController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardTransformationController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardTransformationGraphController.cs" />
+    <Compile Include="Controllers\DashboardControllers\DashboardUsedSOController.cs" />
+    <Compile Include="Controllers\DashboardControllers\MainRebornExecutiveController.cs" />
+    <Compile Include="Controllers\DashboardControllers\StatusDashboardSOController.cs" />
+    <Compile Include="Controllers\DeleteFileController.cs" />
+    <Compile Include="Controllers\DropdownControllers\DropDownOwnerController.cs" />
+    <Compile Include="Controllers\DropdownControllers\DropDownPMOController.cs" />
+    <Compile Include="Controllers\DropdownControllers\DropDownSponsorController.cs" />
+    <Compile Include="Controllers\GetRootController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterKPIValueController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterKPIValueCRUDController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterDepartmentController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterDepartmentCRUDController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterDirektoratController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterHariLiburController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterKPIOrganizationController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterKPIOrganizationCRUDController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterProgramCRUDController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterProjectController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterProjectCostController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterProjectCostCRUDController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterProjectCRUDController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterStrategicObjectiveController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterStrategicObjectiveCRUDController.cs" />
+    <Compile Include="Controllers\MilestoneController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Controllers\PJSController\PJSApprovalController.cs" />
+    <Compile Include="Controllers\PJSController\PJSApprovalCRUDController.cs" />
+    <Compile Include="Controllers\RegisteredDetailUserController.cs" />
+    <Compile Include="Controllers\DropDownUserManagementController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
+    <Compile Include="Controllers\MasterControllers\MasterProgramController.cs" />
+    <Compile Include="Controllers\RegisteredUserListController.cs" />
+    <Compile Include="Controllers\ReportController\AllDataRowController.cs" />
+    <Compile Include="Controllers\ReportController\DetailAnggaranController.cs" />
+    <Compile Include="Controllers\ReportController\DetailAnggaranHeaderController.cs" />
+    <Compile Include="Controllers\ReportController\EvaluasiCapaianProyekController.cs" />
+    <Compile Include="Controllers\ReportController\EvaluasiCapaianProyekPDFController.cs" />
+    <Compile Include="Controllers\ReportController\LaporanCapaianController.cs" />
+    <Compile Include="Controllers\ReportController\LaporanMingguanController.cs" />
+    <Compile Include="Controllers\ReportController\LaporanMingguanMonitoringController.cs" />
+    <Compile Include="Controllers\ReportController\ProjectCharterandPlanningController.cs" />
+    <Compile Include="Controllers\ReportController\ProjectNameController.cs" />
+    <Compile Include="Controllers\ReportController\ReportKendalaController.cs" />
+    <Compile Include="Controllers\ReportController\SummaryController.cs" />
+    <Compile Include="Controllers\ReportController\TrenPencapaianController.cs" />
+    <Compile Include="Controllers\ResourcesController.cs" />
+    <Compile Include="Controllers\SAPControllers\SAPCarryOverController.cs" />
+    <Compile Include="Controllers\SAPControllers\SAPRKATController.cs" />
+    <Compile Include="Controllers\SystemIntegration\ActuateController.cs" />
+    <Compile Include="Controllers\SystemIntegration\DataWarehouseIntegrationController.cs" />
+    <Compile Include="Controllers\SystemIntegration\EmailIntegrationController.cs" />
+    <Compile Include="Controllers\SystemIntegration\PublicHolidayIntegrationController.cs" />
+    <Compile Include="Controllers\SystemIntegration\SAPIntegrationController.cs" />
+    <Compile Include="Controllers\SystemIntegration\SAPHangusController.cs" />
+    <Compile Include="Controllers\SystemIntegration\SAPPergeseranController.cs" />
+    <Compile Include="Controllers\SystemIntegration\SAPMD_Rencana_KerjaController.cs" />
+    <Compile Include="Controllers\SystemIntegration\SAPMD_AccountController.cs" />
+    <Compile Include="Controllers\SystemIntegration\SAPRKATFinalController.cs" />
+    <Compile Include="Controllers\SystemIntegration\SAPKomitmenController.cs" />
+    <Compile Include="Controllers\SystemIntegration\SAPRealisasiController.cs" />
+    <Compile Include="Controllers\TransaksiChangeManagementControllers\ChangeManagementController.cs" />
+    <Compile Include="Controllers\TransaksiChangeManagementControllers\ChangeManagementCRUDController.cs" />
+    <Compile Include="Controllers\TransaksiClosingControllers\ClosingController.cs" />
+    <Compile Include="Controllers\TransaksiClosingControllers\ClosingCRUDController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\EksekusiApprovalController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\EksekusiCheckBeforePeriodeController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\EksekusiCRUDController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\EksekusiListController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\EksekusiMainController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\EksekusiMilestoneController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\EksekusiReportController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\FileUploadMilestoneController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\InitiationController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\InitiationCRUDController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\MPPController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\TransaksiEksekusiController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\TrendRealisasiController.cs" />
+    <Compile Include="Controllers\TransaksiControllers\UploadFileController.cs" />
+    <Compile Include="Controllers\UserManangingController.cs" />
+    <Compile Include="Controllers\UserNewController.cs" />
+    <Compile Include="Controllers\ViewMPPController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\GlobalFunction.cs" />
+    <Compile Include="Models\AuthenticationModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardAllProjectStatus.cs" />
+    <Compile Include="Models\DashboardModels\DashboardEksekutif.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProgressProject.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProgressProjectController.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProjectConstraint.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProjectDepartment.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProjectDetails.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProjectHeader.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProjectMilestone.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProjectTask.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProjectTypeModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProjectTypeSO.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProject\DashboardProjectHeaderModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProject\DashboardProjectModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProject\DashboardProjectOverallModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProject\DashboardProjectProgressModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProject\DashboardProjectTimeSeriesModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardProject\DashboardTransAndNoTransModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardSOModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardSOStackedBarModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardSOStatus.cs" />
+    <Compile Include="Models\DashboardModels\DashboardSOUsed.cs" />
+    <Compile Include="Models\DashboardModels\DashboardStatusProject.cs" />
+    <Compile Include="Models\DashboardModels\DashboardSummary\DashboardSummaryHeaderModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardSummary\DashboardSummaryModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardSummary\DashboardSummaryStatusModel.cs" />
+    <Compile Include="Models\DashboardModels\DashboardTransformation.cs" />
+    <Compile Include="Models\DashboardModels\DashboardTransformationGraph.cs" />
+    <Compile Include="Models\DashboardModels\GetMilestoneProject.cs" />
+    <Compile Include="Models\DashboardModels\GetProjectConstraintModel.cs" />
+    <Compile Include="Models\DashboardModels\GetProjectTaskModel.cs" />
+    <Compile Include="Models\DashboardModels\GetStackHolderProject.cs" />
+    <Compile Include="Models\DashboardModels\GetTableEksekutif.cs" />
+    <Compile Include="Models\DashboardModels\MainRibbonExecutiveModel.cs" />
+    <Compile Include="Models\DashboardModels\ProjectListSODashboard.cs" />
+    <Compile Include="Models\DashboardModels\StatusProjectSODashboard.cs" />
+    <Compile Include="Models\DataWarehouseModels\EmployeeModel.cs" />
+    <Compile Include="Models\DropdownModels\DropDownOwnerModel.cs" />
+    <Compile Include="Models\DropdownModels\DropDownPMOModel.cs" />
+    <Compile Include="Models\DropdownModels\DropDownSponsorModel.cs" />
+    <Compile Include="Models\DropdownModels\DropDownUserManagementModel.cs" />
+    <Compile Include="Models\EksekusiModels\CheckBeforePeriodeModel.cs" />
+    <Compile Include="Models\EksekusiModels\EksekusiMilestone.cs" />
+    <Compile Include="Models\EksekusiModels\EksekusiModel.cs" />
+    <Compile Include="Models\EksekusiModels\ExecutionReportModel.cs" />
+    <Compile Include="Models\EksekusiModels\FileModel.cs" />
+    <Compile Include="Models\EmailModel.cs" />
+    <Compile Include="Models\MasterDataModels\ConstraintTypeModel.cs" />
+    <Compile Include="Models\MasterDataModels\DepartmentModel.cs" />
+    <Compile Include="Models\MasterDataModels\DirektoratModel.cs" />
+    <Compile Include="Models\MasterDataModels\JenisPerubahanModel.cs" />
+    <Compile Include="Models\MasterDataModels\KPIOrganizationModel.cs" />
+    <Compile Include="Models\MasterDataModels\KPIValueModel.cs" />
+    <Compile Include="Models\MasterDataModels\ProgramModel.cs" />
+    <Compile Include="Models\MasterDataModels\ProjectCostModel.cs" />
+    <Compile Include="Models\MasterDataModels\ProjectModel.cs" />
+    <Compile Include="Models\MasterDataModels\ProjectPriorityModel.cs" />
+    <Compile Include="Models\MasterDataModels\ProjectStatusModel.cs" />
+    <Compile Include="Models\MasterDataModels\RoleGroupModel.cs" />
+    <Compile Include="Models\MasterDataModels\StrategicObjectiveModel.cs" />
+    <Compile Include="Models\NewUserModel.cs" />
+    <Compile Include="Models\NotificationModel.cs" />
+    <Compile Include="Models\PJSModels\PJSModel.cs" />
+    <Compile Include="Models\RegisterDetailUserModel.cs" />
+    <Compile Include="Models\RegisteredUserListModel.cs" />
+    <Compile Include="Models\ReportModels\AllDataRowModel.cs" />
+    <Compile Include="Models\ReportModels\CapaianProyekModel.cs" />
+    <Compile Include="Models\ReportModels\DetailAnggaranModel.cs" />
+    <Compile Include="Models\ReportModels\EvaluasiCapaianProyekModel.cs" />
+    <Compile Include="Models\ReportModels\LaporanCapaian.cs" />
+    <Compile Include="Models\ReportModels\ListEvaluasiCapaianProyekModel.cs" />
+    <Compile Include="Models\ReportModels\PDFLaporanBulananModel.cs" />
+    <Compile Include="Models\ReportModels\ProjectCharterandPlanningModel.cs" />
+    <Compile Include="Models\ReportModels\SummaryModel.cs" />
+    <Compile Include="Models\ReportModels\TrenPencapaianModel.cs" />
+    <Compile Include="Models\SAPModels\RKATModel.cs" />
+    <Compile Include="Models\SystemIntegration\Actuate.cs" />
+    <Compile Include="Models\SystemIntegration\DWEntity.cs" />
+    <Compile Include="Models\SystemIntegration\PublicHolidayEntity.cs" />
+    <Compile Include="Models\SystemIntegration\SAPIntegrationEntityRKAT.cs" />
+    <Compile Include="Models\TransaksiChangeManagementModels\ChangeManagementDetailModel.cs" />
+    <Compile Include="Models\TransaksiChangeManagementModels\ChangeManagementHeaderModel.cs" />
+    <Compile Include="Models\TransaksiChangeManagementModels\ProjectChangesApprovalRoleModel.cs" />
+    <Compile Include="Models\TransaksiChangeManagementModels\ProjectChangesReviseRoleModel.cs" />
+    <Compile Include="Models\TransaksiClosingModels\ClosingProjectDetailModel.cs" />
+    <Compile Include="Models\TransaksiClosingModels\ClosingProjectHeaderModel.cs" />
+    <Compile Include="Models\TransaksiDataModels\MPPModel.cs" />
+    <Compile Include="Models\TransaksiDataModels\MPPProjectPlanDetailModel.cs" />
+    <Compile Include="Models\TransaksiDataModels\ProjectConstraintModel.cs" />
+    <Compile Include="Models\TransaksiDataModels\ProjectDetailModel.cs" />
+    <Compile Include="Models\TransaksiDataModels\ProjectHeaderCostModel.cs" />
+    <Compile Include="Models\TransaksiDataModels\ProjectHeaderModel.cs" />
+    <Compile Include="Models\TransaksiDataModels\ProjectInitApprovalRoleModel.cs" />
+    <Compile Include="Models\TransaksiDataModels\ProjectInitReviseRoleModel.cs" />
+    <Compile Include="Models\TransaksiDataModels\ProjectRiskModel.cs" />
+    <Compile Include="Models\TransaksiDataModels\ProjectRoleGroupModel.cs" />
+    <Compile Include="Models\TransaksiDataModels\UserAuthorizedModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LPS_BLL\LPS_BLL.csproj">
+      <Project>{bfc2bff8-3156-454c-a2ec-b21bdefe6f55}</Project>
+      <Name>LPS_BLL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49972</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:49972/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

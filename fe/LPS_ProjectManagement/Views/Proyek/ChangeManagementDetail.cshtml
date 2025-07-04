@@ -1,0 +1,1239 @@
+﻿@model LPS_ProjectManagement.Models.TransaksiChangeManagementModels.ChangeManagementDetailModel
+@using LPS_ProjectManagement.Models
+
+@{
+    ViewBag.Title = "Project Changes Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    RoleProject[] RoleAplikasi = (RoleProject[])Session["Roles"];
+}
+
+<style>
+    a.buttonu {
+        appearance: button;
+        text-decoration: none;
+        padding: 10px;
+        font-size: 12px;
+        font-weight: bold;
+        background: #5DDBB5;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+    }
+
+    .modalu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 99999;
+        opacity: 0;
+        transition: opacity 400ms ease-in;
+        pointer-events: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        min-height: 100vh;
+    }
+
+    .content-modalu {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 50%;
+        height: 60vh;
+    }
+
+    .modalu:target {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modalu h1 {
+        font-size: 42px;
+    }
+
+    .content-modalu a {
+        font-weight: bold;
+    }
+
+    .close {
+        align-self: flex-end;
+        text-decoration: none;
+        color: red;
+    }
+</style>
+
+<input id="hdf" type="hidden" value="@Session["PersonalNumber"].ToString()" />
+
+<div class="col-md-12 col-lg-12 col-xl-12 col-xs-12">
+    <div class="content-body">
+        <br />
+        <div class="tab-group">
+
+            <section id="tab1" title="Formulir">
+
+                <div class="row padding-top-45">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="form-label" for="txtProjectName" style="font-weight:bold">Nama Project</label>
+                            <span class="desc"></span>
+                            <input disabled="disabled" type="text" class="form-control" id="txtProjectName" placeholder="Project Name" value="@Model.ProjectName">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="form-label" for="txtProjectNo" style="font-weight:bold">Nomor Project</label>
+                            <span class="desc"></span>
+                            <input disabled="disabled" type="text" class="form-control" id="txtProjectNo" placeholder="Project Number" value="@Model.ProjectNo">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="form-label" for="txtSubmitterName" style="font-weight:bold">Nama Pelaksana</label>
+                            <span class="desc"></span>
+                            <input disabled="disabled" type="text" class="form-control" id="txtSubmitterName" placeholder="Submiter Name" value="@Session["Nama"].ToString()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row padding-top-45">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" hidden="hidden">
+                        <div class="form-group">
+                            <label class="form-label" for="ddlAOR" style="font-weight:bold">Lampiran</label>
+                            <span class="desc"></span>
+                            <div class="controls">
+                                <select id="ddlAOR" class="form-control ddlAOR" style="width:100%;">
+                                    <option value="">Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        @if (Model.StatusName == "ACTIVE" || Model.StatusName == "REVISE CR")
+                        {
+                            <div class="form-group">
+                                <label class="form-label" for="txtDateSubmited" style="font-weight:bold">Tanggal Request</label>
+                                <span class="desc"></span>
+
+                                @if (Model.DateSubmitted.ToString("yyyy-MM-dd") == "0001-01-01")
+                                {
+                                    <input id="txtDateSubmited" type="date" class="form-control datepicker input-header" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                }
+                                else
+                                {
+                                    <input id="txtDateSubmited" type="date" class="form-control datepicker input-header" value="@Model.DateSubmitted.ToString("yyyy-MM-dd")" />
+                                }
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label class="form-label" for="txtDateSubmited" style="font-weight:bold">Tanggal Request</label>
+                                <span class="desc"></span>
+
+                                @if (Model.DateSubmitted.ToString("yyyy-MM-dd") == "0001-01-01")
+                                {
+                                    <input disabled="disabled" id="txtDateSubmited" type="date" class="form-control datepicker input-header" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                }
+                                else
+                                {
+                                    <input disabled="disabled" id="txtDateSubmited" type="date" class="form-control datepicker input-header" value="@Model.DateSubmitted.ToString("yyyy-MM-dd")" />
+                                }
+
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        @if (Model.StatusName == "ACTIVE" || Model.StatusName == "REVISE CR")
+                        {
+                            <div class="form-group" hidden="hidden">
+                                <label class="form-label" for="txtDateRequired" style="font-weight:bold">Tanggal Dibutuhkan</label>
+                                <span class="desc"></span>
+
+                                @if (Model.DateRequired.ToString("yyyy-MM-dd") == "0001-01-01")
+                                {
+                                    <input id="txtDateRequired" type="date" class="form-control datepicker input-header" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                }
+                                else
+                                {
+                                    <input id="txtDateRequired" type="date" class="form-control datepicker input-header" value="@Model.DateRequired.ToString("yyyy-MM-dd")" />
+                                }
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group" hidden="hidden">
+                                <label class="form-label" for="txtDateRequired" style="font-weight:bold">Tanggal Dibutuhkan</label>
+                                <span class="desc"></span>
+
+                                @if (Model.DateRequired.ToString("yyyy-MM-dd") == "0001-01-01")
+                                {
+                                    <input disabled="disabled" id="txtDateRequired" type="date" class="form-control datepicker input-header" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                }
+                                else
+                                {
+                                    <input disabled="disabled" id="txtDateRequired" type="date" class="form-control datepicker input-header" value="@Model.DateRequired.ToString("yyyy-MM-dd")" />
+                                }
+
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        @if (Model.StatusName == "ACTIVE" || Model.StatusName == "REVISE CR")
+                        {
+                            <div class="form-group">
+                                <label class="form-label" for="txtTOCR" style="font-weight:bold">Jenis Perubahan</label>
+                                <table id="tblListJenisPerubahan" style="width:100%;">
+                                    <tbody>
+                                        @foreach (var data in Model.ListJenisPerubahan)
+                                        {
+                                            if (data.IDJenisPerubahan == Model.IDJenisPerubahan)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox" style="text-align:center">
+                                                            <label class="icheck icheck-success">
+                                                                <input class="jenisPerubahan" type="checkbox" value=@data.IDJenisPerubahan>
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@data.Description</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox" style="text-align:center">
+                                                            <label class="icheck icheck-success">
+                                                                <input class="jenisPerubahan" id="checkJenisLain" type="checkbox" value=@data.IDJenisPerubahan>
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@data.Description</td>
+                                                </tr>
+                                                @*<tr>
+                                                        <td>
+                                                            <div class="checkbox" style="text-align:center" hidden="hidden">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div id="inJenisLain" hidden="hidden">
+                                                                <input type="text" class="form-control" id="txtJenisLain" placeholder="Jenis lain" value="@Model.PenyebabLain">
+                                                            </div>
+                                                        </td>
+                                                    </tr>*@
+                                            }
+
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label class="form-label" for="ddlTOCR" style="font-weight:bold">Jenis Perubahan</label>
+                                <table id="tblListJenisPerubahan" style="width:100%;">
+                                    <tbody>
+                                        @foreach (var data in Model.ListJenisPerubahan)
+                                        {
+                                            if (data.IDJenisPerubahan == Model.IDJenisPerubahan)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox" style="text-align:center">
+                                                            <label class="icheck icheck-success">
+                                                                <input disabled="disabled" class="jenisPerubahan" type="checkbox" value=@data.IDJenisPerubahan>
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@data.Description</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox" style="text-align:center">
+                                                            <label class="icheck icheck-success">
+                                                                <input disabled="disabled" class="jenisPerubahan" id="checkJenisLain" type="checkbox" value=@data.IDJenisPerubahan>
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@data.Description</td>
+                                                </tr>
+                                                @*<tr>
+                                                        <td>
+                                                            <div class="checkbox" style="text-align:center" hidden="hidden">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div id="inJenisLain" hidden="hidden">
+                                                                <input disabled="disabled" type="text" class="form-control" id="txtJenisLain" placeholder="Jenis lain" value="@Model.PenyebabLain">
+                                                            </div>
+                                                        </td>
+                                                    </tr>*@
+                                            }
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" hidden="hidden">
+                        <div class="form-group">
+                            <label class="form-label" for="txtCatatan" style="font-weight:bold">Catatan</label>
+                            <span class="desc"></span>
+                            @if (Model.StatusName == "ACTIVE" || Model.StatusName == "REVISE CR")
+                            {
+                                <input type="text" class="form-control" id="txtCatatan" placeholder="Note" value="@Model.Catatan">
+                            }
+                            else
+                            {
+                                <input disabled="disabled" type="text" class="form-control" id="txtCatatan" placeholder="Note" value="@Model.Catatan">
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row padding-top-45">
+
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        @if (Model.StatusName == "ACTIVE" || Model.StatusName == "REVISE CR")
+                        {
+                            <div class="form-group">
+                                <label class="form-label" for="txtRFC" style="font-weight:bold">Alasan Perubahan</label>
+                                <table id="tblListAlasan" style="width:100%;">
+                                    <tbody>
+                                        @foreach (var data in Model.ListAlasanPerubahan)
+                                        {
+                                            if (data.IDAlasanPerubahan != 8)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox" style="text-align:center">
+                                                            <label class="icheck icheck-success">
+                                                                <input class="alasanPerubahan" type="checkbox" value=@data.IDAlasanPerubahan>
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@data.Name</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox" style="text-align:center">
+                                                            <label class="icheck icheck-success">
+                                                                <input class="alasanPerubahan" id="checkPenyebabLain" type="checkbox" value=@data.IDAlasanPerubahan>
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@data.Name</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox" style="text-align:center" hidden="hidden">
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="inPenyebabLain" hidden="hidden">
+                                                            <input type="text" class="form-control" id="txtPenyebabLain" placeholder="Penyebab Lain" value="@Model.PenyebabLain">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label class="form-label" for="txtRFC" style="font-weight:bold">Alasan Perubahan</label>
+                                <table id="tblListAlasan" style="width:100%;">
+                                    <tbody>
+                                        @foreach (var data in Model.ListAlasanPerubahan)
+                                        {
+                                            if (data.IDAlasanPerubahan != 8)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox" style="text-align:center">
+                                                            <label class="icheck icheck-success">
+                                                                <input disabled="disabled" class="alasanPerubahan" type="checkbox" value=@data.IDAlasanPerubahan>
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@data.Name</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox" style="text-align:center">
+                                                            <label class="icheck icheck-success">
+                                                                <input disabled="disabled" class="alasanPerubahan" type="checkbox" value=@data.IDAlasanPerubahan>
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@data.Name</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox" style="text-align:center" hidden="hidden">
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="inPenyebabLain" hidden="hidden">
+                                                            <input disabled="disabled" type="text" class="form-control" id="txtPenyebabLain" placeholder="Penyebab Lain" value="@Model.PenyebabLain">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+
+
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="form-label" for="txtBDOR" style="font-weight:bold">Uraian Singkat</label>
+                            <span class="desc"></span>
+                            <div id="txtBDOR"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="form-label" for="txtOAI" style="font-weight:bold">Dampak Terhadap Project Lain</label>
+                            <span class="desc"></span>
+                            <div id="txtOAI"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" hidden="hidden">
+                        <div class="form-group">
+                            <label class="form-label" for="txtDetailProyek" style="font-weight:bold">Deskripsi</label>
+                            <span class="desc"></span>
+                            <div id="txtDetailProyek"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row padding-top-45 padding-bottom-0">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <button class="btn btn-secondary btn-icon  right15 margin-bottom-15" onclick="location.href='@Url.Action("ChangeManagement", "Proyek")'">
+                            <i class="fa fa-link"></i> &nbsp; <span>Back To List</span>
+                        </button>
+                        @if (Model.StatusName == "ACTIVE" || Model.StatusName == "REVISE CR")
+                        {
+                            <button class="btn btn-success btn-icon  right15 margin-bottom-15" onclick="InsertChangeManagement(@Model.IDProjectHeader)">
+                                <i class="fa fa-link"></i> &nbsp; <span>Change Project</span>
+                            </button>
+                        }
+                        @if (Model.StatusName == "SUBMIT CR")
+                        {
+                            if (Model.NeedApproval == "1" || Model.NeedApproval == @Session["PersonalNumber"].ToString())
+                            {
+                                <a href="#openModalRevise" class="btn btn-danger btn-icon margin-right-15 margin-bottom-15"><i class="fa fa-times"></i>&nbsp; Revise</a>
+                                <button type="button" class="btn btn-info btn-icon margin-right-15 margin-bottom-15" onclick="ApproveProjectHeader(@Model.IDProjectHeader)">
+                                    <i class="fa fa-check"></i> &nbsp; <span>Approve</span>
+                                </button>
+                            }
+                        }
+                    </div>
+                    <div class="col-lg-6 hidden-md hidden-xs hidden-sm">&nbsp;</div>
+                </div>
+
+            </section>
+
+            <section id="tab2" title="Approval">
+
+                <div class="row padding-top-15">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div class="controls">
+                                <table id="tblApproval" class="display" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <td style="text-align:center" width="3%">No.</td>
+                                            <td hidden="hidden">IDRoleGroup</td>
+                                            <td hidden="hidden">Username</td>
+                                            <td style="text-align:center">Role</td>
+                                            <td style="text-align:center">Jabatan</td>
+                                            <td style="text-align:center">Nama</td>
+                                            <td hidden="hidden">Unit Kerja</td>
+                                            <td hidden="hidden">Tanggal Aktif</td>
+                                            <td hidden="hidden">Tanggal Berakhir</td>
+                                            <td style="text-align:center">Approval</td>
+                                            <td style="text-align:center">Actions</td>
+                                            <td hidden="hidden">Sequence</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var data in Model.ListProjectChangesApprovalRole)
+                                        {
+                                            if (Model.StatusName == "ACTIVE")
+                                            {
+                                                <tr class="ng-scope">
+                                                    <td style="text-align:center">@data.NoUrut</td>
+                                                    <td hidden="hidden">@data.IDRoleGroup</td>
+                                                    <td hidden="hidden">@data.Username</td>
+                                                    <td style="text-align:center">@data.RoleGroupName</td>
+                                                    <td style="text-align:center">@data.Jabatan</td>
+                                                    <td style="text-align:center">@data.Nama</td>
+                                                    <td hidden="hidden">@data.KodeUnitKerja</td>
+                                                    <td hidden="hidden">
+                                                        <input type="date" class="form-control" id="@data.Username.Replace(".", string.Empty)-txtActiveDate" placeholder="Active Date Approval" value="@data.ActiveDate.ToString("yyyy-MM-dd")">
+                                                    </td>
+                                                    <td hidden="hidden">
+                                                        <input type="date" class="form-control" id="@data.Username.Replace(".", string.Empty)-txtEndDate" placeholder="End Date Approval" value="@data.EndDate.ToString("yyyy-MM-dd")">
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        <div class="checkbox" style="text-align:center">
+                                                            <label class="icheck icheck-success">
+                                                                @if (data.IsEnabled == 1)
+                                                                {
+                                                                    <input id="@data.Username.Replace(".", string.Empty)-@data.IDRoleGroup.ToString()-chbApproval" type="checkbox" value="" checked="checked">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input id="@data.Username.Replace(".", string.Empty)-@data.IDRoleGroup.ToString()-chbApproval" type="checkbox" value="">
+                                                                }
+
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        <button title="Naik" type="button" class="btn btn-success btn-xs margin-bottom-5 margin-right-5" onclick="up(this)">
+                                                            <span class="fa fa-arrow-up"></span>
+                                                        </button>
+                                                        <button title="Turun" type="button" class="btn btn-warning btn-xs margin-bottom-5 margin-right-5" onclick="down(this)">
+                                                            <span class="fa fa-arrow-down"></span>
+                                                        </button>
+                                                    </td>
+                                                    <td hidden="hidden">@data.NoUrut</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr class="ng-scope">
+                                                    <td style="text-align:center">@data.NoUrut</td>
+                                                    <td hidden="hidden">@data.IDRoleGroup</td>
+                                                    <td hidden="hidden">@data.Username</td>
+                                                    <td style="text-align:center">@data.RoleGroupName</td>
+                                                    <td style="text-align:center">@data.Jabatan</td>
+                                                    <td style="text-align:center">@data.Nama</td>
+                                                    <td hidden="hidden">@data.KodeUnitKerja</td>
+                                                    <td hidden="hidden">
+                                                        <input type="date" class="form-control" id="@data.Username.Replace(".", string.Empty)-txtActiveDate" placeholder="Active Date Approval" value="@data.ActiveDate.ToString("yyyy-MM-dd")">
+                                                    </td>
+                                                    <td hidden="hidden">
+                                                        <input type="date" class="form-control" id="@data.Username.Replace(".", string.Empty)-txtEndDate" placeholder="End Date Approval" value="@data.EndDate.ToString("yyyy-MM-dd")">
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        <div class="checkbox" style="text-align:center">
+                                                            <label class="icheck icheck-success">
+                                                                @if (data.IsEnabled == 1)
+                                                                {
+                                                                    <input disabled="disabled" id="@data.Username.Replace(".", string.Empty)-@data.IDRoleGroup.ToString()-chbApproval" type="checkbox" value="" checked="checked">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input disabled="disabled" id="@data.Username.Replace(".", string.Empty)-@data.IDRoleGroup.ToString()-chbApproval" type="checkbox" value="">
+                                                                }
+
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @if (data.IsActive == true)
+                                                        {
+                                                            <span class="fa fa-circle" style="color:forestgreen" title="Approved"></span>
+                                                        }
+                                                        else if (data.IsEnabled == 0)
+                                                        {
+                                                            <span class="fa fa-circle" style="color:gray" title="No need approval"></span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="fa fa-circle" style="color:red" title="Waiting for approval"></span>
+                                                        }
+                                                    </td>
+                                                    <td hidden="hidden">@data.NoUrut</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row padding-top-45 padding-bottom-0">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <button class="btn btn-secondary btn-icon  right15 margin-bottom-15" onclick="location.href='@Url.Action("ChangeManagement", "Proyek")'">
+                            <i class="fa fa-link"></i> &nbsp; <span>Back To List</span>
+                        </button>
+                        @if (Model.StatusName == "ACTIVE" || Model.StatusName == "REVISE CR")
+                        {
+                            <button class="btn btn-success btn-icon  right15 margin-bottom-15" onclick="InsertChangeManagement(@Model.IDProjectHeader)">
+                                <i class="fa fa-link"></i> &nbsp; <span>Change Project</span>
+                            </button>
+                        }
+                        @if (Model.StatusName == "SUBMIT CR")
+                        {
+                            if (Model.NeedApproval == "1" || Model.NeedApproval == @Session["PersonalNumber"].ToString())
+                            {
+                                <a href="#openModalRevise" class="btn btn-danger btn-icon margin-right-15 margin-bottom-15"><i class="fa fa-times"></i>&nbsp; Revise</a>
+                                <button type="button" class="btn btn-info btn-icon margin-right-15 margin-bottom-15" onclick="ApproveProjectHeader(@Model.IDProjectHeader)">
+                                    <i class="fa fa-check"></i> &nbsp; <span>Approve</span>
+                                </button>
+                            }
+                        }
+                    </div>
+                    <div class="col-lg-6 hidden-md hidden-xs hidden-sm">&nbsp;</div>
+                </div>
+
+            </section>
+
+            <section id="tab3" title="Approval Log">
+
+                <div class="row padding-top-15">
+
+                    <div class="col-lgl-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div class="controls">
+                                <table id="idTblLogApproval" class="display" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <td width="3%" style="text-align:center">No.</td>
+                                            <td width="10%" style="text-align:left">Type</td>
+                                            <td width="25%" style="text-align:left">Approval By</td>
+                                            <td width="25%" style="text-align:left">Approval Date</td>
+                                            <td>Note</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var data in Model.ListProjectChangesReviseRole)
+                                        {
+                                            <tr>
+                                                <td>@data.NoUrut</td>
+                                                <td>@data.UpdatedDateString</td>
+                                                <td>@data.CreatedBy</td>
+                                                <td>@data.CreatedDate</td>
+                                                <td>@data.Deskripsi</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row padding-top-45 padding-bottom-0">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <button class="btn btn-secondary btn-icon  right15 margin-bottom-15" onclick="location.href='@Url.Action("ChangeManagement", "Proyek")'">
+                            <i class="fa fa-link"></i> &nbsp; <span>Back To List</span>
+                        </button>
+                        @if (Model.StatusName == "ACTIVE" || Model.StatusName == "REVISE CR")
+                        {
+                            <button class="btn btn-success btn-icon  right15 margin-bottom-15" onclick="InsertChangeManagement(@Model.IDProjectHeader)">
+                                <i class="fa fa-link"></i> &nbsp; <span>Change Project</span>
+                            </button>
+                        }
+                        @if (Model.StatusName == "SUBMIT CR")
+                        {
+                            if (Model.NeedApproval == "1" || Model.NeedApproval == @Session["PersonalNumber"].ToString())
+                            {
+                                <a href="#openModalRevise" class="btn btn-danger btn-icon margin-right-15 margin-bottom-15"><i class="fa fa-times"></i>&nbsp; Revise</a>
+                                <button type="button" class="btn btn-info btn-icon margin-right-15 margin-bottom-15" onclick="ApproveProjectHeader(@Model.IDProjectHeader)">
+                                    <i class="fa fa-check"></i> &nbsp; <span>Approve</span>
+                                </button>
+                            }
+                        }
+                    </div>
+                    <div class="col-lg-6 hidden-md hidden-xs hidden-sm">&nbsp;</div>
+                </div>
+
+            </section>
+
+            <section id="tab4" title="File Pendukung">
+                @if (Model.StatusName == "ACTIVE" || Model.StatusName == "REVISE CR")
+                {
+                    <div class="row padding-top-15">
+                        <div class="col-md-3">
+                            <strong>Upload File Pendukung</strong>
+                        </div>
+                    </div>
+                    <div class="row padding-top-15">
+                        <div class="col-md-3">
+                            <input type="file" id="uploadMPP" multiple />
+                        </div>
+                        <div class="col-md-9">
+                            <button class="btn btn-success tooltipcustom" type="button" onclick="Upload()">
+                                <i class="fa fa-cloud-upload"></i>
+                                <span class="tooltiptext">Upload</span>
+                            </button>
+                        </div>
+                        <div class="col-md-12">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                    </div>
+                }
+
+                <div class="row padding-top-15">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group has-focus">
+
+                            <span class="desc"></span>
+                            <div class="controls">
+                                <div class="row">
+                                    <div class="col-md-3 col-xs-3 col-lg-3">
+
+                                    </div>
+                                    <div class="col-md-4 col-xs-4 col-lg-4">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">Name</th>
+                                                    <th width="10%">Tipe File</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="uploadmpp-tbody">
+                                                @if (Model.Document.Count > 0)
+                                                {
+                                                    foreach (var item in Model.Document)
+                                                    {
+                                                        <tr id="@item.ID">
+                                                            <td>@item.DocName</td>
+                                                            <td>@item.DocType</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Download", "Upload",new { ProjectHeaderID = Request["IDProjectHeader"] ,  name = @item.DocName } )';"><i class="fa fa-cloud-download"></i></button>
+
+                                                                @if (Model.StatusName == "ACTIVE" || Model.StatusName == "REVISE CR")
+                                                                {
+                                                                    if (RoleAplikasi.Any(x => x.Role == "CREATE.MASTER.PROJECT"))
+                                                                    {
+                                                                        <button type="button" class="btn btn-danger" onclick="if(confirm('Are you sure?')) deletefile(@item.ID);"><i class="fa fa-trash"></i></button>
+                                                                    }
+                                                                }
+
+                                                            </td>
+
+                                                        </tr>
+                                                    }
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div id="openModalRevise" class="modalu">
+    <div class="content-modalu" style="height:auto">
+        <h1>Alasan Revisi</h1>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <div class="controls">
+                        <textarea class="form-control" name="txtReviseForm" id="txtReviseForm" placeholder="reason"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                &nbsp;
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-4">&nbsp;</div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+                <a href="#close" title="Close" class="close" id="btnClose">CLOSE</a>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+                <a onclick="show_prompt(@Model.IDProjectHeader)" title="Submit" class="close" id="btnSubmit" style="color:green">SUBMIT</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var obj = @Html.Raw(Json.Encode(Model));
+    var urlInsertChangeManagement = '@Url.Action("InsertChangeManagement", "Proyek")';
+    var urlChangeManagement = '@Url.Action("ChangeManagement", "Proyek")';
+    var urlApproveChangeManagement = '@Url.Action("ApproveChangeManagement", "Proyek")';
+
+    $(document).ready(function () {
+        $('.tab-group').tabify();
+        $('#idTblLogApproval').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+
+        $('#tblApproval').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+
+        $('.ddlAOR').select2({
+            selectOnClose: true
+        });
+
+        //$('.ddlJenisPerubahan').select2({
+        //    selectOnClose: true
+        //});
+
+        $('#txtBDOR').summernote({
+            tabsize: 2,
+            height: 150,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['view', ['undo', 'redo']]
+            ]
+        });
+        $('#txtBDOR').summernote(
+            'code',
+            obj.BriefDescriptionOfRequest
+        );
+
+
+
+        $('#txtOAI').summernote({
+            tabsize: 2,
+            height: 150,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['view', ['undo', 'redo']]
+            ]
+        });
+        $('#txtOAI').summernote(
+            'code',
+            obj.OtherArtifactsImpacted
+        );
+
+        $('#txtDetailProyek').summernote({
+            tabsize: 2,
+            height: 150,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['view', ['undo', 'redo']]
+            ]
+        });
+        $('#txtDetailProyek').summernote(
+            'code',
+            obj.Deskripsi
+        );
+
+        if (obj.StatusName === 'SUBMIT CR') {
+            $('#txtBDOR').summernote('disable');
+            $('#txtRFC').summernote('disable');
+            $('#txtOAI').summernote('disable');
+            $('#txtDetailProyek').summernote('disable');
+        }
+
+        $("#checkPenyebabLain").click(function () {
+            if ($("#checkPenyebabLain").prop("checked")) {
+                $("#inPenyebabLain").show();
+            } else {
+                $("#inPenyebabLain").hide();
+            }
+        });
+
+        var i;
+        var a = 0;
+        var b = 0;
+        console.log(obj.ListIDAlasan);
+
+        var listAllAlasan = document.getElementsByClassName("alasanPerubahan");
+        for (i = 0; i < listAllAlasan.length; i++) {
+            console.log(listAllAlasan[i].value)
+            if (listAllAlasan[i].value == obj.ListIDAlasan[a]) {
+                listAllAlasan[i].checked = true;
+                if (listAllAlasan[i].value == 8) {
+                    $("#inPenyebabLain").show();
+                }
+                a++;
+            }
+        }
+        debugger;
+        var listAllJenisPerubahan = document.getElementsByClassName("jenisPerubahan");
+        for (i = 0; i < listAllJenisPerubahan.length; i++) {
+            if (listAllJenisPerubahan[i].value == obj.ListIDJenisPerubahan[b]) {
+                listAllJenisPerubahan[i].checked = true;
+                b++;
+            }
+        }
+
+
+    });
+
+    function show_prompt(IDProjectHeader) {
+        var Reason = $('#txtReviseForm').val();
+        ReviseProjectHeader(IDProjectHeader, Reason);
+    }
+
+    function up(element) {
+
+        if ($('#tblApproval tr').length = 0) {
+            $('#tblApproval').DataTable().clear();
+        }
+
+        $('#tblApproval').DataTable().destroy();
+
+        var tr = $(element).closest('tr');
+        var prevtr = $(element).closest('tr').prev('tr');
+
+        var it = element.parentNode.parentNode.rowIndex;
+        var prev = it - 1;
+        var table = document.getElementById("tblApproval");
+        var first = 1;
+
+        if (it != first) {
+            table.rows[it].cells[0].innerHTML = prev;
+            table.rows[prev].cells[0].innerHTML = it;
+            tr.remove();
+            tr.insertBefore(prevtr);
+        }
+
+        $('#tblApproval').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+
+    }
+
+    function down(element) {
+
+        if ($('#tblApproval tr').length = 0) {
+            $('#tblApproval').DataTable().clear();
+        }
+
+        $('#tblApproval').DataTable().destroy();
+
+        var tr = $(element).closest('tr');
+        var nexttr = $(element).closest('tr').next('tr');
+
+        var it = element.parentNode.parentNode.rowIndex;
+        var next = it + 1;
+        var table = document.getElementById("tblApproval");
+        var last = table.rows.length - 1;
+
+        if (it != last) {
+            table.rows[it].cells[0].innerHTML = next;
+            table.rows[next].cells[0].innerHTML = it;
+            tr.remove();
+            tr.insertAfter(nexttr);
+        }
+
+        $('#tblApproval').DataTable({
+            "bLengthChange": false,
+            searching: false,
+            info: false,
+            "scrollX": true
+        });
+
+    }
+
+    function InsertChangeManagement(IDProjectHeader) {
+
+        var isCancel = false;
+        var tableApproval = $('#tblApproval').DataTable();
+        var dataApproval = tableApproval.rows().data();
+        var ListProjectChangesApprovalRole = [];
+        var ListProjectRoleGroup = [];
+        for (i = 0; i < dataApproval.length; i++) {
+            var rowsApproval = dataApproval[i];
+            var IsEnabled = 0;
+            if ($('#' + rowsApproval[2].replace('.', '') + '-' + String(rowsApproval[1]) + '-chbApproval').is(":checked")) {
+                var IsEnabled = 1;
+            }
+
+            ListProjectChangesApprovalRole.push({
+                Sequence: rowsApproval[0],
+                IDRoleGroup: rowsApproval[1],
+                Username: rowsApproval[2],
+                ActiveDate: $('#' + rowsApproval[2].replace('.', '') + '-txtActiveDate').val(),
+                EndDate: $('#' + rowsApproval[2].replace('.', '') + '-txtEndDate').val(),
+                IsEnabled: IsEnabled
+            });
+            var str = rowsApproval[1];
+            var array = str.split("|");
+
+            for (j = 0; j < array.length; j++) {
+                ListProjectRoleGroup.push({
+                    IDProjectRoleGroup: array[j],
+                    Username: rowsApproval[2]
+                });
+            }
+
+        }
+
+        var inputElements = document.getElementsByClassName('alasanPerubahan');
+
+        var checkedValue = "";
+        for (var i = 0; inputElements[i]; ++i) {
+            if (inputElements[i].checked) {
+                checkedValue = checkedValue + inputElements[i].value + ",";
+            }
+        }
+
+        var inputElementsJenisPerubahan = document.getElementsByClassName('jenisPerubahan');
+
+        var checkedValueJenisPerubahan = "";
+        for (var i = 0; inputElementsJenisPerubahan[i]; ++i) {
+            if (inputElementsJenisPerubahan[i].checked) {
+                checkedValueJenisPerubahan = checkedValueJenisPerubahan + inputElementsJenisPerubahan[i].value + ",";
+                if (inputElementsJenisPerubahan[i].value == 5) {
+                    isCancel = true;
+                }
+            }
+        }
+        if (inputElementsJenisPerubahan.length > 0) {
+            checkedValueJenisPerubahan = checkedValueJenisPerubahan.slice(0, -1);
+        }
+        debugger;
+        var idPenyebabLain = document.getElementById('checkPenyebabLain');
+        if (idPenyebabLain.checked) {
+            checkedValue = checkedValue + idPenyebabLain.value;
+        } else {
+            checkedValue = checkedValue.slice(0, -1);
+        }
+
+        var penyebabLain = document.getElementById("txtPenyebabLain").value;
+
+        var changemanagementdetail = {
+            IDProjectHeader: IDProjectHeader,
+            IDJenisPerubahan: 0,//$('#ddlJenisPerubahan').val(),
+            SubmitterName: $('#txtSubmitterName').val(),
+            BriefDescriptionOfRequest: $('#txtBDOR').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            //BriefDescriptionOfRequest: checkedValue,
+            DateSubmitted: $('#txtDateSubmited').val(),
+            DateRequired: $('#txtDateRequired').val(),
+            //ReasonForChange: $('#txtBDOR').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            ReasonForChange: checkedValue,
+            JenisPerubahan: checkedValueJenisPerubahan,
+            IsCancel: isCancel,
+            PenyebabLain: penyebabLain,
+            OtherArtifactsImpacted: $('#txtOAI').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            //AttachmentsOrReferences: $('#ddlEndMonth').val(),
+            Catatan: $('#txtCatatan').val(),
+            Deskripsi: $('#txtDetailProyek').summernote('code').replace(/</g, "{").replace(/>/g, "}"),
+            CreatedBy: $('#hdf').val(),
+            ListProjectChangesApprovalRole: ListProjectChangesApprovalRole
+        }
+
+        $.ajax({
+            type: "POST",
+            url: urlInsertChangeManagement,
+            data: changemanagementdetail,
+            success: function (result) {
+                if (result.Result === "Success") {
+                    alert(result.Message);
+                    window.location.href = urlChangeManagement;
+                }
+                else {
+                    alert(result.Message);
+                }
+            }
+        });
+
+    }
+
+    function ApproveProjectHeader(IDProjectHeader) {
+
+        var ProjectHeader = {
+            IDProjectHeader: IDProjectHeader,
+            ApprovedBy: '',
+            CreatedBy: $('#hdf').val(),
+            TypeTransaction: 'Approve'
+        };
+
+        $.ajax({
+            type: "POST",
+            url: urlApproveChangeManagement,
+            data: ProjectHeader,
+            success: function (result) {
+                if (result.Result === "Success") {
+                    alert(result.Message);
+                    //GetDataIFExistSubmit();
+                    window.location.href = urlChangeManagement;
+                }
+                else {
+                    alert(result.Message);
+                }
+            }
+        });
+
+    }
+
+    function ReviseProjectHeader(IDProjectHeader, Deskripsi) {
+
+        var ProjectHeader = {
+            IDProjectHeader: IDProjectHeader,
+            ApprovedBy: Deskripsi,
+            CreatedBy: $('#hdf').val(),
+            TypeTransaction: 'Revise'
+        };
+
+        $.ajax({
+            type: "POST",
+            url: urlApproveChangeManagement,
+            data: ProjectHeader,
+            success: function (result) {
+                if (result.Result === "Success") {
+                    alert(result.Message);
+                    //GetDataIFExistSubmit();
+                    window.location.href = urlChangeManagement;
+                }
+                else {
+                    alert(result.Message);
+                }
+            }
+        });
+
+    }
+
+     function Upload() {
+        var $file = document.getElementById('uploadMPP'),
+            $formData = new FormData();
+
+        if ($file.files.length > 0) {
+            for (var i = 0; i < $file.files.length; i++) {
+                $formData.append('file-' + i, $file.files[i]);
+            }
+        }
+
+
+          $.ajax({
+            url: '@Url.Action("UploadFile", "Upload", new { ProjHead = Request["IDProjectHeader"] + "|5|4|0" })',
+            type: 'POST',
+                 data: $formData,
+                 dataType: 'json',
+                 contentType: false,
+                 processData: false,
+              success: function (result) {
+                  if (result == "OK") {
+                      var uploadhtml = "";
+                      var oFile = document.getElementById("uploadMPP").files[0];
+
+                      uploadhtml += "<tr id='" + result + "'><td>Closing_" + oFile.name + "</td><td>MPP</td>";
+                      uploadhtml += '<td> <button type="button" class="btn btn-danger" onclick="if(confirm("Are you sure ?")) deletefile(' + result + ');"><i class="fa fa-trash"></i></button>';
+                      uploadhtml += '</tr>';
+                      $("#uploadmpp-tbody").append(uploadhtml);
+                  } else {
+                      alert("Error Upload Data");
+                  }
+                }
+            });
+    }
+
+
+    function deletefile(ID) {
+        var data = '@Url.Action("DeleteFile", "Upload", new { ProjectHeaderID = Request["IDProjectHeader"]})' +'&DocumentID=' + ID;
+        $.ajax({
+            url: data,
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+                if (result.status.includes("S|Success")) {
+                    var row = '#uploadmpp-tbody tr#' + ID;
+                    $(row).remove();
+                }
+                else {
+                    alert('File Gagal Dihapus')
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: " + textStatus); alert("Error: " + errorThrown);
+            }
+        });
+    }
+</script>

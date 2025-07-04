@@ -1,0 +1,78 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "DotNetAutoAttach",
+            "request": "launch",
+            "name": ".NET Core Watch: SAP_Scheduller",
+            "args": [],
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "project": "SAP_Scheduller"
+        },
+        {
+            "type": "DotNetAutoAttach",
+            "request": "launch",
+            "name": ".NET Core Watch: Scheduller_Email",
+            "args": [],
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "project": "Scheduller_Email"
+        },
+        {
+            "type": "DotNetAutoAttach",
+            "request": "launch",
+            "name": ".NET Core Watch: Scheduller_Calendar",
+            "args": [],
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "project": "Scheduller_Calendar"
+        },
+        {
+            "type": "DotNetAutoAttach",
+            "request": "launch",
+            "name": ".NET Core Watch: LPS_API",
+            "args": [],
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "project": "LPS_API"
+        },
+        {
+            "type": "DotNetAutoAttach",
+            "request": "launch",
+            "name": ".NET Core Watch: LPS_ProjectManagement",
+            "args": [],
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "project": "LPS_ProjectManagement"
+        },
+        {
+            "type": "DotNetAutoAttach",
+            "request": "launch",
+            "name": ".NET Core Watch: LPS_ApiConnector",
+            "args": [],
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "project": "LPS_ApiConnector"
+        },
+        {
+            "type": "DotNetAutoAttach",
+            "request": "launch",
+            "name": ".NET Core Watch: Dashboard_Scheduller",
+            "args": [],
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "project": "Dashboard_Scheduller"
+        }
+    ]
+}

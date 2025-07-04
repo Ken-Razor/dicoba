@@ -1,0 +1,156 @@
+﻿@model List < LPS_ProjectManagement.Models.MasterDataModels.ddlYear>
+@using LPS_ProjectManagement.Models
+
+@{
+    ViewBag.Title = "Master Hari Libur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    RoleProject[] RoleAplikasi = (RoleProject[])Session["Roles"];
+}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Daftar Hari Libur</h2>
+        </header>
+        <div class="content-body padding-top-45">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label" style="font-weight : bold;">Tahun</label>
+                            <div class="controls">
+                                <div class="col-md-4 padding-left-0">
+                                    <select id="ddlGroup" class="form-control ddlGroup" style="width:100%">
+                                        @foreach (var data in Model)
+                                        {
+                                            var year = DateTime.Now.Year;
+                                            if (data.id == year)
+                                            {
+                                                <option value="@data.id" selected="selected">@data.Description</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@data.id">@data.Description</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="display:flex;justify-content:right;">
+                            <button type="button" class="btn btn-info btn-corner" id="btnTambah" onclick="location.href='@Url.Action("DetailHoliday","Master", new {Id= 0})'"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Tambah SLA</button>
+                        </div>
+                    </div>
+
+                    <table id="tblListHoliday" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align:left">Nama</th>
+                                <th style="text-align:left">Tanggal Mulai</th>
+                                <th style="text-align:left">Tanggal Selesai</th>
+                                <th style="text-align:center" width="20%">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+              
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="~/Assets/moment.min.js"></script>
+<script>
+
+    $('#btnTambah').mdl({
+        type: 'modal',
+        fullscreen: false,
+        overlayClick: true
+    });
+
+
+    $(document).ready(function () {
+        var table = $('#tblListHoliday').DataTable({
+            searching: true,
+            info: false,
+            "ajax": {
+                "url": "/Master/GetHolidays",
+                "type": "POST",
+                "data": function (d) {
+                    d.tahun = $('#ddlGroup').val();
+                }
+            },
+            "columns": [
+                { "data": "Nama" },
+                {
+                    "data": "TglMulai",
+                    "render": function (data, type, row) {
+                        if (data) {
+                            return moment(data).format('DD-MM-yyyy');
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "data": "TglSelesai",
+                    "render": function (data, type, row) {
+                        if (data) {
+                            return moment(data).format('DD-MM-yyyy');
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "data": "IDHoliday",
+                    "render": function (data, type, row) {
+                        return `
+                    <div style="text-align:center">
+                        <a href="/Master/DetailHoliday?Id=${data}" class="btn btn-warning tooltipcustom margin-top-5 margin-bottom-5"> 
+                            <i class="fa fa-edit"></i>
+                            <span class="tooltiptext">Detil</span>
+                        </a>
+                        <a onclick="deleteData(${data})" class="btn btn-danger tooltipcustom margin-top-5 margin-bottom-5">
+                            <i class="fa fa-trash"></i>
+                            <span class="tooltiptext">Hapus</span>
+                        </a>
+                    </div>
+                `;
+                    },
+                    "orderable": false, 
+                    "searchable": false 
+                }
+            ]
+        });
+        $('#ddlGroup').change(function () {
+            table.ajax.reload(); 
+        });
+    });
+
+    function deleteData(id) {
+        var Department = {
+            Id: id
+        };
+
+        var r = confirm("Anda yakin ingin menghapus Hari libur ini ?");
+        if (r == true) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("DeleteHoliday", "Master")',
+                data: Department,
+                success: function (result) {
+                    alert(result.Message);
+                    window.location.href = '@Url.Action("MasterHoliday", "Master")';
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
+        }
+    }
+
+</script>
+

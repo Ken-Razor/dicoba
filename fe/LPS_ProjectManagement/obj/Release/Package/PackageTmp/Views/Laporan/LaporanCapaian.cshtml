@@ -1,0 +1,241 @@
+﻿@model LPS_ProjectManagement.Models.ReportModels.LaporanPencapaian
+@using LPS_ProjectManagement.Helper;
+@{
+    /**/
+
+    ViewBag.Title = "LaporanCapaian";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .circle {
+        border-radius: 50%;
+        width: 5px;
+        height: 5px;
+        margin: auto;
+        padding: 5px;
+        /* width and height can be anything, as long as they're equal */
+    }
+
+    thead, th, tbody, td {
+        text-align: center;
+    }
+</style>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Laporan Pencapaian</h2>
+        </header>
+        <div class="content-body padding-top-45">
+            <div class="row padding-left-30 padding-right-30">
+                <div>
+                    <div class="row">
+                        <div class="tab-group">
+                            <section id="tab1" title="Transformasi dan Non Transformasi">
+                                <div class="row padding-top-30">
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                        <div class="form-group has-warning">
+                                            <label class="form-label label-header" for="ddlMonth">Bulan</label>
+                                            <span class="desc"></span>
+                                            <div class="controls">
+                                                <select id="ddlMonth" class="form-control ddlMonth" style="width:100%">
+                                                    @foreach (var data in GlobalHelper.ListDropDowMonth())
+                                                    {
+                                                        if (data.Month == Convert.ToInt32(Request["month"]))
+                                                        {
+                                                            <option value="@data.Month" selected="selected">@data.Description</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@data.Month">@data.Description</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                        <div class="form-group has-warning">
+                                            <label class="form-label label-header" for="ddlYear">Tahun</label>
+                                            <span class="desc"></span>
+                                            <div class="controls">
+                                                <select id="ddlYear" class="form-control ddlYear" style="width:100%;">
+                                                    <option value="0">All</option>
+                                                    @for (int year = Convert.ToInt32(DateTime.Now.Year.ToString()) - 20; year <= Convert.ToInt32(DateTime.Now.Year.ToString()) + 20; year++)
+                                                    {
+                                                        if (Convert.ToInt32(Request["year"]) == year)
+                                                        {
+                                                            <option value=@year selected="selected">@year</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value=@year>@year</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="form-label label-header" for="ddlIsTransformasi">Jenis Transformasi</label>
+                                            <span class="desc"></span>
+                                            <select id="ddlIsTransformasi" class="ddlIsTransformasi" style="width:100%;">
+                                                @if (Convert.ToInt32(Request["tipe"]) == 2)
+                                                {
+                                                    <option value="2" selected="selected">All</option>
+                                                    <option value="1">Transformasi</option>
+                                                    <option value="0">Non Transformasi</option>
+                                                }
+                                                else if (Convert.ToInt32(Request["tipe"]) == 1)
+                                                {
+                                                    <option value="2">All</option>
+                                                    <option value="1" selected="selected">Transformasi</option>
+                                                    <option value="0">Non Transformasi</option>
+                                                }
+                                                else if (Convert.ToInt32(Request["tipe"]) == 0)
+                                                {
+                                                    <option value="2">All</option>
+                                                    <option value="1">Transformasi</option>
+                                                    <option value="0" selected="selected">Non Transformasi</option>
+                                                }
+
+                                            </select>
+                                        </div>
+                                    </div>@Url.Action("Index", "Beranda")
+
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                        <div class="form-group has-warning">
+                                            <label class="form-label label-header" for="ddlYear">&nbsp;</label>
+                                            <span class="desc"></span>
+                                            <div class="controls">
+                                                <button onclick="Search()" type="button" class="btn btn-info btn-corner">@*<a href="">*@<i class="fa fa-search"></i>&nbsp;&nbsp; Search@*</a>*@</button>
+                                                <button onclick="PrintExcel(window.o)" type="button" class="btn btn-info btn-corner">@*<a href="">*@<i class="fa fa-Print"></i>&nbsp;&nbsp; Download Excel@*</a>*@</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row padding-top-10">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <div id="divFile">
+                                                <table id="tblPencapaianTrans" class="table table-bordered" style="width:100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Program</th>
+                                                            <th>Anggaran (Rp.Juta)</th>
+                                                            <th>Pencapaian</th>
+                                                            <th>Status</th>
+                                                            <th>Realisasi Anggaran</th>
+                                                            <th>Real + Komit</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        @if (Model.Trans.Count > 0)
+                                                        {
+                                                            foreach (var item in Model.Trans)
+                                                            {
+                                                                <tr>
+                                                                    <td>@item.NamaProgram</td>
+                                                                    <td>@item.TotalAnggaran</td>
+                                                                    <td>@item.RataPencapain</td>
+                                                                    <td>@Html.Raw(item.Status)</td>
+                                                                    <td>@item.Realisasi</td>
+                                                                    <td>@item.Realisasi</td>
+                                                                </tr>
+                                                            }
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+                <table id="tblPencapaianTransPrint" class="table table-bordered" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Program</th>
+                            <th>Anggaran (Rp.Juta)</th>
+                            <th>Pencapaian</th>
+                            <th>Status</th>
+                            <th>Realisasi Anggaran</th>
+                            <th>Real + Komit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model.Trans.Count > 0)
+                        {
+                            foreach (var item in Model.Trans)
+                            {
+                                <tr>
+                                    <td>@item.NamaProgram</td>
+                                    <td>@item.TotalAnggaran</td>
+                                    <td>@item.RataPencapain</td>
+                                    <td>@Html.Raw(item.Status)</td>
+                                    <td>@item.Realisasi</td>
+                                    <td>@item.Realisasi</td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('.tab-group').tabify();
+        $('#tblPencapaianTrans').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            "scrollX": true,
+            info: false
+        });
+        $('.ddlYear').select2({
+            placeholder: 'Pilih Tahun',
+            selectOnClose: true
+        });
+
+        $('.ddlMonth').select2({
+            placeholder: 'Pilih Bulan',
+            selectOnClose: true
+        });
+
+        $('.ddlIsTransformasi').select2({
+            placeholder: 'Pilih Bulan',
+            selectOnClose: true
+        });
+    });
+
+    function Search() {
+        var Month = $('#ddlMonth').val();
+        var Year = $('#ddlYear').val();
+        var Week = 0;
+        var Tipe = $('#ddlIsTransformasi').val();
+
+
+        location.href = '@Url.Action("LaporanCapaian", "Laporan")' + '?week=' + Week + '&month=' + Month + '&year=' + Year + '&tipe=' + Tipe;
+    }
+</script>
+
+
+

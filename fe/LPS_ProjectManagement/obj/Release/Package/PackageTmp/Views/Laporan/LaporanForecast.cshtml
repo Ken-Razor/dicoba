@@ -1,0 +1,150 @@
+﻿@model IEnumerable<LPS_ProjectManagement.Models.ReportModels.ProjectForecastModel>
+
+@{
+    ViewBag.Title = "Forecast";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <section class="box">
+        <header class="panel_header">
+            <h2 class="title pull-left">Daftar Project</h2>
+            <div class="actions panel_actions pull-right">
+                <i class="box_toggle material-icons">expand_more</i>
+                <i class="box_close material-icons">close</i>
+            </div>
+        </header>
+        <div class="content-body padding-top-45">
+
+            <div class="row padding-15">
+                @*<div class="col-md-2 padding-top-30">
+                    <h4>Year</h4>
+                    <select id="ddlMetode" class="form-control ddlMetode" style="width:100%;">
+                        <option value=1 selected="selected">Naive</option>
+                        <option value=2>SMA</option>
+                        <option value=3>WMA</option>
+                        <option value=4>ES</option>
+                        <option value=5>ARS</option>
+                        <option value=6>Linear</option>
+                    </select>
+                </div>*@
+
+                @*<div class="col-md-2 padding-top-30">
+                    <h4>Jenis Proyek</h4>
+                    <select id="ddlIsTransformasi" class="form-control ddlIsTransformasi" style="width:100%;">
+                        <option value=2>All</option>
+                        <option value=1 selected="selected">Transformasi</option>
+                        <option value=0>Non Transformasi</option>
+                    </select>
+                </div>*@
+
+                @*<div class="col-md-4" style="text-align:left;padding-top:50px">
+                    <button class="btn btn-success" onclick="ForecastAll()">Forecast</button>
+                </div>*@
+
+            </div>
+
+            <div class="row padding-top-10">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <table id="tblListProjectCharter" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width:1%;">
+                                    No
+                                </th>
+                                <th style="width:8%;">
+                                    Kode Proyek
+                                </th>
+                                <th style="width:30%;">
+                                    Nama Proyek
+                                </th>
+                                <th style="width:8%;">
+                                    Jenis Proyek
+                                </th>
+                                <th style="width:8%;">
+                                    Tanggal Mulai
+                                </th>
+                                <th style="width:8%;">
+                                    Tanggal Selesai
+                                </th>
+                                <th style="width:8%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int RowNo = 0; }
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="width:10px;">
+                                        @{RowNo++;} @RowNo
+                                    </td>
+                                    <td style="text-align:right;">
+                                        @Html.DisplayFor(modelItem => item.KodeProyek)
+                                    </td>
+                                    <td style="text-align: left !important;">
+                                        @Html.DisplayFor(modelItem => item.NamaProyek)
+                                    </td>
+
+                                    <td>
+                                        @if (item.isTransformasi == 1)
+                                        {
+                                            <span>Transformasi</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Non Transformasi</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TanggalMulaiProyek)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TanggalSelesaiProyek)
+                                    </td>
+
+                                    <td>
+                                        <button class="btn btn-success" onclick='Forecast(@item.ProyekPK,@item.isTransformasi,"@item.NamaProyek")'><i class="fa fa-search"></i> Detail</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#tblListProjectCharter').DataTable({
+            "bLengthChange": false,
+            searching: true,
+            info: false
+        });
+
+        //$('.ddlMetode').select2({
+        //    placeholder: 'Pilih Metode'
+        //});
+
+        //$('.ddlIsTransformasi').select2({
+        //    placeholder: 'Pilih Jenis Proyek'
+        //});
+    });
+
+    function Forecast(id, isTransformasi,projectName) {
+        if (isTransformasi === '1') {
+            IsTransformasi = 'true';
+            week = $('#ddlWeek').val();
+        }
+        else if (isTransformasi === '2') {
+            IsTransformasi = null;
+        }
+        else {
+            IsTransformasi = 'false';
+        }
+        window.location.href = '@Url.Action("GenerateForecast", "Laporan")' + '?IsTransformasi=' + IsTransformasi + '&ProjectHeaderId=' + id + '&ProjectName=' + projectName;
+        //window.location.href = '@Url.Action("GenerateForecast", "Laporan")' + '?IsTransformasi=' + IsTransformasi + '&ProjectHeaderId=' + id;
+    }
+
+</script>

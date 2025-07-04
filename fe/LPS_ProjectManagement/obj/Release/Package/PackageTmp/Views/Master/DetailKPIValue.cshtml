@@ -1,0 +1,202 @@
+﻿@model LPS_ProjectManagement.Models.MasterDataModels.KPIValueModel
+@using LPS_ProjectManagement.Models
+
+@{
+    ViewBag.Title = "Detail KPI Value";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    RoleProject[] RoleAplikasi = (RoleProject[])Session["Roles"];
+}
+
+<input id="hdf" type="hidden" value="@Session["PersonalNumber"].ToString()" />
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+    <section class="box">
+
+        <header class="panel_header">
+            <h2 class="title pull-left">Detail KPI Value</h2>
+        </header>
+
+        <div class="content-body padding-top-45">
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">Nama Project</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.ProjectName == null)
+                                    {
+                                        <input disabled="disabled" id="txtProjectName" type="text" class="form-control" placeholder="Project Name" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input disabled="disabled" id="txtProjectName" type="text" class="form-control" placeholder="Project Name" value="@Model.ProjectName" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">Kode Project</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.ProjectNo == null)
+                                    {
+                                        <input disabled="disabled" id="txtProjectCode" type="text" class="form-control" placeholder="Project Code" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input disabled="disabled" id="txtProjectCode" type="text" class="form-control" placeholder="Project Code" value="@Model.ProjectNo" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">KPI TW 1</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.TW1 == null)
+                                    {
+                                        <input id="txtTW1" type="number" class="form-control" placeholder="KPI TW 1" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtTW1" type="number" class="form-control" placeholder="KPI TW 1" value="@Model.TW1" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">KPI TW 2</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.TW2 == null)
+                                    {
+                                        <input id="txtTW2" type="number" class="form-control" placeholder="KPI TW 2" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtTW2" type="number" class="form-control" placeholder="KPI TW 2" value="@Model.TW2" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">KPI TW 3</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.TW3 == null)
+                                    {
+                                        <input id="txtTW3" type="number" class="form-control" placeholder="KPI TW 3" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtTW3" type="number" class="form-control" placeholder="KPI TW 3" value="@Model.TW3" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label" style="font-weight : bold;">KPI TW 4</label>
+                            <div class="controls">
+                                <div class="col-md-8 padding-left-0">
+                                    @if (Model.TW4 == null)
+                                    {
+                                        <input id="txtTW4" type="number" class="form-control" placeholder="KPI TW 4" value="" />
+                                    }
+                                    else
+                                    {
+                                        <input id="txtTW4" type="number" class="form-control" placeholder="KPI TW 4" value="@Model.TW4" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+
+                @if (RoleAplikasi.Any(x => x.Role == "EDIT.KPIVALUE"))
+                {
+                    <button class="btn btn-success" onclick="UpdateValue(@Model.IDProject)"> Update Value</button>
+                }
+
+                <button class="btn btn-default" onclick="location.href='@Url.Action("MasterKPIValue","Master")';"> Back To List</button>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    
+    var urlUpdateKPIValue = '@Url.Action("UpdateKPIValue", "Master")';
+    var urlMasterKPIValue = '@Url.Action("MasterKPIValue", "Master")';
+
+    function UpdateValue(IDProject) {
+
+        var obj = {
+            IDProject: IDProject,
+            TW1: $('#txtTW1').val(),
+            TW2: $('#txtTW2').val(),
+            TW3: $('#txtTW3').val(),
+            TW4: $('#txtTW4').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: urlUpdateKPIValue,
+            data: obj,
+            success: function (result) {
+                if (result.Result === "Success") {
+                    alert(result.Message);
+                    window.location.href = urlMasterKPIValue;
+                }
+                else {
+                    debugger;
+                    alert(result.Message);
+                }
+            }
+        });
+    }
+
+</script>

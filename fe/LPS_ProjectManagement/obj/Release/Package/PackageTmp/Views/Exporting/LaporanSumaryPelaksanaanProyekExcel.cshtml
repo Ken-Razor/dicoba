@@ -1,0 +1,199 @@
+﻿@model List<LPS_ProjectManagement.Models.ReportModels.SummaryModel>
+@{
+    Layout = null;
+}
+
+<style>
+    .circle {
+        border-radius: 50%;
+        width: 3px;
+        height: 3px;
+        margin: auto;
+        padding: 3px;
+        /* width and height can be anything, as long as they're equal */
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    thead, th, tbody, td {
+        text-align: center;
+        font-size: 11pt;
+    }
+
+    td {
+        border-top: 1px dashed #ddd !important;
+        border-bottom: 1px dashed #ddd !important;
+    }
+
+    thead {
+        display: table-header-group;
+        background-color: rgb(252,213,180) !important;
+        border-top: 1px solid rgb(151,71,6) !important;
+        height: 20px;
+        border-bottom: 1px solid rgb(151,71,6) !important;
+    }
+
+    /*tr {
+            border-bottom: 1px solid rgb(0,0,0);
+        }*/
+    tfoot {
+        display: table-row-group
+    }
+
+    tr {
+        page-break-inside: avoid;
+    }
+
+    th {
+        background-color: rgb(252,213,180);
+        border-color: rgb(151,71,6);
+        border-width: 2px;
+    }
+
+    body, h3, h2, h1 {
+        font-family: 'Book Antiqua' !important;
+        font-size: 14pt;
+    }
+</style>
+<table style="width:100%;" id="tableData">
+    <thead>
+        @*<tr>
+            <td colspan="4" style="text-align:center; font-size:14px;">
+                <b>
+                    Laporan Series Per Tahun
+                </b>
+            </td>
+        </tr>*@
+        <tr>
+            <th style="white-space:nowrap; color:black; background-color:#da8824;" rowspan="2">
+                Strategic Objective
+            </th>
+            <th style="white-space:nowrap; text-align:center; background-color:#da8824; color:black;" colspan="6">
+                Proyek Transformasi
+            </th>
+            <th style="white-space:nowrap; text-align:center; background-color:#da8824; color:black;" colspan="6">
+                Proyek Nontransformasi
+            </th>
+            <th style="white-space:nowrap; background-color:#da8824; color:black" rowspan="2">
+                Total
+            </th>
+        </tr>
+        <tr>
+            <th style="white-space:nowrap; background-color:cornflowerblue; color:black">
+                Diatas Target
+            </th>
+            <th style="white-space:nowrap; background-color:forestgreen; color:black">
+                Sesuai Target
+            </th>
+            <th style="white-space:nowrap; background-color:yellow; color:black">
+                Dibawah Target
+            </th>
+            <th style="white-space:nowrap; background-color:red; color:black">
+                Jauh Dibawah
+            </th>
+            <th style="white-space:nowrap; background-color:gray; color:black">
+                Belum Mulai
+            </th>
+            <th style="white-space:nowrap; background-color:black; color:white">
+                Selesai
+            </th>
+
+            <th style="white-space:nowrap; background-color:cornflowerblue; color:black">
+                Diatas Target
+            </th>
+            <th style="white-space:nowrap; background-color:forestgreen; color:black">
+                Sesuai Target
+            </th>
+            <th style="white-space:nowrap; background-color:yellow; color:black">
+                Dibawah Target
+            </th>
+            <th style="white-space:nowrap; background-color:red; color:black">
+                Jauh Dibawah
+            </th>
+            <th style="white-space:nowrap; background-color:gray; color:black">
+                Belum Mulai
+            </th>
+            <th style="white-space:nowrap; background-color:black; color:white">
+                Selesai
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td style="text-align:left">@item.StrategicObjectiveName</td>
+            <td style="text-align:left">@item.DiatasTarget_T</td>
+            <td style="text-align:left">@item.SesuaiTarget_T</td>
+            <td style="text-align:left">@item.DibawahTarget_T</td>
+            <td style="text-align:left">@item.JauhDibawahTarget_T</td>
+            <td style="text-align:left">@item.BelumDimulai_T</td>
+            <td style="text-align:left">@item.Selesai_T</td>
+            <td style="text-align:left">@item.DiatasTarget_NT</td>
+            <td style="text-align:left">@item.SesuaiTarget_NT</td>
+            <td style="text-align:left">@item.DibawahTarget_NT</td>
+            <td style="text-align:left">@item.JauhDibawahTarget_NT</td>
+            <td style="text-align:left">@item.BelumDimulai_NT</td>
+            <td style="text-align:left">@item.Selesai_NT</td>
+            <td style="text-align:left">@item.JumlahProject</td>
+        </tr>
+        }
+    <tr>
+        <td style="text-align:left"><strong>Total :</strong></td>
+        <td style="text-align:left">@Model.Select(q => q.DiatasTarget_T).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.SesuaiTarget_T).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.DibawahTarget_T).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.JauhDibawahTarget_T).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.BelumDimulai_T).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.Selesai_T).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.DiatasTarget_NT).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.SesuaiTarget_NT).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.DibawahTarget_NT).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.JauhDibawahTarget_NT).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.BelumDimulai_NT).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.Selesai_NT).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.JumlahProject).ToList().Sum()</td>
+        <td style="text-align:left">@Model.Select(q => q.JumlahProject).ToList().Sum()</td>
+    </tr>
+    </tbody>
+
+</table>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function ($) {
+
+        tableToExcel('tableData', 'Sheet 1');
+        setTimeout(function () {
+            self.close();
+        }, 500);
+    });
+
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; })
+            }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = {
+                worksheet: name || 'Worksheet', table: table.innerHTML
+            }
+            //window.location.href = uri + base64(format(template, ctx))
+
+            var link = document.createElement("a");
+            link.download = "Report-Summary-Pelaksanaan-Proyek.xls";
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+
+        }
+    })();
+
+</script>
+
